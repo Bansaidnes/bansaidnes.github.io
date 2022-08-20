@@ -10,19 +10,27 @@
         <script src="script.js"></script>
         <title>Bansaidnes' site</title>
     </head>
-        <body>
-            <div class="content">
-                <iframe width="100%" height="100%" frameborder="0" src="../jellyfish.html"></iframe>
-            </div>
-            <div id="over">
-                  <div class="download-panel">
-                    <p id="download"></p>
-                    <script> 
-                    var filename = 'You are downloading: ' + urlParams.get('filename');
-                        document.getElementById("download").innerHTML = filename;</script>
-                  <button onclick="Download()">Download file</button>
-                  </div>
-            </div>
-        </body>
+    <body>
+        <div class="content">
+            <iframe width="100%" height="100%" frameborder="0" src="../jellyfish.html"></iframe>
+        </div>
+        <div id="over">
+            <div class="topnav" id="myTopnav">
+                <a href="index.html" class="active">Home</a>
+                <a href="https://vpn.bansaidnes.me">VPN</a>
+                <a href="https://github.com/Bansaidnes">Github</a>
+                <a href="Projects.html">Projects</a>
+                <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+                  <i class="fa fa-bars"></i>
+                </a>
+              </div>
+              <div class="download-panel">
+                <p id="download"></p>
+                <script> 
+                var filename = 'You are downloading: ' + urlParams.get('filename');
+                    document.getElementById("download").innerHTML = filename;</script>
+              <button onclick="Download()">Download file</button>
+              </div>
+        </div>
+    </body>
 </html>
-
