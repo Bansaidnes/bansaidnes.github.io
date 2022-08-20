@@ -4,19 +4,20 @@
   text-align: center;
   margin: 0px auto;
   width: 40%;
-  margin-right: 42.5%;
+  margin-right: 40.5%;
 }
 #over > div{
   display: inline-block;
     border: solid 5px white;
 }
-p{font-size: 1.5em; color: white;}
+p{font-size: 1.5em; color: white; word-wrap: break-word;}
 button{background-color:#af38d6; color: white; border: none; border-radius: 5px; padding: 10px; font-size: 1.5em; margin-top: 10px;}
 .download-panel{
   display: flex;
   align-items: center;
   display: inline-block;
-  vertical-align:middle;
-  position: absolute;
-  top: 30%;
+  position: fixed;
+  left: 50%;
+  top: 40%;
+  transform: translate(-50%, -50%);
 }
