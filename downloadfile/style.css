@@ -1,0 +1,22 @@
+#body, html{margin: 0; padding: 0; height: 100%; overflow: hidden;}
+.content{ position:absolute; left: 0%; right: 0%; bottom: 0%; top: 0%; filter: blur(1px); -webkit-filter: blur(1px); transform: scale(1.1); }
+#over {
+  text-align: center;
+  margin: 0px auto;
+  width: 40%;
+  margin-right: 42.5%;
+}
+#over > div{
+  display: inline-block;
+    border: solid 5px white;
+}
+p{font-size: 1.5em; color: white;}
+button{background-color:#af38d6; color: white; border: none; border-radius: 5px; padding: 10px; font-size: 1.5em; margin-top: 10px;}
+.download-panel{
+  display: flex;
+  align-items: center;
+  display: inline-block;
+  vertical-align:middle;
+  position: absolute;
+  top: 30%;
+}
