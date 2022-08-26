@@ -5,8 +5,9 @@
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <style src="style.css"></style>
         <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="navbar.css">
         <link rel="icon" type="image/x-icon" href="img/Icon.jpg">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
         <script src="script.js"></script>
         <title>Bansaidnes' site</title>
     </head>
@@ -15,21 +16,26 @@
             <iframe width="100%" height="100%" frameborder="0" src="jellyfish.html"></iframe>
         </div>
         <div id="over">
-            <div class="topnav" id="myTopnav">
-                <a href="index.html" class="active">Home</a>
-                <a href="https://vpn.bansaidnes.me">VPN</a>
-                <a href="https://github.com/Bansaidnes">Github</a>
-                <a href="Projects.html">Projects</a>
-                <a href="javascript:void(0);" class="icon" onclick="myFunction()">
-                  <i class="fa fa-bars"></i>
-                </a>
-              </div>
-            <p>>Welcome to bansaidnes' site!</p>
-            <br/>
-            <p>>About me: </p>
-            <p>I'm a teen who's interested in computers, programming, and technology in general</p>
-            <p>Obviously, I plan to study software engineering and maybe develop web apps with C# and ASP.NET</p>
-            <p>I currently program in C# using .NET</p>
+          <nav>
+            <input type="checkbox" id="check">
+            <label for="check" class="checkbtn">
+              <i class="fas fa-bars"></i>
+            </label>
+            <label class="logo">Bansaidnes</label>
+            <ul>
+              <li><a class="active" href="">Home</a></li>
+              <li><a href="https://vpn.bansaidnes.me">VPN</a></li>
+              <li><a href="https://github.com/Bansaidnes">Github</a></li>
+              <li><a href="https://rxverse.me">designer</a></li>
+            </ul>
+          </nav>
+          <div class = "about">
+            <p>&gt; Welcome to bansaidnes' site! <br/>
+            &gt; About me: <br/>
+            I'm a teen who's interested in computers, programming, and tech in general<br/>
+            I plan to study software engineering and maybe develop web apps with C# and ASP.NET<br/>
+            I currently program in C# using .NET</p>
+            </div>
         </div>
     </body>
 </html>
