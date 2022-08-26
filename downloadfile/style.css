@@ -1,5 +1,5 @@
 #body, html{margin: 0; padding: 0; height: 100%; overflow: hidden;}
-.content{ position:absolute; left: 0%; right: 0%; bottom: 0%; top: 0%; filter: blur(1px); -webkit-filter: blur(1px);}
+.content{ position:absolute; left: 0%; right: 0%; bottom: 0%; top: 0%;}
 #over {position:relative; text-align: center;}
 p{font-size: 1.5em; color: white;}
 
