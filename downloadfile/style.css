@@ -24,3 +24,11 @@ button{background-color:#af38d6; color: white; border: none; border-radius: 5px;
 #btn:active {
     animation: buttanim 0.5s;
 }
+a{
+    color:white;
+  }
+  a:hover{
+    color: #af38d6;
+    cursor: pointer;
+  }
+  
