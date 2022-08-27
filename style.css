@@ -1,12 +1,13 @@
-.about{padding: 20px;}
+.about{padding: 20px;  overflow:hidden;}
 #body, html{margin: 0; padding: 0; height: 100%; overflow: hidden;}
 .content{ position:absolute; left: 0%; right: 0%; bottom: 0%; top: 0%;}
 #over {position:relative;}
 p{font-size: 1.5em; color: white;}
+h1{font-size: 1.5em; color: white;}
 a{
     color:white;
   }
-  a:hover{
+ a:hover{
     color: #af38d6;
     cursor: pointer;
   }
