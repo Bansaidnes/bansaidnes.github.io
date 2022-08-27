@@ -20,23 +20,23 @@
           <nav>
             <input type="checkbox" id="check">
             <label for="check" class="checkbtn">
-              <i class="fas fa-bars"></i>
+              <i class="fas fa-bars" onclick="hide()"></i>
             </label>
             <label class="logo">Bansaidnes</label>
             <ul>
               <li><a class="active" href="../">Home</a></li>
               <li><a href="https://vpn.bansaidnes.me">VPN</a></li>
               <li><a href="https://github.com/Bansaidnes">Github</a></li>
-              <li><a href="https://rxverse.me">designer</a></li>
+              <li><a href="https://rxverse.me">Chowdarium</a></li>
             </ul>
           </nav>
-          <div class="download-panel">
+          <div id="download-panel">
             <p id="download"></p>
-            <script> 
-            var filename = 'You are downloading: ' + urlParams.get('filename');
-                document.getElementById("download").innerHTML = filename;</script>
           <button id="btn" onclick="Download()">Download file</button>
           </div>
+          <script>
+            document.getElementById("download").innerHTML = "You are downloading: "+fileName;
+          </script>
         </div>
     </body>
 </html>
