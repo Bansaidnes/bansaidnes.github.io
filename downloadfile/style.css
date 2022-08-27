@@ -16,3 +16,11 @@ button{background-color:#af38d6; color: white; border: none; border-radius: 5px;
   padding: 10px;
   text-align: center;
 }
+@keyframes buttanim {
+    0% {transform: scale(1);}
+    50% {transform:scale(0.5);}
+    100% {transform:scale(1);}
+}
+#btn:active {
+    animation: buttanim 0.5s;
+}
