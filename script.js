@@ -26,3 +26,6 @@ function linkAction(){
   navMenu.classList.remove('show')
 }
 navLink.forEach(n => n.addEventListener('click', linkAction));
+function delay(time) {
+  return new Promise(resolve => setTimeout(resolve, time));
+}
