@@ -39,7 +39,7 @@ nav ul li a{
   border-radius: 3px;
   text-transform: uppercase;
 }
-a:hover{
+li>a:hover{
   background: #3c096c;
   transition: .5s;
 }
@@ -87,7 +87,7 @@ a:hover{
   nav ul li a{
     font-size: 20px;
   }
-  a:hover{
+  li>a:hover{
     background: none;
     color: #3c096c;
   }
