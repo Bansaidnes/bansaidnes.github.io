@@ -31,4 +31,12 @@ a{
     color: #af38d6;
     cursor: pointer;
   }
-  
+@media (max-width: 858px){  
+  .about{padding: 20px;  overflow:hidden;}
+  #body, html{margin: 0; padding: 0; height: 100%; overflow: hidden;}
+  .content{ position:absolute; left: 0%; right: 0%; bottom: 0%; top: 0%;}
+  #over {position:relative;}
+  p{font-size: 1em; color: white;}
+  h1{font-size: 1em; color: white;}
+  button{background-color:#af38d6; color: white; border: none; border-radius: 5px; padding: 10px; font-size: 1em; margin-top: 10px; cursor: pointer;}
+}
