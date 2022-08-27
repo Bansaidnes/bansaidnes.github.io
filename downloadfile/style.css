@@ -3,7 +3,7 @@
 #over {position:relative; }
 p{font-size: 1.5em; color: white;}
 
-button{background-color:#af38d6; color: white; border: none; border-radius: 5px; padding: 10px; font-size: 1.5em; margin-top: 10px; cursor: pointer;}
+button{background-color:#5a189a; color: white; border: none; border-radius: 5px; padding: 10px; font-size: 1.5em; margin-top: 10px; cursor: pointer;}
 #download-panel{
   display: flex;
   align-items: center;
