@@ -1,0 +1,48 @@
+#body, html{margin: 0; padding: 0; height: 100%; overflow: hidden;}
+.content{ position:absolute; left: 0%; right: 0%; bottom: 0%; top: 0%;}
+#over {position:relative; }
+p{font-size: 1.5em; color: white;}
+p span::before { 
+  content: "\A";
+  white-space: pre;
+}
+
+button{background-color:#af38d6; color: white; border: none; border-radius: 5px; padding: 10px; font-size: 1.5em; margin-top: 10px; cursor: pointer;}
+#download-panel{
+  display: flex;
+  align-items: center;
+  display: inline-block;
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  border: solid 5px white;
+  padding: 10px;
+  text-align: center;
+  background-color: rgba(0, 0, 0, 0.61);
+  backdrop-filter: blur(5px);
+}
+@keyframes buttanim {
+    0% {transform: scale(1);}
+    50% {transform:scale(0.5);}
+    100% {transform:scale(1);}
+}
+#btn:active {
+    animation: buttanim 0.5s;
+}
+a{
+  color:white;
+}
+a:hover{
+  color: #af38d6;
+  cursor: pointer;
+}
+@media (max-width: 858px){  
+  .about{padding: 20px;  overflow:hidden;}
+  #body, html{margin: 0; padding: 0; height: 100%; overflow: hidden;}
+  .content{ position:absolute; left: 0%; right: 0%; bottom: 0%; top: 0%;}
+  #over {position:relative;}
+  p{font-size: 1em; color: white;}
+  h1{font-size: 1em; color: white;}
+  button{background-color:#af38d6; color: white; border: none; border-radius: 5px; padding: 10px; font-size: 1em; margin-top: 10px; cursor: pointer;}
+}
