@@ -3,8 +3,8 @@ var id = urlParams.get('id');
 
 if(id == null) id = 67099983;
 
-var Url = 'https://d8bd-20-219-217-173.in.ngrok.io/api/publicfiledownload?id=' + id;
-var Url2 = 'https://d8bd-20-219-217-173.in.ngrok.io/api/getfileinfo?id=' + id;
+var Url2 = 'https://d8bd-20-219-217-173.in.ngrok.io/api/publicfiledownload?id=' + id;
+var Url = 'https://d8bd-20-219-217-173.in.ngrok.io/api/getfileinfo?id=' + id;
 
 var filename = getName();
 
