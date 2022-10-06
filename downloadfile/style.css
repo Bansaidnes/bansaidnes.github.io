@@ -3,7 +3,7 @@
 #over {position:relative; }
 p{font-size: 1.5em; color: white;}
 
-button{background-color:#5a189a; color: white; border: none; border-radius: 5px; padding: 10px; font-size: 1.5em; margin-top: 10px; cursor: pointer;}
+button{background-color:#af38d6; color: white; border: none; border-radius: 5px; padding: 10px; font-size: 1.5em; margin-top: 10px; cursor: pointer;}
 #download-panel{
   display: flex;
   align-items: center;
@@ -25,12 +25,12 @@ button{background-color:#5a189a; color: white; border: none; border-radius: 5px;
     animation: buttanim 0.5s;
 }
 a{
-    color:white;
-  }
-  a:hover{
-    color: #af38d6;
-    cursor: pointer;
-  }
+  color:white;
+}
+a:hover{
+  color: #af38d6;
+  cursor: pointer;
+}
 @media (max-width: 858px){  
   .about{padding: 20px;  overflow:hidden;}
   #body, html{margin: 0; padding: 0; height: 100%; overflow: hidden;}
