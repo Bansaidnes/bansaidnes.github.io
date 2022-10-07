@@ -21,8 +21,8 @@ button{background-color:#5a189a; color: white; border: none; border-radius: 10px
 }
 img {
     display: block;
-    max-width:200px;
-    max-height:200px;
+    max-width:400px;
+    max-height:400px;
     width: auto;
     height: auto;
     border: solid 5px white;
