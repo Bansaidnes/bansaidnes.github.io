@@ -10,7 +10,7 @@ var isImage = false;
 var filename = getName();
 
 console.log(Url);
-console.log(filename)
+console.log(filename);
 
 function setPreview(){
     document.getElementById("preview").src = Url2;
