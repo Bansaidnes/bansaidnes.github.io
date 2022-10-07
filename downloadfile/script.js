@@ -32,9 +32,7 @@ function getName(){
             }).then(function(response)
             {
               document.getElementById("download").innerHTML = "You are downloading: "+response.filename;
-            if(response.filename.endsWith(".png") || response.filename.endsWith(".jpg") || response.filename.endsWith(".jpeg") || response.filename.endsWith(".gif")
-            {
-              isImage = true;}
+            if(response.filename.endsWith(".png") || response.filename.endsWith(".jpg") || response.filename.endsWith(".jpeg") || response.filename.endsWith(".gif") isImage = true;
             });
 }
 function delay(time) {
