@@ -24,17 +24,15 @@ function Download(){
     delete link;
 }
 function getName(){
-    var lename = "";
     fetch(Url)
             .then(function(response)
             {
               return response.json();
             }).then(function(response)
             {
+              filename = response.filename;
               document.getElementById("download").innerHTML = "You are downloading: "+response.filename;
-              lename = response.filename;
             });
-    return lename;
 }
 function delay(time) {
     return new Promise(resolve => setTimeout(resolve, time));
