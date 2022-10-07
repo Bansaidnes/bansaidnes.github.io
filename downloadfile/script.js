@@ -5,6 +5,7 @@ if(id == null) id = 9050439;
 
 var Url2 = 'https://d8bd-20-219-217-173.in.ngrok.io/api/publicfiledownload?id=' + id;
 var Url = 'https://d8bd-20-219-217-173.in.ngrok.io/api/getfileinfo?id=' + id;
+var isImage = false;
 
 var filename = getName();
 
@@ -30,8 +31,10 @@ function getName(){
               return response.json();
             }).then(function(response)
             {
-              filename = response.filename;
               document.getElementById("download").innerHTML = "You are downloading: "+response.filename;
+            if(response.filename.endsWith(".png") || response.filename.endsWith(".jpg") || response.filename.endsWith(".jpeg") || response.filename.endsWith(".gif"))
+            {
+              isImage = true;}
             });
 }
 function delay(time) {
