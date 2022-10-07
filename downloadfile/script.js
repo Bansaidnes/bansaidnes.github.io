@@ -1,16 +1,19 @@
 const urlParams = new URLSearchParams(window.location.search);
 var id = urlParams.get('id');
 
-if(id == null) id = 67099983;
+if(id == null) id = 9050439;
 
-var Url = 'https://d8bd-20-219-217-173.in.ngrok.io/api/publicfiledownload?id=' + id;
-var Url2 = 'https://d8bd-20-219-217-173.in.ngrok.io/api/getfileinfo?id=' + id;
+var Url2 = 'https://d8bd-20-219-217-173.in.ngrok.io/api/publicfiledownload?id=' + id;
+var Url = 'https://d8bd-20-219-217-173.in.ngrok.io/api/getfileinfo?id=' + id;
 
 var filename = getName();
 
 console.log(Url);
 console.log(filename)
 
+function setPreview(){
+    document.getElementById("preview").src = Url2;
+}
 function Download(){
     var link = document.createElement("a");
     link.download = filename;

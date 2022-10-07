@@ -11,6 +11,7 @@
         <script src="script.js"></script>
         <script src="../script.js"></script>
         <title>Bansaidnes' site</title>
+        
     </head>
     <body>
         <div class="content">
@@ -27,13 +28,21 @@
               <li><a class="active" href="../">Home</a></li>
               <li><a href="https://vpn.bansaidnes.me">VPN</a></li>
               <li><a href="https://github.com/Bansaidnes">Github</a></li>
-              <li><a href="https://rxverse.me">Chowdarium</a></li>
+              <li><a href="https://aymaan.xyz">Chowdarium</a></li>
             </ul>
           </nav>
           <div id="download-panel">
             <p id="download"></p>
           <button id="btn" onclick="Download()">Download file</button>
+          <p>Preview: </p>
+          <img id="preview" src="">
           </div>
         </div>
+        <script>if(filename.endsWith(".png") || filename.endsWith(".jpg") || filename.endsWith(".jpeg") || filename.endsWith(".gif")){
+          setPreview();}
+          else {
+            document.getElementById("preview").src = "noprv.png";
+          }
+        </script>
     </body>
 </html>
