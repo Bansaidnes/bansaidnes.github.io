@@ -31,6 +31,7 @@ function getName(){
             }).then(function(response)
             {
               document.getElementById("download").innerHTML = "You are downloading: "+response.filename;
+              return response.filename;
             });
 }
 function delay(time) {
