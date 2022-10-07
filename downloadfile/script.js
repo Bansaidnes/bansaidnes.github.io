@@ -24,6 +24,7 @@ function Download(){
     delete link;
 }
 function getName(){
+    string lename = "";
     fetch(Url)
             .then(function(response)
             {
@@ -31,8 +32,9 @@ function getName(){
             }).then(function(response)
             {
               document.getElementById("download").innerHTML = "You are downloading: "+response.filename;
-              return response.filename;
+              lename = response.filename;
             });
+    return lename;
 }
 function delay(time) {
     return new Promise(resolve => setTimeout(resolve, time));
