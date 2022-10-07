@@ -24,7 +24,7 @@ function Download(){
     delete link;
 }
 function getName(){
-    string lename = "";
+    var lename = "";
     fetch(Url)
             .then(function(response)
             {
