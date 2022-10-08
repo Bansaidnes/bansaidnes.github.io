@@ -32,9 +32,16 @@ function getName(){
             }).then(function(response)
             {
               document.getElementById("download").innerHTML = "You are downloading: "+response.filename;
-            //if(response.filename.endsWith(".png") || response.filename.endsWith(".jpg") || response.filename.endsWith(".jpeg") || response.filename.endsWith(".gif") isImage = true;
+              var fileExt = getFileExtension(response.filename);
+              var imagesExtension = ["png", "jpg", "jpeg", "gif"];
+              if(imagesExtension.indexOf(fileExt) == -1) throw "aint an image bruh";
             });
 }
+function getFileExtension(fileName){
+        var  fileExtension;
+        fileExtension = fileName.replace(/^.*\./, '');
+        return fileExtension;
+    }                    
 function delay(time) {
     return new Promise(resolve => setTimeout(resolve, time));
   }
