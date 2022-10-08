@@ -5,25 +5,36 @@ if(id == null) id = 9050439;
 
 var Url2 = 'https://d8bd-20-219-217-173.in.ngrok.io/api/publicfiledownload?id=' + id;
 var Url = 'https://d8bd-20-219-217-173.in.ngrok.io/api/getfileinfo?id=' + id;
+//var isImage = false;
+
+var filename = getName();
 
 console.log(Url);
+console.log(filename);
 
-function setPreview(prv){
-    document.getElementById("preview").src = prv;
+function setPreview(){
+    document.getElementById("preview").src = Url2;
 }
 function Download(){
     var link = document.createElement("a");
+    link.download = filename;
     link.href = Url2;
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
     delete link;
 }
-function getFileExtension(fileName){
-        var  fileExtension;
-        fileExtension = fileName.replace(/^.*\./, '');
-        return fileExtension;
-    }                    
+function getName(){
+    fetch(Url)
+            .then(function(response)
+            {
+              return response.json();
+            }).then(function(response)
+            {
+              document.getElementById("download").innerHTML = "You are downloading: "+response.filename;
+            //if(response.filename.endsWith(".png") || response.filename.endsWith(".jpg") || response.filename.endsWith(".jpeg") || response.filename.endsWith(".gif") isImage = true;
+            });
+}
 function delay(time) {
     return new Promise(resolve => setTimeout(resolve, time));
   }
