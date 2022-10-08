@@ -12,8 +12,8 @@ var filename = getName();
 console.log(Url);
 console.log(filename);
 
-function setPreview(){
-    document.getElementById("preview").src = Url2;
+function setPreview(var prv){
+    document.getElementById("preview").src = prv;
 }
 function Download(){
     var link = document.createElement("a");
@@ -23,19 +23,6 @@ function Download(){
     link.click();
     document.body.removeChild(link);
     delete link;
-}
-function getName(){
-    fetch(Url)
-            .then(function(response)
-            {
-              return response.json();
-            }).then(function(response)
-            {
-              document.getElementById("download").innerHTML = "You are downloading: "+response.filename;
-              var fileExt = getFileExtension(response.filename);
-              var imagesExtension = ["png", "jpg", "jpeg", "gif"];
-              if(imagesExtension.indexOf(fileExt) == -1) throw "aint an image bruh";
-            });
 }
 function getFileExtension(fileName){
         var  fileExtension;
