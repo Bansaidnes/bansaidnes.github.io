@@ -7,14 +7,12 @@ var Url2 = 'https://d8bd-20-219-217-173.in.ngrok.io/api/publicfiledownload?id=' 
 var Url = 'https://d8bd-20-219-217-173.in.ngrok.io/api/getfileinfo?id=' + id;
 
 console.log(Url);
-console.log(filename);
 
 function setPreview(prv){
     document.getElementById("preview").src = prv;
 }
 function Download(){
     var link = document.createElement("a");
-    link.download = filename;
     link.href = Url2;
     document.body.appendChild(link);
     link.click();
