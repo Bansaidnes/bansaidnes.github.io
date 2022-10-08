@@ -38,25 +38,11 @@
           <img id="preview" src="">
           </div>
         </div>
-        <script>
-           function getName(){
-    fetch(Url)
-            .then(function(response)
-            {
-              return response.json();
-            }).then(function(response)
-            {
-              document.getElementById("download").innerHTML = "You are downloading: "+response.filename;
-              var fileExt = getFileExtension(response.filename);
-              var imagesExtension = ["png", "jpg", "jpeg", "gif"];
-              if(imagesExtension.indexOf(fileExt) !== -1) {
-              setPreview(Url2);
-              } 
-              else{
-                  setPreview("noprv.png");
-              }
-            });
-            }
+        <script>//if(isImage == true){
+          setPreview();//}
+          //else {
+            //document.getElementById("preview").src = "noprv.png";
+          //}
         </script>
     </body>
 </html>
