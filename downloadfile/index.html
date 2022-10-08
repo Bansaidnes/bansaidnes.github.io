@@ -39,11 +39,23 @@
           </div>
         </div>
         <script>
-            try {
-              setPreview();
-            } catch (error) {
-              console.error(error);
-              document.getElementById("preview").src = "noprv.png";
+           function getName(){
+    fetch(Url)
+            .then(function(response)
+            {
+              return response.json();
+            }).then(function(response)
+            {
+              document.getElementById("download").innerHTML = "You are downloading: "+response.filename;
+              var fileExt = getFileExtension(response.filename);
+              var imagesExtension = ["png", "jpg", "jpeg", "gif"];
+              if(imagesExtension.indexOf(fileExt) !== -1) {
+              setPreview(Url2);
+              } 
+              else{
+                  setPreview("noprv.png");
+              }
+            });
             }
         </script>
     </body>
