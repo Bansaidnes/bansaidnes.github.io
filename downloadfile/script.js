@@ -12,7 +12,7 @@ var filename = getName();
 console.log(Url);
 console.log(filename);
 
-function setPreview(var prv){
+function setPreview(prv){
     document.getElementById("preview").src = prv;
 }
 function Download(){
