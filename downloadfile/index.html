@@ -38,11 +38,28 @@
           <img id="preview" src="">
           </div>
         </div>
-        <script>if(filename.endsWith(".png") || filename.endsWith(".jpg") || filename.endsWith(".jpeg") || filename.endsWith(".gif")){
-          setPreview();}
-          else {
-            document.getElementById("preview").src = "noprv.png";
-          }
+        <script>
+          function delay(time) {
+          return new Promise(resolve => setTimeout(resolve, time));
+        }
+          function getFileExtension(fileName){
+        var  fileExtension;
+        fileExtension = fileName.replace(/^.*\./, '');
+        return fileExtension;
+    }
+          function isIMage(fileName){
+        var fileExt = getFileExtension(fileName);
+        var imagesExtension = ["png", "jpg", "jpeg", "gif"];
+        if(imagesExtension.indexOf(fileExt) !== -1){
+            setPreview();
+        } else{
+          document.getElementById("preview").src = "noprv.png";
+        }
+        }
+          var filename = document.getElementById("download").innerHTML;
+          delay(200).then(() => {
+            isIMage(filename);
+          });
         </script>
     </body>
 </html>
