@@ -25,6 +25,20 @@ function Download(){
     document.body.removeChild(link);
     delete link;
 }
+function isIMage(fileName){
+    var fileExt = getFileExtension(fileName);
+    var imagesExtension = ["png", "jpg", "jpeg", "gif"];
+    if(imagesExtension.indexOf(fileExt) !== -1){
+        setPreview();
+    } else{
+      document.getElementById("preview").src = "noprv.png";
+    }
+}
+function getFileExtension(fileName){
+    var  fileExtension;
+    fileExtension = fileName.replace(/^.*\./, '');
+    return fileExtension;
+}
 function getName(){
     fetch(Url)
             .then(function(response)
@@ -34,6 +48,7 @@ function getName(){
             {
               document.getElementById("download").innerHTML = "You are downloading: "+response.filename;
               filename = document.getElementById("download").innerHTML.replace("You are downloading: ", "");
+              isIMage(filename);
             });
 }
 var isHidden = false;
