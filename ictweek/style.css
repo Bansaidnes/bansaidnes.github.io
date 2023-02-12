@@ -77,3 +77,14 @@ a:hover{
     margin-right: auto;
   }
 }
+var isHidden = false;
+function hide(){
+    if(!isHidden){
+        document.getElementById("panel").style.display = "none";
+        isHidden = true;
+    } else {
+        delay(250).then(() => {
+        document.getElementById("panel").style.display = "block";
+        isHidden = false;});
+    }
+} 
