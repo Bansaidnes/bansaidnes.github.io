@@ -24,4 +24,14 @@ function decrypt(str, shift) {
       document.getElementById("output").innerHTML = "Output: "+response;
     });
 }
-  
+ var isHidden = false;
+function hide(){
+    if(!isHidden){
+        document.getElementById("panel").style.display = "none";
+        isHidden = true;
+    } else {
+        delay(250).then(() => {
+        document.getElementById("panel").style.display = "block";
+        isHidden = false;});
+    }
+} 
