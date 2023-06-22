@@ -1,10 +1,10 @@
-var url = "https://d8bd-20-219-217-173.in.ngrok.io/api/Caesar?text=Bozo&key=12&encrypt=true";
+var url = "https://df60-20-219-217-173.ngrok-free.app/api/Caesar?text=Bozo&key=12&encrypt=true";
 
 function print(message, shift) {
     console.log (encrypt(message, shift));
 }
 function encrypt(str, shift) {
-    fetch("https://d8bd-20-219-217-173.in.ngrok.io/api/Caesar?text="+str+"&key="+shift+"&encrypt=true")
+    fetch("https://df60-20-219-217-173.ngrok-free.app/api/Caesar?text="+str+"&key="+shift+"&encrypt=true")
     .then(function(response)
     {
       return response.text();      
@@ -15,7 +15,7 @@ function encrypt(str, shift) {
   }
   
 function decrypt(str, shift) {
-  fetch("https://d8bd-20-219-217-173.in.ngrok.io/api/Caesar?text="+str+"&key="+shift+"&encrypt=false")
+  fetch("https://df60-20-219-217-173.ngrok-free.app/api/Caesar?text="+str+"&key="+shift+"&encrypt=false")
     .then(function(response)
     {
       return response.text();      
