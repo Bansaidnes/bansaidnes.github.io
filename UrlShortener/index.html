@@ -28,17 +28,19 @@
               <li><a href="https://vpn.bansaidnes.me">VPN</a></li>
               <li><a href="https://github.com/Bansaidnes">Github</a></li>
               <li><a href="https://aymaan.xyz">Chowdarium</a></li>
-              <li><a href="../UrlShortener/">Url Shortener</a></li>
             </ul>
           </nav>
           <div id="panel">
-            <p id="output">Output: </p>
-            <input type="text" id="input" placeholder="Enter your string to shift">
-            <input type="text" id="keyinput" placeholder="Enter your key">
+            <p id="output">Shortened: </p>
+            <input type="text" id="input" placeholder="Enter your url to shorten">
           <div id="btns">
-            <button id="btn" onclick="encrypt(document.getElementById('input').value, document.getElementById('keyinput').value)">Encrypt</button>
-            <button id="btn" onclick="decrypt(document.getElementById('input').value, document.getElementById('keyinput').value)">Decrypt</button>
+            <button id="btn" onclick="shorten(document.getElementById('input').value)">Shorten</button>
+            <button id="btn" onclick="copy()">Copy</button>
           </div>
         </div>
+        <script>
+          function delay(time) {
+    return new Promise(resolve => setTimeout(resolve, time));}
+        </script>
     </body>
 </html>

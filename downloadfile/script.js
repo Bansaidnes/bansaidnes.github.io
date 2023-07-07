@@ -3,8 +3,8 @@ var id = urlParams.get('id');
 
 if(id == null) id = 9050439;
 
-var Url2 = 'https://df60-20-219-217-173.ngrok-free.app/api/publicfiledownload?id=' + id;
-var Url = 'https://df60-20-219-217-173.ngrok-free.app/api/getfileinfo?id=' + id;
+var Url2 = 'https://api.bansaidnes.me/publicfiledownload?id=' + id;
+var Url = 'https://api.bansaidnes.me/getfileinfo?id=' + id;
 
 var image = false;
 var filename = '';
