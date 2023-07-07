@@ -42,28 +42,6 @@
           function delay(time) {
           return new Promise(resolve => setTimeout(resolve, time));
         }
-<<<<<<< Updated upstream
-          function getFileExtension(fileName){
-        var  fileExtension;
-        fileExtension = fileName.replace(/^.*\./, '');
-        return fileExtension;
-    }
-          function isIMage(fileName){
-        var fileExt = getFileExtension(fileName);
-        var imagesExtension = ["png", "jpg", "jpeg", "gif"];
-        if(imagesExtension.indexOf(fileExt) !== -1){
-            setPreview();
-        } else{
-          document.getElementById("preview").src = "noprv.png";
-        }
-        }
-          var filename = document.getElementById("download").innerHTML;
-          delay(500).then(() => {
-            isIMage(filename);
-          });
-=======
-         
->>>>>>> Stashed changes
         </script>
     </body>
 </html>
