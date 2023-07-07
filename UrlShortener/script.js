@@ -12,7 +12,7 @@ function shorten(url) {
   }
 function copy()
 {
-  navigator.clipboard.writeText(short);
+  navigator.clipboard.writeText("https://"+short);
   document.getElementById("output").innerHTML = "Copied :D!";
   delay(2500).then(() => {
     document.getElementById("output").innerHTML = "Shortened: "+short;
