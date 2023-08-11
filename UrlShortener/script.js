@@ -1,12 +1,12 @@
 var short = "";
 function shorten(url) {
-    fetch("https://api.bansaidnes.me/shorten?destination="+url)
+    fetch("https://api.bansaidnes.tech/shorten?destination="+url)
     .then(function(response)
     {
       return response.text();      
     }).then(async function(response)
     {
-      short = "url.bansaidnes.me?t="+response;
+      short = "url.bansaidnes.tech?t="+response;
       document.getElementById("output").innerHTML = "Shortened: "+short;
     });
   }
