@@ -52,6 +52,9 @@ a:hover{
   #over {position:relative;}
   p{font-size: 1em; color: white;}
   h1{font-size: 1em; color: white;}
+  #clip-panel{
+    min-width: 125px;
+  }
   video {
     display: block;
     max-width:300px;
