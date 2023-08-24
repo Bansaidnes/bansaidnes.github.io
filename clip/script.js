@@ -1,7 +1,7 @@
 const urlParams = new URLSearchParams(window.location.search);
 
 var id = urlParams.get('id');
-/*if(id == null) id = 'BZh1ajK80';*/
+if(id == null) id = 'BZh1ajK80';
 
 var Url = "https://api.bansaidnes.tech/ViewClip?id="+id;
 
