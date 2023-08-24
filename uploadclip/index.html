@@ -1,0 +1,52 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <style src="style.css"></style>
+        <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="../navbar.css">
+        <link rel="icon" type="image/x-icon" href="../img/Icon.jpg">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+        <script src="../script.js"></script>
+        <title>Post a clip</title>
+    </head>
+    <body>
+        <div class="content">
+            <iframe width="100%" height="100%" frameborder="0" src="../jellyfish.html"></iframe>
+        </div>
+        <div id="over">
+          <nav>
+            <input type="checkbox" id="check">
+            <label for="check" class="checkbtn">
+              <i class="fas fa-bars" onclick="hide()"></i>
+            </label>
+            <label class="logo" ><a href="../">Bansaidnes</a></label>
+            <ul>
+              <li><a class="active" href="../">Home</a></li>
+              <li><a href="https://vpn.bansaidnes.tech">VPN</a></li>
+              <li><a href="https://github.com/Bansaidnes">Github</a></li>
+              <li><a href="https://aymaan.xyz">Chowdarium</a></li>
+              <li><a href="../UrlShortener/">Url Shortener</a></li>
+            </ul>
+          </nav>
+          <div id="download-panel">
+            <form action="https://api.bansaidnes.tech/ClipUp" method="post" enctype="multipart/form-data" id="form">
+              <p id="filename">Selected file: </p>
+              <Video autoplay controls src="" style="display: none;"></Video>
+              <div id="progress-panel" style="display: none;">
+                <p>Upload progress: </p>
+                <progress id="upload-progress"></progress>
+                <br/>
+              </div>
+              <p id="clip-url"></p>
+              <label for="vidUp" id="fileLabel" onclick=setName()>Select File</label>
+              <input id="vidUp" name="clip" type="file" />
+              <button type="button" id="copy-btn" style="display: none;" onclick=copy()> Copy </button>
+              <button id="upload-btn" type="submit">Upload</button>
+            </form>
+          </div>
+        </div>
+        <script src="script.js"></script>
+    </body>
+</html>
