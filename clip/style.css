@@ -22,7 +22,9 @@ p{font-size: 1.5em; color: white;}
 video {
   display: block;
   max-width:800px;
+  min-height: 300px;
   max-height:400px;
+  min-width: 175px;
   width: auto;
   height: auto;
   border-radius: 10px;
@@ -50,11 +52,11 @@ a:hover{
   #body, html{margin: 0; padding: 0; height: 100%; overflow: hidden;}
   .content{ position:absolute; left: 0%; right: 0%; bottom: 0%; top: 0%;}
   #over {position:relative;}
+  #clip-panel{
+    margin-top: 15.3%;
+  }
   p{font-size: 1em; color: white;}
   h1{font-size: 1em; color: white;}
-  #clip-panel{
-    min-width: 125px;
-  }
   video {
     display: block;
     max-width:300px;
