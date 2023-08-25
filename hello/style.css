@@ -17,6 +17,7 @@ button{background-color:#af38d6; color: white; border: none; border-radius: 5px;
   top: 50%;
   transform: translate(-50%, -50%);
   border: solid 5px white;
+  border-radius: 10px;
   padding: 10px;
   text-align: center;
   background-color: rgba(0, 0, 0, 0.61);

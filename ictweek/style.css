@@ -14,13 +14,22 @@ button{background-color:#5a189a; color: white; border: none; border-radius: 10px
   transform: translate(-50%, -50%);
   margin-top: 5%;
   border: solid 5px white;
+  border-radius: 10px;
   padding: 10px;
   text-align: center;
   background-color: rgba(0, 0, 0, 0.61);
   backdrop-filter: blur(5px);
 }
 input {
+  border-radius: 10px;
   vertical-align: top;
+  padding: 10px 20px;
+  margin-bottom: 20px;
+  font-size: medium;
+  text-align: center;
+}
+input::placeholder{
+  overflow: visible;
 }
 img {
   display: block;
@@ -40,7 +49,8 @@ img {
     100% {transform:scale(1);}
 }
 #panel p{
-  border: solid 2.5px white;
+  border: solid 3px white;
+  border-radius: 10px;
   border-color: white;
   text-align: left;
   margin-bottom: 10%;

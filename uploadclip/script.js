@@ -27,14 +27,13 @@ function copy()
   });
 }
 
-async function main(event) {
+async function uploadReq(event) {
     event.preventDefault();
 
     document.getElementById("progress-panel").style.display = "block";
     const url = new URL(form.action);
     const data = new FormData(form);
     const uploadProgress = document.getElementById("upload-progress");
-    let resp = ""
   
     const xhr = new XMLHttpRequest();
     const success = await new Promise((resolve) => {
@@ -54,13 +53,13 @@ async function main(event) {
     console.log("success? ", success);
     var id = JSON.parse(xhr.response).id;
     clipUrl = "https://bansaidnes.tech/clip?id="+id;
-    document.getElementById("progress-panel").style.display = "none";
-    document.getElementById("upload-btn").style.display = "none";
-    document.getElementById("fileLabel").style.display = "none";
-    document.getElementById("clip-url").innerHTML = "Clip url: bansaidnes.tech/clip?id="+id;
+    document.querySelectorAll("#progress-panel, #upload-btn, #fileLabel").forEach((element)=>{
+      element.style.display = "none";
+    })
+    document.getElementById("clip-url").innerText = "Clip url: bansaidnes.tech/clip?id="+id;
     document.getElementById("copy-btn").style.display = "inline";
   }
-  main().catch(console.error);
+  uploadReq().catch(console.error);
 
 var isHidden = false;
 function hide(){

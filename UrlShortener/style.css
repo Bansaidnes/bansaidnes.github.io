@@ -14,12 +14,14 @@ button{background-color:#5a189a; color: white; border: none; border-radius: 10px
   transform: translate(-50%, -50%);
   margin-top: 5%;
   border: solid 5px white;
+  border-radius: 10px;
   padding: 10px;
   text-align: center;
   background-color: rgba(0, 0, 0, 0.61);
   backdrop-filter: blur(5px);
 }
 input {
+  border-radius: 10px;
   vertical-align: top;
   padding: 12px 20px;
   margin-bottom: 20px;
@@ -47,8 +49,7 @@ img {
     100% {transform:scale(1);}
 }
 #panel p{
-  border: solid 2.5px white;
-  border-color: white;
+  border-radius: 10px;
   text-align: left;
   margin-bottom: 10%;
   width: 500px;
@@ -69,7 +70,8 @@ a:hover{
   .content{ position:absolute; left: 0%; right: 0%; bottom: 0%; top: 0%;}
   #over {position:relative;}
   #panel p{width: 250px;}
-  p{font-size: 1em; color: white;}
+  #panel {margin-top: 25%;}
+  p{font-size: 1.25em; color: white;}
   h1{font-size: 1em; color: white;}
   button{background-color:#5a189a; color: white; border: none; border-radius: 5px; padding: 10px; font-size: 1em; margin-top: 10px; cursor: pointer;}
   img {
