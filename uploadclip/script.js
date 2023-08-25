@@ -16,7 +16,7 @@ document.getElementById("vidUp").addEventListener('change', function(event) {
     document.querySelector("video").src = blobURL;
 }); 
 
-form.addEventListener('submit', main);
+form.addEventListener('submit', uploadReq);
 
 function copy()
 {
@@ -54,8 +54,7 @@ async function uploadReq(event) {
     var id = JSON.parse(xhr.response).id;
     clipUrl = "https://bansaidnes.tech/clip?id="+id;
     document.querySelectorAll("#progress-panel, #upload-btn, #fileLabel").forEach((element)=>{
-      element.style.display = "none";
-    })
+      element.style.display = "none";});
     document.getElementById("clip-url").innerText = "Clip url: bansaidnes.tech/clip?id="+id;
     document.getElementById("copy-btn").style.display = "inline";
   }
