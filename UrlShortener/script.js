@@ -1,6 +1,6 @@
 var short = "";
 function shorten(url) {
-    fetch("https://api.bansaidnes.tech/shorten?destination="+url)
+    fetch("https://api.bansaidnes.tech/shorten?_Destination="+url)
     .then(function(response)
     {
       return response.text();      
