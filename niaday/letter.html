@@ -1,0 +1,120 @@
+<html>
+    <body>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <div class="envelope">
+            <div class="envelope__letter">
+              <div><span>To the prettiest, funniest, nicest, and coolest girl in the world:
+                <br/>
+                <br/>
+                Happy birthday Daniah, thank you for being in my life, thank you for always being there for me. I love you and want you to know
+                how grateful I am for having you, how much I cherish our memories together, and how much you make me feel loved.
+                So this year, I want you to know how much you are loved and appreciated. You deserve all the happiness in the world, and I can't wait to see what amazing things this year holds for you.
+              </span></div>
+            </div>
+            <div class="envelope__triangle envelope__triangle--down"></div>
+            <div class="envelope__triangle envelope__triangle--right"></div>
+            <div class="envelope__triangle envelope__triangle--left"></div>
+        </div>
+        <p>ps: click the top of the letter to expand :3</p>
+    </body>
+</html>
+<style>
+body{
+    background:  #902C3E;
+    color: white;
+}
+p{
+    display: flex;
+    justify-content: center;
+}
+    .envelope {
+  position: relative;
+  width: 320px;
+  height: 213.3333333333px;
+  background-color: #E95F55;
+  margin: 10em auto;
+  z-index: 0;
+}
+
+.envelope__triangle {
+  position: absolute;
+  margin: auto;
+  width: 0;
+  height: 0;
+}
+
+.envelope__triangle--left {
+  border-top: 212.3333333333px solid transparent;
+  border-bottom: 0 solid transparent;
+  border-right: 319px solid #D15047;
+  z-index: 2;
+}
+
+.envelope__triangle--right {
+  border-top: 106.6666666667px solid transparent;
+  border-bottom: 106.6666666667px solid transparent;
+  border-left: 160px solid #d3584f;
+  z-index: 2;
+}
+
+.envelope__triangle--down {
+  border-left: 161px solid transparent;
+  border-right: 161px solid transparent;
+  border-top: 107.6666666667px solid #cc3d33;
+  z-index: 2;
+  transition: all 0.3s linear;
+}
+.is-open .envelope__triangle--down {
+  -webkit-transform: translate(0px, -106.6666666667px) scale(1, -1);
+  -moz-transform: translate(0px, -106.6666666667px) scale(1, -1);
+  -o-transform: translate(0px, -106.6666666667px) scale(1, -1);
+  -ms-transform: translate(0px, -106.6666666667px) scale(1, -1);
+  transform: translate(0px, -106.6666666667px) scale(1, -1);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.envelope__letter {
+  position: absolute;
+  margin: auto;
+  left: 0;
+  right: 0;
+  width: 80%;
+  height: 50%;
+  padding: 1em;
+  font-size: 0.8em;
+  color: #555;
+  background-color: #fff;
+  box-shadow: 1px 1px 3px 1px #999;
+  z-index: 2;
+  transition: all 3s linear;
+}
+.is-open .envelope__letter {
+  -webkit-transform: translate(0px, -106.6666666667px);
+  -moz-transform: translate(0px, -106.6666666667px);
+  -o-transform: translate(0px, -106.6666666667px);
+  -ms-transform: translate(0px, -106.6666666667px);
+  transform: translate(0px, -106.6666666667px);
+  height: 213.3333333333px;
+  transform: translate(0px, -106.6666666667px);
+  z-index: 2;
+}
+</style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+<script>
+    $(document).ready(function() {
+  setTimeout(function() {
+    $('.envelope').addClass('is-open');
+  }, 1500); 
+});
+
+const letter = document.getElementsByClassName("envelope__letter")[0];
+letter.addEventListener("click", () => {
+    window.open("expanded-letter.html","_self")
+});
+</script>

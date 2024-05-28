@@ -1,0 +1,69 @@
+<html>
+    <head>
+        <link rel="shortcut icon" type="image/png" href="img/favicon.png" />
+        <title>Tatoqueen day!!</title>
+    </head>
+    <body>
+        <audio class="song" loop autoplay>
+            <source src="music/hbd.mp3">
+            Your browser isn't invited for super fun audio time.
+        </audio>
+        <button id="startbtn">Start!</button>
+    </body>
+</html>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<style>
+    body{
+        background-color: #902C3E;
+    }
+    .song {
+  visibility: hidden;
+}
+#startbtn {
+    min-width: 200px;
+    border-radius: 20px;
+    font-family: 'Lato', sans-serif;
+    font-size: 50px;
+    color: black;
+    background-color: antiquewhite;
+    position: absolute;
+    width: 15%;
+    height: 15%;
+    left: 50%;
+    top: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+button{
+    border-radius: 20px;
+    font-family: 'Lato', sans-serif;
+    font-size: 50px;
+    color: black;
+    background-color: antiquewhite;
+}
+</style>
+<script>
+    const sBtn = document.getElementById("startbtn")
+    sBtn.addEventListener("click", () => {
+        sBtn.style.display = "none"
+        document.querySelector('.song').play();
+        const song = document.querySelector('.song');
+        song.volume = 0.5;
+        const newIframe = document.createElement('iframe');
+        newIframe.id = "frame";
+        newIframe.style.position = "fixed";
+        newIframe.style.top = "0";
+        newIframe.style.left = "0";
+        newIframe.style.bottom = "0";
+        newIframe.style.right = "0";
+        newIframe.style.width = "100%";
+        newIframe.style.height = "100%";
+        newIframe.style.border = "none";
+        newIframe.style.margin = "0";
+        newIframe.style.padding = "0";
+        newIframe.style.overflow = "hidden";
+        newIframe.style.zIndex = "999999";
+        newIframe.src = "main.html"
+        document.body.appendChild(newIframe);
+    });
+</script>
