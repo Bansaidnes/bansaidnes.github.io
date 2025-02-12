@@ -1,0 +1,65 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Match the hearts!</title>
+    <style>
+        body { color:white; text-align: center; font-family: Arial, sans-serif; background: linear-gradient(313.01deg, #dd5485, #841648 81.14%); }
+        .grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(80px, 1fr)); 
+            gap: 10px; 
+            justify-content: center; 
+            margin: 50px auto; 
+            max-width: 400px;
+        }
+        .card { 
+            width: 80px; 
+            height: 80px; 
+            background: white; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            font-size: 24px; 
+            cursor: pointer; 
+            border-radius: 10px; 
+        }
+        .matched { background: red !important; color: white; }
+    </style>
+</head>
+<body>
+    <h1>Match the hearts!</h1>
+    <div class="grid" id="gameGrid"></div>
+    <script>
+        const emojis = ['❤️', '💖', '💘', '💕', '❤️', '💖', '💘', '💕'];
+        let shuffled = emojis.sort(() => 0.5 - Math.random());
+        let selected = [];
+        let matchedCount = 0;
+        
+        const grid = document.getElementById("gameGrid");
+        shuffled.forEach((emoji, index) => {
+            const card = document.createElement("div");
+            card.classList.add("card");
+            card.dataset.index = index;
+            card.addEventListener("click", () => {
+                if (card.classList.contains("matched") || selected.length === 2) return;
+                card.textContent = emoji;
+                selected.push({ card, emoji });
+                if (selected.length === 2) {
+                    setTimeout(() => {
+                        if (selected[0].emoji === selected[1].emoji) {
+                            selected.forEach(el => el.card.classList.add("matched"));
+                            matchedCount += 2;
+                            if (matchedCount === emojis.length) window. open("3.html", "_self");
+                        } else {
+                            selected.forEach(el => el.card.textContent = "");
+                        }
+                        selected = [];
+                    }, 500);
+                }
+            });
+            grid.appendChild(card);
+        });
+    </script>
+</body>
+</html>

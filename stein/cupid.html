@@ -1,0 +1,69 @@
+<!-- Cupid's Catch Game -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catch</title>
+    <style>
+        body { text-align: center; font-family: Arial, sans-serif; background: #841648; color:white;}
+        #gameCanvas { background: linear-gradient(313.01deg, #dd5485, #841648 81.14%); display: block; margin: auto;  touch-action: none; border-radius: 10px; border: solid 2px white;}
+    </style>
+</head>
+<body>
+    <h1>Catch 14 hearts!</h1>
+    <canvas id="gameCanvas" width="400" height="500"></canvas>
+    <p>Hearts Caught: <span id="score">0</span></p>
+    <script>
+        const canvas = document.getElementById("gameCanvas");
+        const ctx = canvas.getContext("2d");
+        const cupidImg = new Image();
+        cupidImg.src = "cupid.png";
+        const heartImg = new Image();
+        heartImg.src = "heart.png";
+        const cupid = { x: 180, y: 450, width: 40, height: 40 };
+        const hearts = [];
+        let score = 0;
+        const scoreDisplay = document.getElementById("score");
+        
+        function spawnHeart() {
+            hearts.push({ x: Math.random() * 360, y: 0, width: 20, height: 20 });
+        }
+        setInterval(spawnHeart, 1000);
+        
+        function update() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.drawImage(cupidImg, cupid.x, cupid.y, cupid.width, cupid.height);
+            
+            hearts.forEach((heart, index) => {
+                heart.y += 3;
+                ctx.drawImage(heartImg, heart.x, heart.y, heart.width, heart.height);
+                
+                if (
+                    heart.y + heart.height > cupid.y &&
+                    heart.x < cupid.x + cupid.width &&
+                    heart.x + heart.width > cupid.x
+                ) {
+                    hearts.splice(index, 1);
+                    score++;
+                    scoreDisplay.textContent = score;
+                    if (score === 14) {
+                        window. open("2.html", "_self");
+                    }
+                }
+            });
+            requestAnimationFrame(update);
+        }
+        update();
+        
+        canvas.addEventListener("touchmove", (e) => {
+            const touch = e.touches[0];
+            const rect = canvas.getBoundingClientRect();
+            let newX = touch.clientX - rect.left - cupid.width / 2;
+            if (newX < 0) newX = 0;
+            if (newX + cupid.width > canvas.width) newX = canvas.width - cupid.width;
+            cupid.x = newX;
+        });
+    </script>
+</body>
+</html>

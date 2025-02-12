@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Moment of truth!!</title>
+    <style>
+        .button-container {
+            text-align: center;
+            position: relative; /* Ensure the container is the reference for absolute positioning */   
+            margin-right: 7.5em;        
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            margin: 10px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            transition: background-color 0.3s ease;
+        }
+        #yes-button {
+            background-color: #4CAF50; /* Green */
+        }
+        #yes-button:hover {
+            background-color: #45a049;
+        }
+        #no-button {
+            background-color: #f44336; /* Red */
+            position: absolute;
+            transition: left 0.5s ease, top 0.5s ease; /* Smooth transition */
+        }
+        #no-button:hover {
+            background-color: #e53935;
+        }
+    </style>
+</head>
+<body>
+    
+</body>
+</html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Intro</title>
+    <style>
+        body { 
+            color:white; 
+            text-align: center; 
+            font-family: Arial, sans-serif; 
+            background: linear-gradient(313.01deg, #dd5485, #841648 81.14%); 
+        }
+        .container {
+            align-items: center;
+            display: inline-block;
+            position: absolute;
+            top: 40%;
+            transform: translate(-50%, -50%);
+            margin-top: 5%;
+            border: solid 5px white;
+            padding: 10px;
+            text-align: center;
+            background-color: rgba(0, 0, 0, 0.61);
+            backdrop-filter: blur(5px);
+            border-radius: 10px;
+        }
+        button {
+            background-color: #A52A2A ;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            padding: 20px;
+            font-size: 3em;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Daniah, will you be my valentine?</h2>
+        <div class="button-container">
+            <button id="yes-button" onclick="yes()">Yes</button>
+            <button id="no-button">No</button>
+        </div>
+    
+    </div>
+    
+    <script>
+        const noButton = document.getElementById('no-button');
+        const yesButton = document.getElementById('yes-button');
+        const buttonContainer = document.querySelector('.button-container');
+
+        noButton.addEventListener('click', () => {
+            moveNoButton();
+        });
+
+        function moveNoButton() {
+            const containerRect = buttonContainer.getBoundingClientRect();
+            const windowWidth = window.innerWidth;
+            const windowHeight = window.innerHeight;
+
+            // Calculate random position within the visible area, ensuring the button stays within bounds
+            const randomX = Math.floor(Math.random() * (windowWidth - noButton.offsetWidth));
+            const randomY = Math.floor(Math.random() * (windowHeight - noButton.offsetHeight));
+
+            noButton.style.left = `${randomX - containerRect.left}px`;
+            noButton.style.top = `${randomY - containerRect.top}px`;
+        }
+
+        yesButton.addEventListener('click', () => {
+            window.open("yay.html", "_self");
+        });
+    </script>
+</body>
+</html>

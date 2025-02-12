@@ -1,0 +1,396 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Final</title>
+        <style>
+            body {   background: linear-gradient(313.01deg, #dd5485, #841648 81.14%); margin: 0; overflow: hidden; display: flex; flex-direction: column; align-items: center; height: 100vh; }
+            canvas { display: block; background: lightgray; max-width: 100%; height: auto; z-index: 2147483647;            }
+            .controls { display: flex; justify-content: space-between; width: 90%; max-width: 800px; margin-top: 10px; z-index: 2147483647;            }
+            .btn { width: 20vw; max-width: 80px; height: 20vw; max-height: 80px; font-size: 24px; margin: 5px; z-index: 2147483647;   position: relative;            }
+            .btn-large { width: 25vw; max-width: 100px; height: 20vw; max-height: 80px; z-index: 2147483647;  position: relative;          }
+            .gamecontainer {
+                width: 100%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                flex-direction: column;
+            }
+
+        </style>
+    </head>
+    <body>
+        <div class="valentine">
+            <div class="gamecontainer">
+                <canvas id="gameCanvas"></canvas>
+                <div class="controls">
+                    <div>
+                        <button class="btn" id="left">←</button>
+                        <button class="btn" id="right">→</button>
+                    </div>
+                    <button class="btn btn-large" id="jump">⬆</button>
+                </div>
+            </div>
+    <script>
+      function delay(time) {
+          return new Promise(resolve => setTimeout(resolve, time));
+        }
+        const canvas = document.getElementById("gameCanvas");
+        const ctx = canvas.getContext("2d");
+        canvas.width = 800;
+        canvas.height = 400;
+
+        const gravity = 0.6;
+        let particles = [];
+        let keys = {};
+        let gameWon = false;
+
+        const playerImg = new Image();
+        playerImg.src = "player.png";
+
+        const goalImg = new Image();
+        goalImg.src = "goal.png";
+
+        class Particle {
+            constructor(x, y) {
+                this.x = x;
+                this.y = y;
+                this.size = Math.random() * 5 + 2;
+                this.speedX = (Math.random() - 0.5) * 4;
+                this.speedY = (Math.random() - 0.5) * 4;    
+                this.alpha = 1;
+            }
+            draw() {
+                ctx.fillStyle = `rgba(255, 0, 100, ${this.alpha})`;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                this.alpha -= 0.02;
+            }
+        }
+
+        class Player {
+            constructor() {
+                this.width = 40;
+                this.height = 40;
+                this.x = 50;
+                this.y = canvas.height - this.height;
+                this.velocityY = 0;
+                this.speed = 5;
+                this.jumpPower = -10;
+                this.onGround = false;
+            }
+
+            draw() {
+                ctx.drawImage(playerImg, this.x, this.y, this.width, this.height);
+            }
+
+            update(spikes, goal) {
+                if (gameWon) return;
+                
+                if (keys["ArrowRight"]) this.x += this.speed;
+                if (keys["ArrowLeft"]) this.x -= this.speed;
+                if (keys["ArrowUp"] && this.onGround) {
+                    this.velocityY = this.jumpPower;
+                    this.onGround = false;
+                }
+
+                this.velocityY += gravity;
+                this.y += this.velocityY;
+                this.onGround = false;
+
+                if (this.y + this.height >= canvas.height) {
+                    this.y = canvas.height - this.height;
+                    this.velocityY = 0;
+                    this.onGround = true;
+                }
+
+                if (this.x < 0) this.x = 0;
+                if (this.x + this.width > canvas.width) this.x = canvas.width - this.width;
+
+                spikes.forEach(spike => {
+                    if (
+                        this.x < spike.x + spike.width &&
+                        this.x + this.width > spike.x &&
+                        this.y < spike.y + spike.height &&
+                        this.y + this.height > spike.y
+                    ) {
+                        alert("You hit a spike! Try again.");
+                        this.reset();
+                    }
+                });
+
+                if (
+                    this.x < goal.x + goal.width &&
+                    this.x + this.width > goal.x &&
+                    this.y < goal.y + goal.height &&
+                    this.y + this.height > goal.y
+                ) {
+                    for (let i = 0; i < 50; i++) {
+                        particles.push(new Particle(goal.x + goal.width / 2, goal.y + goal.height / 2));
+                    }
+                    gameWon = true;
+                    delay(2000).then(() => {
+                      window.open("4.html", "_self");
+                    });
+                }
+            }
+
+            reset() {
+                this.x = 50;
+                this.y = canvas.height - this.height;
+                this.velocityY = 0;
+                keys = {};
+            }
+        }
+
+        class Spike {
+            constructor(x, y) {
+                this.x = x;
+                this.y = y;
+                this.width = 30;
+                this.height = 30;
+            }
+
+            draw() {
+                ctx.fillStyle = "red";
+                ctx.beginPath();
+                ctx.moveTo(this.x, this.y + this.height);
+                ctx.lineTo(this.x + this.width / 2, this.y);
+                ctx.lineTo(this.x + this.width, this.y + this.height);
+                ctx.fill();
+            }
+        }
+
+        class Goal {
+            constructor(x, y) {
+                this.x = x;
+                this.y = y;
+                this.width = 40;
+                this.height = 40;
+            }
+
+            draw() {
+                ctx.drawImage(goalImg, this.x, this.y, this.width, this.height);
+            }
+        }
+
+        function handleTouch(event, key, isActive) {
+            if (!gameWon) {
+                event.preventDefault();
+                keys[key] = isActive;
+            }
+        }
+
+        document.getElementById("left").addEventListener("touchstart", (e) => handleTouch(e, "ArrowLeft", true));
+        document.getElementById("left").addEventListener("touchend", (e) => handleTouch(e, "ArrowLeft", false));
+        document.getElementById("right").addEventListener("touchstart", (e) => handleTouch(e, "ArrowRight", true));
+        document.getElementById("right").addEventListener("touchend", (e) => handleTouch(e, "ArrowRight", false));
+        document.getElementById("jump").addEventListener("touchstart", (e) => handleTouch(e, "ArrowUp", true));
+        document.getElementById("jump").addEventListener("touchend", (e) => handleTouch(e, "ArrowUp", false));
+        window.addEventListener("keydown", (e) => { if (!gameWon) keys[e.key] = true; });
+        window.addEventListener("keyup", (e) => { if (!gameWon) keys[e.key] = false; });
+
+        let player = new Player();
+        let spikes = [new Spike(320, canvas.height - 30), new Spike(350, canvas.height - 30), new Spike(550, canvas.height - 30)];
+        let goal = new Goal(750, canvas.height - 40);
+
+        function gameLoop() {
+            document.addEventListener("DOMContentLoaded", () => {
+    // Select all canvas elements and set the highest z-index
+    document.querySelectorAll("canvas").forEach(canvas => {
+        canvas.style.position = "relative";
+        canvas.style.zIndex = "2147483647";
+
+    });
+});
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            player.update(spikes, goal);
+            player.draw();
+            spikes.forEach(s => s.draw());
+            goal.draw();
+            particles.forEach((particle, index) => {
+                particle.update();
+                particle.draw();
+                if (particle.alpha <= 0) particles.splice(index, 1);
+            });
+            requestAnimationFrame(gameLoop);
+        }
+
+        gameLoop();
+    </script>
+            <div id="heart-group-1"></div>
+            <div id="heart-group-2"></div>
+            <div id="heart-group-3"></div>
+            <div id="heart-group-4"></div>
+            <div id="star-group-1"></div>
+            <div id="star-group-2"></div>
+            <div id="star-group-3"></div>
+            <div class="heart-fixed heart-xs"></div>
+            <div class="heart-fixed heart-sm"></div>
+            <div class="heart-fixed heart-lg"></div>
+        </div>
+    </body>
+</html>
+
+<style>
+    body {
+  margin: 0;
+  padding: 0;
+}
+
+.valentine {
+  height: 100vh;
+  width: 100%;
+  position: fixed;
+  background: linear-gradient(313.01deg, #dd5485, #841648 81.14%);
+}
+.valentine #heart-group-1 {
+  background: url(https://firebasestorage.googleapis.com/v0/b/codepen-asset.appspot.com/o/valentine-animation%2Fheart-xs-1.svg?alt=media&token=c8ee973c-fd7a-4b18-b7cf-fd260962768c) 6% 95% no-repeat, url(https://firebasestorage.googleapis.com/v0/b/codepen-asset.appspot.com/o/valentine-animation%2Fheart-xs-1.svg?alt=media&token=c8ee973c-fd7a-4b18-b7cf-fd260962768c) 36% 29% no-repeat, url(https://firebasestorage.googleapis.com/v0/b/codepen-asset.appspot.com/o/valentine-animation%2Fheart-xs-1.svg?alt=media&token=c8ee973c-fd7a-4b18-b7cf-fd260962768c) 72% 56% no-repeat, url(https://firebasestorage.googleapis.com/v0/b/codepen-asset.appspot.com/o/valentine-animation%2Fheart-xs-1.svg?alt=media&token=c8ee973c-fd7a-4b18-b7cf-fd260962768c) 45% 15% no-repeat, url(https://firebasestorage.googleapis.com/v0/b/codepen-asset.appspot.com/o/valentine-animation%2Fheart-xs-1.svg?alt=media&token=c8ee973c-fd7a-4b18-b7cf-fd260962768c) 56% 13% no-repeat, url(https://firebasestorage.googleapis.com/v0/b/codepen-asset.appspot.com/o/valentine-animation%2Fheart-xs-1.svg?alt=media&token=c8ee973c-fd7a-4b18-b7cf-fd260962768c) 59% 76% no-repeat, url(https://firebasestorage.googleapis.com/v0/b/codepen-asset.appspot.com/o/valentine-animation%2Fheart-xs-1.svg?alt=media&token=c8ee973c-fd7a-4b18-b7cf-fd260962768c) 3% 92% no-repeat, url(https://firebasestorage.googleapis.com/v0/b/codepen-asset.appspot.com/o/valentine-animation%2Fheart-xs-1.svg?alt=media&token=c8ee973c-fd7a-4b18-b7cf-fd260962768c) 50% 99% no-repeat;
+  height: 100vh;
+  width: 100%;
+  filter: blur(12px);
+  z-index: 10;
+  position: absolute;
+  transform: translateY(-100%);
+  animation: drop linear 17s 2s infinite;
+}
+.valentine #heart-group-2 {
+  background: url(https://firebasestorage.googleapis.com/v0/b/codepen-asset.appspot.com/o/valentine-animation%2Fheart-xs-4.svg?alt=media&token=a9aca079-9b66-4d27-83fa-a2cbf4f97df8) 53% 62% no-repeat, url(https://firebasestorage.googleapis.com/v0/b/codepen-asset.appspot.com/o/valentine-animation%2Fheart-xs-4.svg?alt=media&token=a9aca079-9b66-4d27-83fa-a2cbf4f97df8) 18% 81% no-repeat, url(https://firebasestorage.googleapis.com/v0/b/codepen-asset.appspot.com/o/valentine-animation%2Fheart-xs-4.svg?alt=media&token=a9aca079-9b66-4d27-83fa-a2cbf4f97df8) 33% 15% no-repeat;
+  height: 100vh;
+  width: 100%;
+  filter: blur(5px);
+  z-index: 20;
+  position: absolute;
+  transform: translateY(-100%);
+  animation: drop linear 14s 0s infinite;
+}
+.valentine #heart-group-3 {
+  background: url(https://firebasestorage.googleapis.com/v0/b/codepen-asset.appspot.com/o/valentine-animation%2Fheart-xs-2.svg?alt=media&token=e542fc9c-87de-4817-a42e-3a23c42e9e92) 53% 39% no-repeat, url(https://firebasestorage.googleapis.com/v0/b/codepen-asset.appspot.com/o/valentine-animation%2Fheart-xs-2.svg?alt=media&token=e542fc9c-87de-4817-a42e-3a23c42e9e92) 46% 59% no-repeat, url(https://firebasestorage.googleapis.com/v0/b/codepen-asset.appspot.com/o/valentine-animation%2Fheart-xs-2.svg?alt=media&token=e542fc9c-87de-4817-a42e-3a23c42e9e92) 21% 78% no-repeat;
+  height: 100vh;
+  width: 100%;
+  filter: blur(3px);
+  z-index: 30;
+  position: absolute;
+  transform: translateY(-100%);
+  animation: drop linear 12s 1s infinite;
+}
+.valentine #heart-group-4 {
+  background: url(https://firebasestorage.googleapis.com/v0/b/codepen-asset.appspot.com/o/valentine-animation%2Fheart-xs-1.svg?alt=media&token=c8ee973c-fd7a-4b18-b7cf-fd260962768c) 33% 20% no-repeat, url(https://firebasestorage.googleapis.com/v0/b/codepen-asset.appspot.com/o/valentine-animation%2Fheart-xs-1.svg?alt=media&token=c8ee973c-fd7a-4b18-b7cf-fd260962768c) 10% 61% no-repeat, url(https://firebasestorage.googleapis.com/v0/b/codepen-asset.appspot.com/o/valentine-animation%2Fheart-xs-1.svg?alt=media&token=c8ee973c-fd7a-4b18-b7cf-fd260962768c) 17% 19% no-repeat;
+  height: 100vh;
+  width: 100%;
+  filter: blur(2px);
+  z-index: 40;
+  position: absolute;
+  transform: translateY(-100%);
+  animation: drop linear 10s 1s infinite;
+}
+.valentine #heart-group-5 {
+  background: url(https://firebasestorage.googleapis.com/v0/b/codepen-asset.appspot.com/o/valentine-animation%2Fheart-xs-5.svg?alt=media&token=71ca3b0c-8715-4484-92e7-b027edd71631) 33% 6% no-repeat, url(https://firebasestorage.googleapis.com/v0/b/codepen-asset.appspot.com/o/valentine-animation%2Fheart-xs-5.svg?alt=media&token=71ca3b0c-8715-4484-92e7-b027edd71631) 75% 53% no-repeat, url(https://firebasestorage.googleapis.com/v0/b/codepen-asset.appspot.com/o/valentine-animation%2Fheart-xs-5.svg?alt=media&token=71ca3b0c-8715-4484-92e7-b027edd71631) 59% 83% no-repeat, url(https://firebasestorage.googleapis.com/v0/b/codepen-asset.appspot.com/o/valentine-animation%2Fheart-xs-5.svg?alt=media&token=71ca3b0c-8715-4484-92e7-b027edd71631) 84% 2% no-repeat;
+  height: 100vh;
+  width: 100%;
+  filter: blur(1px);
+  z-index: 50;
+  position: absolute;
+  transform: translateY(-100%);
+  animation: drop linear 8s 0s infinite;
+}
+.valentine #star-group-1 {
+  background: url(https://firebasestorage.googleapis.com/v0/b/codepen-asset.appspot.com/o/valentine-animation%2Fglitter-star.svg?alt=media&token=0b693d8e-e569-4567-8827-10f8c25dbbdd) 22% 58% no-repeat, url(https://firebasestorage.googleapis.com/v0/b/codepen-asset.appspot.com/o/valentine-animation%2Fglitter-star.svg?alt=media&token=0b693d8e-e569-4567-8827-10f8c25dbbdd) 5% 8% no-repeat, url(https://firebasestorage.googleapis.com/v0/b/codepen-asset.appspot.com/o/valentine-animation%2Fglitter-star.svg?alt=media&token=0b693d8e-e569-4567-8827-10f8c25dbbdd) 95% 78% no-repeat, url(https://firebasestorage.googleapis.com/v0/b/codepen-asset.appspot.com/o/valentine-animation%2Fglitter-star.svg?alt=media&token=0b693d8e-e569-4567-8827-10f8c25dbbdd) 100% 12% no-repeat, url(https://firebasestorage.googleapis.com/v0/b/codepen-asset.appspot.com/o/valentine-animation%2Fglitter-star.svg?alt=media&token=0b693d8e-e569-4567-8827-10f8c25dbbdd) 67% 75% no-repeat, url(https://firebasestorage.googleapis.com/v0/b/codepen-asset.appspot.com/o/valentine-animation%2Fglitter-star.svg?alt=media&token=0b693d8e-e569-4567-8827-10f8c25dbbdd) 11% 85% no-repeat;
+  height: 100vh;
+  width: 100%;
+  filter: blur(0px);
+  z-index: 60;
+  position: absolute;
+  transform: translateY(0%);
+  animation: glitter linear 1.8s 0s infinite;
+}
+.valentine #star-group-2 {
+  background: url(https://firebasestorage.googleapis.com/v0/b/codepen-asset.appspot.com/o/valentine-animation%2Fglitter-star-sm.svg?alt=media&token=13e65b1f-d181-4266-ac34-97485789e1af) 26% 53% no-repeat, url(https://firebasestorage.googleapis.com/v0/b/codepen-asset.appspot.com/o/valentine-animation%2Fglitter-star-sm.svg?alt=media&token=13e65b1f-d181-4266-ac34-97485789e1af) 68% 82% no-repeat, url(https://firebasestorage.googleapis.com/v0/b/codepen-asset.appspot.com/o/valentine-animation%2Fglitter-star-sm.svg?alt=media&token=13e65b1f-d181-4266-ac34-97485789e1af) 50% 45% no-repeat, url(https://firebasestorage.googleapis.com/v0/b/codepen-asset.appspot.com/o/valentine-animation%2Fglitter-star-sm.svg?alt=media&token=13e65b1f-d181-4266-ac34-97485789e1af) 51% 66% no-repeat, url(https://firebasestorage.googleapis.com/v0/b/codepen-asset.appspot.com/o/valentine-animation%2Fglitter-star-sm.svg?alt=media&token=13e65b1f-d181-4266-ac34-97485789e1af) 60% 72% no-repeat, url(https://firebasestorage.googleapis.com/v0/b/codepen-asset.appspot.com/o/valentine-animation%2Fglitter-star-sm.svg?alt=media&token=13e65b1f-d181-4266-ac34-97485789e1af) 76% 18% no-repeat;
+  height: 100vh;
+  width: 100%;
+  filter: blur(0px);
+  z-index: 60;
+  position: absolute;
+  transform: translateY(0%);
+  animation: glitter linear 1s 0s infinite;
+}
+.valentine #star-group-3 {
+  background: url(https://firebasestorage.googleapis.com/v0/b/codepen-asset.appspot.com/o/valentine-animation%2Fglitter-star-xs.svg?alt=media&token=0516d117-d8c2-4c0e-b0f8-e468b33ede05) 73% 5% no-repeat, url(https://firebasestorage.googleapis.com/v0/b/codepen-asset.appspot.com/o/valentine-animation%2Fglitter-star-xs.svg?alt=media&token=0516d117-d8c2-4c0e-b0f8-e468b33ede05) 32% 56% no-repeat, url(https://firebasestorage.googleapis.com/v0/b/codepen-asset.appspot.com/o/valentine-animation%2Fglitter-star-xs.svg?alt=media&token=0516d117-d8c2-4c0e-b0f8-e468b33ede05) 64% 85% no-repeat, url(https://firebasestorage.googleapis.com/v0/b/codepen-asset.appspot.com/o/valentine-animation%2Fglitter-star-xs.svg?alt=media&token=0516d117-d8c2-4c0e-b0f8-e468b33ede05) 23% 82% no-repeat, url(https://firebasestorage.googleapis.com/v0/b/codepen-asset.appspot.com/o/valentine-animation%2Fglitter-star-xs.svg?alt=media&token=0516d117-d8c2-4c0e-b0f8-e468b33ede05) 13% 86% no-repeat, url(https://firebasestorage.googleapis.com/v0/b/codepen-asset.appspot.com/o/valentine-animation%2Fglitter-star-xs.svg?alt=media&token=0516d117-d8c2-4c0e-b0f8-e468b33ede05) 53% 77% no-repeat, url(https://firebasestorage.googleapis.com/v0/b/codepen-asset.appspot.com/o/valentine-animation%2Fglitter-star-xs.svg?alt=media&token=0516d117-d8c2-4c0e-b0f8-e468b33ede05) 92% 99% no-repeat, url(https://firebasestorage.googleapis.com/v0/b/codepen-asset.appspot.com/o/valentine-animation%2Fglitter-star-xs.svg?alt=media&token=0516d117-d8c2-4c0e-b0f8-e468b33ede05) 44% 15% no-repeat, url(https://firebasestorage.googleapis.com/v0/b/codepen-asset.appspot.com/o/valentine-animation%2Fglitter-star-xs.svg?alt=media&token=0516d117-d8c2-4c0e-b0f8-e468b33ede05) 52% 57% no-repeat, url(https://firebasestorage.googleapis.com/v0/b/codepen-asset.appspot.com/o/valentine-animation%2Fglitter-star-xs.svg?alt=media&token=0516d117-d8c2-4c0e-b0f8-e468b33ede05) 15% 40% no-repeat, url(https://firebasestorage.googleapis.com/v0/b/codepen-asset.appspot.com/o/valentine-animation%2Fglitter-star-xs.svg?alt=media&token=0516d117-d8c2-4c0e-b0f8-e468b33ede05) 10% 83% no-repeat, url(https://firebasestorage.googleapis.com/v0/b/codepen-asset.appspot.com/o/valentine-animation%2Fglitter-star-xs.svg?alt=media&token=0516d117-d8c2-4c0e-b0f8-e468b33ede05) 18% 7% no-repeat, url(https://firebasestorage.googleapis.com/v0/b/codepen-asset.appspot.com/o/valentine-animation%2Fglitter-star-xs.svg?alt=media&token=0516d117-d8c2-4c0e-b0f8-e468b33ede05) 49% 94% no-repeat, url(https://firebasestorage.googleapis.com/v0/b/codepen-asset.appspot.com/o/valentine-animation%2Fglitter-star-xs.svg?alt=media&token=0516d117-d8c2-4c0e-b0f8-e468b33ede05) 33% 52% no-repeat, url(https://firebasestorage.googleapis.com/v0/b/codepen-asset.appspot.com/o/valentine-animation%2Fglitter-star-xs.svg?alt=media&token=0516d117-d8c2-4c0e-b0f8-e468b33ede05) 11% 20% no-repeat, url(https://firebasestorage.googleapis.com/v0/b/codepen-asset.appspot.com/o/valentine-animation%2Fglitter-star-xs.svg?alt=media&token=0516d117-d8c2-4c0e-b0f8-e468b33ede05) 11% 12% no-repeat, url(https://firebasestorage.googleapis.com/v0/b/codepen-asset.appspot.com/o/valentine-animation%2Fglitter-star-xs.svg?alt=media&token=0516d117-d8c2-4c0e-b0f8-e468b33ede05) 59% 21% no-repeat, url(https://firebasestorage.googleapis.com/v0/b/codepen-asset.appspot.com/o/valentine-animation%2Fglitter-star-xs.svg?alt=media&token=0516d117-d8c2-4c0e-b0f8-e468b33ede05) 57% 35% no-repeat, url(https://firebasestorage.googleapis.com/v0/b/codepen-asset.appspot.com/o/valentine-animation%2Fglitter-star-xs.svg?alt=media&token=0516d117-d8c2-4c0e-b0f8-e468b33ede05) 63% 89% no-repeat, url(https://firebasestorage.googleapis.com/v0/b/codepen-asset.appspot.com/o/valentine-animation%2Fglitter-star-xs.svg?alt=media&token=0516d117-d8c2-4c0e-b0f8-e468b33ede05) 61% 17% no-repeat;
+  height: 100vh;
+  width: 100%;
+  filter: blur(0px);
+  z-index: 60;
+  position: absolute;
+  transform: translateY(0%);
+  animation: glitter linear 1.9s 0s infinite;
+}
+.valentine .heart-fixed {
+  position: fixed;
+  height: 100%;
+  width: 100%;
+}
+.valentine .heart-lg {
+  background: url("https://firebasestorage.googleapis.com/v0/b/codepen-asset.appspot.com/o/valentine-animation%2Fheart-lg.svg?alt=media&token=aabe9399-f03f-44de-9b55-99025b2981a3") no-repeat;
+  height: 389px;
+  width: 438px;
+  top: 50%;
+  left: -2%;
+  transform: rotate(299deg);
+  filter: blur(1px);
+  z-index: 45;
+}
+.valentine .heart-sm {
+  background: url("https://firebasestorage.googleapis.com/v0/b/codepen-asset.appspot.com/o/valentine-animation%2Fheart-sm.svg?alt=media&token=2750292c-92fd-41de-8e1d-d8814119a602") no-repeat;
+  height: 264px;
+  width: 299px;
+  top: 30%;
+  left: 65%;
+  transform: rotate(45deg);
+  filter: blur(7px);
+  z-index: 15;
+}
+.valentine .heart-xs {
+  background: url("https://firebasestorage.googleapis.com/v0/b/codepen-asset.appspot.com/o/valentine-animation%2Fheart-xs-2.svg?alt=media&token=e542fc9c-87de-4817-a42e-3a23c42e9e92") no-repeat;
+  height: 87px;
+  width: 89px;
+  top: 10%;
+  left: 30%;
+  transform: rotate(299deg);
+  filter: blur(3px);
+  z-index: 35;
+}
+.valentine .overlay {
+  background-color: white;
+  height: 100vh;
+  opacity: 0.23;
+  width: 100vw;
+  position: absolute;
+  z-index: 100;
+}
+
+@keyframes drop {
+  from {
+    transform: translateY(-100%);
+  }
+  to {
+    transform: translateY(100%);
+  }
+}
+@keyframes glitter {
+  0% {
+    opacity: 0;
+  }
+  70% {
+    opacity: 0.4;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+</style>
