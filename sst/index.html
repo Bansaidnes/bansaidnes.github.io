@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>التغير المناخي والإمارات: تحديات وحلول مفصلة</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Cairo', 'sans-serif';
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        html {
+            scroll-behavior: smooth;
+        }
+        .nav-link-active {
+            font-weight: bold;
+            color: #10B981;
+        }
+        .dark .nav-link-active {
+            color: #34D399;
+        }
+        img[src^="https://placehold.co"] {
+             background-color: #e2e8f0;
+        }
+       .dark img[src^="https://placehold.co"] {
+             background-color: #4a5568;
+        }
+        img[src$=".png"], img[src$=".jpg"] {
+            background-color: #e2e8f0;
+        }
+       .dark img[src$=".png"], .dark img[src$=".jpg"] {
+            background-color: #4a5568;
+        }
+        ul {
+            margin-bottom: 1rem;
+        }
+        li {
+            margin-bottom: 0.5rem;
+        }
+    </style>
+    <script>
+        tailwind.config = {
+          darkMode: 'class',
+          theme: {
+            extend: {}
+          }
+        }
+      </script>
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-200 leading-relaxed">
+
+    <header class="bg-white dark:bg-gray-800 shadow-md sticky top-0 z-50">
+        <nav class="container mx-auto px-6 py-3 flex justify-between items-center">
+            <div class="text-2xl font-bold text-emerald-600 dark:text-emerald-400">مناخنا ومستقبلنا</div>
+            <div class="flex items-center space-x-4 space-x-reverse">
+                <div class="hidden md:flex space-x-6 space-x-reverse">
+                    <a href="#home" class="text-gray-600 hover:text-emerald-600 dark:text-gray-300 dark:hover:text-emerald-400 nav-link">الرئيسية</a>
+                    <a href="#what-is-cc" class="text-gray-600 hover:text-emerald-600 dark:text-gray-300 dark:hover:text-emerald-400 nav-link">ما هو التغير المناخي؟</a>
+                    <a href="#causes" class="text-gray-600 hover:text-emerald-600 dark:text-gray-300 dark:hover:text-emerald-400 nav-link">الأسباب</a>
+                    <a href="#impacts" class="text-gray-600 hover:text-emerald-600 dark:text-gray-300 dark:hover:text-emerald-400 nav-link">التأثيرات</a>
+                    <a href="#solutions" class="text-gray-600 hover:text-emerald-600 dark:text-gray-300 dark:hover:text-emerald-400 nav-link">الحلول</a>
+                    <a href="#uae-focus" class="text-gray-600 hover:text-emerald-600 dark:text-gray-300 dark:hover:text-emerald-400 nav-link">جهود الإمارات</a>
+                    <a href="#action" class="text-gray-600 hover:text-emerald-600 dark:text-gray-300 dark:hover:text-emerald-400 nav-link">شارك بدورك</a>
+                </div>
+                 <button id="theme-toggle" type="button" class="text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-2.5">
+                    <i id="theme-toggle-dark-icon" class="fas fa-moon w-5 h-5"></i>
+                    <i id="theme-toggle-light-icon" class="fas fa-sun w-5 h-5"></i>
+                </button>
+                <button id="mobile-menu-button" class="md:hidden focus:outline-none text-gray-600 dark:text-gray-300">
+                    <i class="fas fa-bars text-2xl"></i>
+                </button>
+            </div>
+        </nav>
+        <div id="mobile-menu" class="hidden md:hidden bg-white dark:bg-gray-800 py-2 border-t border-gray-200 dark:border-gray-700">
+            <a href="#home" class="block px-6 py-2 text-gray-600 hover:bg-emerald-50 dark:text-gray-300 dark:hover:bg-gray-700">الرئيسية</a>
+            <a href="#what-is-cc" class="block px-6 py-2 text-gray-600 hover:bg-emerald-50 dark:text-gray-300 dark:hover:bg-gray-700">ما هو التغير المناخي؟</a>
+            <a href="#causes" class="block px-6 py-2 text-gray-600 hover:bg-emerald-50 dark:text-gray-300 dark:hover:bg-gray-700">الأسباب</a>
+            <a href="#impacts" class="block px-6 py-2 text-gray-600 hover:bg-emerald-50 dark:text-gray-300 dark:hover:bg-gray-700">التأثيرات</a>
+            <a href="#solutions" class="block px-6 py-2 text-gray-600 hover:bg-emerald-50 dark:text-gray-300 dark:hover:bg-gray-700">الحلول</a>
+            <a href="#uae-focus" class="block px-6 py-2 text-gray-600 hover:bg-emerald-50 dark:text-gray-300 dark:hover:bg-gray-700">جهود الإمارات</a>
+            <a href="#action" class="block px-6 py-2 text-gray-600 hover:bg-emerald-50 dark:text-gray-300 dark:hover:bg-gray-700">شارك بدورك</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-6 py-8">
+
+        <section id="home" class="relative text-center bg-cover bg-center rounded-lg shadow-lg overflow-hidden mb-12" style="background-image: url('banner.png'); height: 500px;">
+            <div class="absolute inset-0 bg-black bg-opacity-60 dark:bg-opacity-70 flex flex-col justify-center items-center p-4">
+                <h1 class="text-4xl md:text-5xl font-bold text-white mb-4 leading-tight">التغير المناخي: مستقبلنا المشترك</h1>
+                <p class="text-xl text-gray-200 dark:text-gray-300 mb-8 max-w-2xl">فهم التحديات العالمية المتزايدة والجهود الرائدة لدولة الإمارات العربية المتحدة في بناء مستقبل مستدام ومرن.</p>
+                <a href="#uae-focus" class="bg-emerald-600 hover:bg-emerald-700 dark:bg-emerald-500 dark:hover:bg-emerald-600 text-white font-bold py-3 px-8 rounded-full transition duration-300">اكتشف جهود الإمارات التفصيلية</a>
+            </div>
+        </section>
+
+        <section id="what-is-cc" class="mb-16 scroll-mt-20">
+            <h2 class="text-3xl font-bold text-center text-emerald-700 dark:text-emerald-400 mb-8">ما هو التغير المناخي؟ فهم أعمق</h2>
+            <div class="grid md:grid-cols-2 gap-8 items-center">
+                <div class="space-y-4">
+                    <h3 class="text-2xl font-semibold text-gray-700 dark:text-gray-200">العلم وراء التحذير العالمي</h3>
+                    <p class="text-gray-600 dark:text-gray-400">التغير المناخي هو تحول كبير وطويل الأمد في الأنماط الإحصائية للطقس على مدى فترات تتراوح من عقود إلى ملايين السنين. قد يكون تغيرًا في متوسط ​​أحوال الطقس، أو في توزيع الأحداث الجوية حول المتوسط (مثل زيادة أو نقصان الظواهر الجوية المتطرفة). بينما شهدت الأرض تغيرات مناخية طبيعية في الماضي، فإن الوتيرة الحالية للاحترار العالمي غير مسبوقة وترتبط ارتباطًا وثيقًا بالثورة الصناعية والأنشطة البشرية التي تلتها.</p>
+                    <p class="text-gray-600 dark:text-gray-400">تؤكد الهيئة الحكومية الدولية المعنية بتغير المناخ (IPCC)، وهي الهيئة العلمية الرائدة في هذا المجال، أن التأثير البشري على النظام المناخي واضح ولا لبس فيه.</p>
+                    <ul class="list-disc list-inside space-y-2 text-gray-600 dark:text-gray-400">
+                        <li><strong class="font-semibold text-gray-700 dark:text-gray-300">ظاهرة الاحتباس الحراري المعززة:</strong> الغازات الدفيئة الرئيسية (مثل ثاني أكسيد الكربون CO2، الميثان CH4، أكسيد النيتروز N2O، والغازات المفلورة) تتراكم في الغلاف الجوي، مما يعزز تأثير الاحتباس الحراري الطبيعي ويؤدي إلى ارتفاع درجة حرارة سطح الأرض والمحيطات.</li>
+                        <li><strong class="font-semibold text-gray-700 dark:text-gray-300">المناخ مقابل الطقس:</strong> الطقس يصف الظروف الجوية قصيرة المدى (ساعات، أيام)، بينما المناخ هو متوسط ​​هذه الظروف على مدى 30 عامًا أو أكثر. تغير المناخ يعني تغيرًا في هذه المتوسطات طويلة الأجل.</li>
+                        <li><strong class="font-semibold text-gray-700 dark:text-gray-300">الأدلة الدامغة:</strong> تشمل سجلات درجات الحرارة العالمية التي تظهر ارتفاعًا واضحًا، وتقلص الأنهار الجليدية والصفائح الجليدية القطبية، وارتفاع مستوى سطح البحر بمعدل متسارع، وزيادة حموضة المحيطات بسبب امتصاص CO2 الزائد.</li>
+                    </ul>
+                </div>
+                <div>
+                    <img src="image 1.png" alt="رسم توضيحي لظاهرة الاحتباس الحراري المعززة" class="rounded-lg shadow-md w-full">
+                </div>
+            </div>
+        </section>
+
+        <section id="causes" class="mb-16 bg-emerald-50 dark:bg-gray-800 p-8 rounded-lg shadow scroll-mt-20">
+            <h2 class="text-3xl font-bold text-center text-emerald-700 dark:text-emerald-400 mb-8">الأسباب الرئيسية للتغير المناخي المتسارع</h2>
+            <p class="text-center text-gray-600 dark:text-gray-400 mb-8 max-w-3xl mx-auto">السبب الأساسي هو الزيادة الكبيرة في انبعاثات غازات الدفيئة الناتجة عن الأنشطة البشرية منذ بدء الثورة الصناعية، مما أخل بالتوازن الطبيعي للطاقة في الغلاف الجوي.</p>
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 text-center">
+                <div class="bg-white dark:bg-gray-700 p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow flex flex-col items-center">
+                    <i class="fas fa-gas-pump text-4xl text-emerald-600 dark:text-emerald-400 mb-4"></i>
+                    <h4 class="text-xl font-semibold mb-2 text-gray-800 dark:text-gray-100">احتراق الوقود الأحفوري</h4>
+                    <p class="text-sm text-gray-600 dark:text-gray-400">المصدر الأكبر للانبعاثات، ويشمل حرق الفحم والنفط والغاز لتوليد الكهرباء والتدفئة وتشغيل المركبات (السيارات، الشاحنات، السفن، الطائرات).</p>
+                </div>
+                <div class="bg-white dark:bg-gray-700 p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow flex flex-col items-center">
+                    <i class="fas fa-tree text-4xl text-emerald-600 dark:text-emerald-400 mb-4"></i> 
+                    <h4 class="text-xl font-semibold mb-2 text-gray-800 dark:text-gray-100">إزالة الغابات وتغيير استخدام الأراضي</h4>
+                    <p class="text-sm text-gray-600 dark:text-gray-400">قطع الغابات (التي تمتص CO2) وتحويل الأراضي للزراعة أو التوسع العمراني يطلق الكربون المخزن ويقلل قدرة الكوكب على امتصاصه.</p>
+                </div>
+                <div class="bg-white dark:bg-gray-700 p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow flex flex-col items-center">
+                    <i class="fas fa-industry text-4xl text-emerald-600 dark:text-emerald-400 mb-4"></i>
+                    <h4 class="text-xl font-semibold mb-2 text-gray-800 dark:text-gray-100">العمليات الصناعية</h4>
+                    <p class="text-sm text-gray-600 dark:text-gray-400">انبعاثات مباشرة من صناعات مثل إنتاج الأسمنت والحديد والصلب والمواد الكيميائية، بالإضافة إلى استخدام المذيبات والغازات المفلورة في بعض العمليات.</p>
+                </div>
+                <div class="bg-white dark:bg-gray-700 p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow flex flex-col items-center">
+                    <i class="fas fa-tractor text-4xl text-emerald-600 dark:text-emerald-400 mb-4"></i>
+                    <h4 class="text-xl font-semibold mb-2 text-gray-800 dark:text-gray-100">الزراعة وتربية الحيوانات</h4>
+                    <p class="text-sm text-gray-600 dark:text-gray-400">انبعاث الميثان (غاز دفيئة قوي) من عملية الهضم لدى الماشية وحقول الأرز، وانبعاث أكسيد النيتروز من استخدام الأسمدة النيتروجينية في التربة.</p>
+                </div>
+                 <div class="bg-white dark:bg-gray-700 p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow flex flex-col items-center md:col-span-2 lg:col-span-4">
+                    <i class="fas fa-dumpster text-4xl text-emerald-600 dark:text-emerald-400 mb-4"></i>
+                    <h4 class="text-xl font-semibold mb-2 text-gray-800 dark:text-gray-100">إدارة النفايات</h4>
+                    <p class="text-sm text-gray-600 dark:text-gray-400">تحلل النفايات العضوية في مدافن النفايات يطلق الميثان، كما أن حرق النفايات يطلق غازات دفيئة أخرى.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="impacts" class="mb-16 scroll-mt-20">
+            <h2 class="text-3xl font-bold text-center text-emerald-700 dark:text-emerald-400 mb-8">التأثيرات والنتائج المتزايدة عالميًا وفي الإمارات</h2>
+            <div class="grid md:grid-cols-2 gap-12">
+                <div>
+                    <h3 class="text-2xl font-semibold text-gray-700 dark:text-gray-200 mb-4 border-b-2 border-emerald-500 dark:border-emerald-700 pb-2">التأثيرات العالمية واسعة النطاق</h3>
+                    <ul class="list-disc list-inside space-y-3 text-gray-600 dark:text-gray-400">
+                        <li><strong class="font-semibold text-gray-700 dark:text-gray-300">الظواهر الجوية المتطرفة:</strong> زيادة شدة وتواتر موجات الحر القاتلة، فترات الجفاف الطويلة، الأمطار الغزيرة والفيضانات المدمرة، الأعاصير والعواصف الأكثر قوة.</li>
+                        <li><strong class="font-semibold text-gray-700 dark:text-gray-300">ارتفاع مستوى سطح البحر:</strong> يهدد بغمر المناطق الساحلية المنخفضة والجزر الصغيرة، وتملح مصادر المياه العذبة الساحلية، وتشريد الملايين.</li>
+                        <li><strong class="font-semibold text-gray-700 dark:text-gray-300">تدهور المحيطات:</strong> ارتفاع درجة حرارة المياه يسبب ابيضاض واسع النطاق للشعاب المرجانية، وزيادة امتصاص CO2 تؤدي إلى تحمض المحيطات مما يضر بالكائنات ذات الأصداف والهياكل العظمية (مثل المحار والعوالق).</li>
+                        <li><strong class="font-semibold text-gray-700 dark:text-gray-300">فقدان التنوع البيولوجي:</strong> تغير النطاقات الجغرافية للأنواع، انقراض الأنواع التي لا تستطيع التكيف بالسرعة الكافية، تعطيل النظم البيئية وسلاسل الغذاء.</li>
+                        <li><strong class="font-semibold text-gray-700 dark:text-gray-300">تهديد الأمن الغذائي والمائي:</strong> تغير أنماط هطول الأمطار والجفاف يؤثر على غلات المحاصيل، وارتفاع درجات الحرارة يجهد الماشية، وتقلص الأنهار الجليدية يهدد مصادر المياه العذبة لمئات الملايين.</li>
+                        <li><strong class="font-semibold text-gray-700 dark:text-gray-300">التأثيرات الصحية:</strong> زيادة الوفيات والأمراض المرتبطة بالحرارة، انتشار الأمراض المنقولة بالنواقل (مثل الملاريا وحمى الضنك) مع تغير نطاقاتها، تفاقم مشاكل الجهاز التنفسي بسبب تلوث الهواء وحبوب اللقاح.</li>
+                    </ul>
+                    <img src="image 2.png" alt="التأثيرات العالمية المتعددة لتغير المناخ" class="mt-6 rounded-lg shadow-md w-full">
+                </div>
+                <div>
+                    <h3 class="text-2xl font-semibold text-gray-700 dark:text-gray-200 mb-4 border-b-2 border-emerald-500 dark:border-emerald-700 pb-2">التحديات الخاصة بدولة الإمارات</h3>
+                    <ul class="list-disc list-inside space-y-3 text-gray-600 dark:text-gray-400">
+                         <li><strong class="font-semibold text-gray-700 dark:text-gray-300">الحرارة والرطوبة الشديدة:</strong> تفاقم ظروف الحرارة والرطوبة العالية، مما يزيد من أيام "العلم الأسود" التي تحد من الأنشطة الخارجية، ويزيد من مخاطر الإجهاد الحراري وضربات الشمس، ويرفع الطلب على الطاقة بشكل كبير لأغراض التبريد.</li>
+                        <li><strong class="font-semibold text-gray-700 dark:text-gray-300">ضغط هائل على موارد المياه:</strong> زيادة صعوبة وتكلفة تحلية مياه البحر (التي تستهلك طاقة كبيرة بالفعل)، وتملح محتمل للمياه الجوفية الساحلية الشحيحة، وزيادة التبخر من المسطحات المائية.</li>
+                        <li><strong class="font-semibold text-gray-700 dark:text-gray-300">ضعف السواحل أمام ارتفاع مستوى سطح البحر:</strong> تشكل السواحل المنخفضة التي تتركز فيها المدن الكبرى (دبي، أبوظبي، الشارقة) والبنية التحتية الحيوية (الموانئ، المطارات، محطات الطاقة والتحلية) والمناطق السكنية والتجارية والسياحية، نقطة ضعف كبيرة.</li>
+                        <li><strong class="font-semibold text-gray-700 dark:text-gray-300">تدهور النظم البيئية البحرية والساحلية:</strong> زيادة خطر ابيضاض وتدهور الشعاب المرجانية الحساسة، وتأثر مصائد الأسماك، وتدهور مناطق أشجار القرم والسبخات التي توفر حماية ساحلية طبيعية وموائل هامة.</li>
+                        <li><strong class="font-semibold text-gray-700 dark:text-gray-300">زيادة مخاطر العواصف الترابية والتصحر:</strong> تغير أنماط الرياح وهطول الأمطار قد يؤدي إلى زيادة وتيرة وشدة العواصف الترابية، وزيادة الضغط على النظم البيئية الصحراوية الهشة.</li>
+                        <li><strong class="font-semibold text-gray-700 dark:text-gray-300">الآثار الاقتصادية المتعددة:</strong> تهديدات لقطاع السياحة (خاصة الشاطئية)، انخفاض قيمة العقارات الساحلية، زيادة تكاليف صيانة وحماية البنية التحتية، تأثيرات محتملة على الزراعة المحدودة أصلاً.</li>
+                    </ul>
+                     <img src="image 3.png" alt="تأثيرات تغير المناخ المحددة على الإمارات" class="mt-6 rounded-lg shadow-md w-full">
+                </div>
+            </div>
+        </section>
+
+        <section id="solutions" class="mb-16 bg-gray-100 dark:bg-gray-800 p-8 rounded-lg shadow scroll-mt-20">
+            <h2 class="text-3xl font-bold text-center text-emerald-700 dark:text-emerald-400 mb-8">مسارات الحلول: التخفيف والتكيف والابتكار</h2>
+            <p class="text-center text-gray-600 dark:text-gray-400 mb-8 max-w-3xl mx-auto">تتطلب مواجهة التغير المناخي نهجًا شاملاً يجمع بين خفض الانبعاثات بشكل جذري (التخفيف) والاستعداد للتأثيرات التي لا مفر منها (التكيف)، مدعومًا بالابتكار والتعاون الدولي.</p>
+            <div class="grid md:grid-cols-2 gap-12">
+                <div>
+                    <h3 class="text-2xl font-semibold text-gray-700 dark:text-gray-200 mb-4"><i class="fas fa-arrow-down-short-wide text-emerald-600 dark:text-emerald-400 mr-2"></i> التخفيف: الحد من الانبعاثات من المصدر</h3>
+                    <ul class="list-none space-y-4 text-gray-600 dark:text-gray-400">
+                        <li class="flex items-start"><i class="fas fa-solar-panel text-yellow-500 mt-1 mr-3 fa-fw"></i><span><strong class="font-semibold text-gray-700 dark:text-gray-300">تحول نظام الطاقة:</strong> التوسع الهائل في مصادر الطاقة المتجددة (الشمسية، الرياح)، ودور الطاقة النووية السلمية، وتطوير شبكات ذكية لتوزيع الكهرباء، وتحسين كفاءة استخدام الطاقة في المباني والصناعة والأجهزة.</span></li>
+                        <li class="flex items-start"><i class="fas fa-leaf text-green-500 mt-1 mr-3 fa-fw"></i><span><strong class="font-semibold text-gray-700 dark:text-gray-300">إزالة الكربون الصناعي:</strong> تطوير واعتماد عمليات صناعية منخفضة الكربون (مثل استخدام الهيدروجين الأخضر في صناعة الصلب)، وتطبيق تقنيات احتجاز الكربون واستخدامه وتخزينه (CCUS) في الصناعات الثقيلة ومحطات الطاقة.</span></li>
+                        <li class="flex items-start"><i class="fas fa-car-side text-blue-500 mt-1 mr-3 fa-fw"></i><span><strong class="font-semibold text-gray-700 dark:text-gray-300">النقل المستدام:</strong> التحول إلى المركبات الكهربائية التي تعمل بالطاقة النظيفة، وتعزيز وسائل النقل العام الفعالة، وتشجيع التنقل النشط (المشي وركوب الدراجات)، وتطوير وقود مستدام للطيران والشحن.</span></li>
+                        <li class="flex items-start"><i class="fas fa-seedling text-lime-600 mt-1 mr-3 fa-fw"></i><span><strong class="font-semibold text-gray-700 dark:text-gray-300">الحلول القائمة على الطبيعة:</strong> حماية واستعادة الغابات والأراضي الرطبة وأشجار القرم والنظم البيئية الأخرى التي تمتص الكربون وتخزنه، واعتماد ممارسات زراعية مستدامة تقلل الانبعاثات وتعزز صحة التربة.</span></li>
+                         <li class="flex items-start"><i class="fas fa-recycle text-purple-500 mt-1 mr-3 fa-fw"></i><span><strong class="font-semibold text-gray-700 dark:text-gray-300">الاقتصاد الدائري وإدارة النفايات:</strong> تقليل توليد النفايات من خلال إعادة التصميم والاستهلاك الواعي، وزيادة معدلات إعادة الاستخدام والتدوير، وتحويل النفايات العضوية عن مدافن النفايات (مثل التسميد أو إنتاج الغاز الحيوي).</span></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-2xl font-semibold text-gray-700 dark:text-gray-200 mb-4"><i class="fas fa-shield-alt text-emerald-600 dark:text-emerald-400 mr-2"></i> التكيف: بناء المرونة لمواجهة التأثيرات</h3>
+                     <ul class="list-none space-y-4 text-gray-600 dark:text-gray-400">
+                        <li class="flex items-start"><i class="fas fa-water text-cyan-500 mt-1 mr-3 fa-fw"></i><span><strong class="font-semibold text-gray-700 dark:text-gray-300">إدارة موارد المياه:</strong> الاستثمار في تقنيات تحلية المياه عالية الكفاءة ومنخفضة التأثير البيئي، وتعزيز ترشيد استهلاك المياه في جميع القطاعات، وتطوير أنظمة إعادة استخدام مياه الصرف الصحي المعالجة، وحماية موارد المياه الجوفية.</span></li>
+                        <li class="flex items-start"><i class="fas fa-city text-orange-500 mt-1 mr-3 fa-fw"></i><span><strong class="font-semibold text-gray-700 dark:text-gray-300">بنية تحتية مرنة ومدن مستدامة:</strong> تصميم وبناء بنية تحتية (طرق، جسور، مباني، شبكات طاقة ومياه) قادرة على تحمل الظواهر الجوية المتطرفة وارتفاع مستوى سطح البحر، وتطبيق معايير المباني الخضراء، وزيادة المساحات الخضراء في المدن للتبريد وامتصاص مياه الأمطار.</span></li>
+                         <li class="flex items-start"><i class="fas fa-wheat-awn text-yellow-600 mt-1 mr-3 fa-fw"></i><span><strong class="font-semibold text-gray-700 dark:text-gray-300">الزراعة والأمن الغذائي:</strong> تطوير ونشر أصناف محاصيل مقاومة للحرارة والجفاف والملوحة، وتحسين كفاءة الري، وتنويع مصادر الغذاء، وتعزيز سلاسل الإمداد الغذائي المحلية.</span></li>
+                        <li class="flex items-start"><i class="fas fa-user-shield text-red-500 mt-1 mr-3 fa-fw"></i><span><strong class="font-semibold text-gray-700 dark:text-gray-300">حماية السواحل والمجتمعات:</strong> بناء وتعزيز الدفاعات الساحلية الصلبة (مثل السدود البحرية) واللينة (مثل استعادة الشواطئ وأشجار القرم)، وتطوير خطط لإدارة التراجع الساحلي عند الضرورة، وإنشاء أنظمة إنذار مبكر فعالة للعواصف والفيضانات.</span></li>
+                         <li class="flex items-start"><i class="fas fa-book-medical text-pink-500 mt-1 mr-3 fa-fw"></i><span><strong class="font-semibold text-gray-700 dark:text-gray-300">الصحة العامة:</strong> تعزيز أنظمة مراقبة الأمراض المرتبطة بالمناخ، وتطوير خطط استجابة لموجات الحر، وتوعية الجمهور بالمخاطر الصحية وكيفية الوقاية منها.</span></li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="uae-focus" class="mb-16 scroll-mt-20">
+            <h2 class="text-3xl font-bold text-center text-emerald-700 dark:text-emerald-400 mb-8">جهود الإمارات العربية المتحدة: استراتيجية شاملة وعمل دؤوب</h2>
+            <p class="text-center text-gray-600 dark:text-gray-400 mb-8 max-w-3xl mx-auto">إدراكًا منها لخطورة التحدي وفرص التحول الأخضر، تتبنى دولة الإمارات نهجًا استباقيًا وشاملاً للعمل المناخي، يرتكز على الابتكار والاستثمار والشراكات، ويتجلى ذلك في المبادرة الاستراتيجية للحياد المناخي 2050 وقيادتها للحوار العالمي كما في COP28.</p>
+
+            <div class="space-y-10">
+                <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg flex flex-col md:flex-row items-center gap-6">
+                    <img src="image 4.png" alt="المبادرة الاستراتيجية للحياد المناخي 2050" class="rounded-md w-full md:w-1/3 h-48 object-cover">
+                    <div class="md:w-2/3">
+                        <h4 class="text-2xl font-semibold mb-3 text-emerald-800 dark:text-emerald-300">المبادرة الاستراتيجية للحياد المناخي 2050</h4>
+                        <p class="text-gray-600 dark:text-gray-400 mb-2">التزام وطني طموح يهدف إلى تحقيق صافي انبعاثات صفرية بحلول منتصف القرن، من خلال تحول جذري في قطاعات الطاقة والصناعة والنقل والزراعة والنفايات. تتضمن المبادرة استثمارات ضخمة تقدر بمئات المليارات في الطاقة النظيفة والمتجددة والتكنولوجيا الخضراء على مدى العقود القادمة.</p>
+                        <p class="text-sm text-gray-500 dark:text-gray-500">محاور رئيسية: الطاقة النظيفة، كفاءة الطاقة، الهيدروجين الأخضر، احتجاز الكربون، الزراعة المستدامة، إدارة النفايات.</p>
+                    </div>
+                </div>
+
+                 <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg flex flex-col md:flex-row-reverse items-center gap-6">
+                     <img src="image 5.png" alt="الطاقة النظيفة في الإمارات" class="rounded-md w-full md:w-1/3 h-48 object-cover">
+                     <div class="md:w-2/3">
+                        <h4 class="text-2xl font-semibold mb-3 text-emerald-800 dark:text-emerald-300">ريادة في الطاقة النظيفة</h4>
+                        <p class="text-gray-600 dark:text-gray-400 mb-2">تستثمر الإمارات بكثافة لتنويع مزيج الطاقة وزيادة حصة المصادر النظيفة. تشمل المشاريع الرائدة مجمع محمد بن راشد آل مكتوم للطاقة الشمسية (الأكبر في موقع واحد عالميًا)، ومحطة الظفرة للطاقة الشمسية، ومحطة نور أبوظبي. كما توفر محطة براكة للطاقة النووية السلمية كميات كبيرة من الكهرباء الخالية من الانبعاثات، مما يدعم بشكل كبير أهداف الحياد المناخي.</p>
+                         <p class="text-sm text-gray-500 dark:text-gray-500">أهداف طموحة لزيادة نسبة الطاقة النظيفة في مزيج الطاقة الوطني.</p>
+                    </div>
+                </div>
+
+                 <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg flex flex-col md:flex-row items-center gap-6">
+                    <img src="image 6.jpg" alt="حماية الطبيعة والتكيف في الإمارات" class="rounded-md w-full md:w-1/3 h-48 object-cover">
+                    <div class="md:w-2/3">
+                        <h4 class="text-2xl font-semibold mb-3 text-emerald-800 dark:text-emerald-300">حماية الطبيعة وتعزيز التكيف</h4>
+                        <p class="text-gray-600 dark:text-gray-400 mb-2">تولي الدولة أهمية كبيرة للحلول القائمة على الطبيعة كجزء من استراتيجيتها المناخية. تشمل المبادرات زيادة مساحات زراعة أشجار القرم (التي تمتص الكربون وتحمي السواحل)، وبرامج استعادة الشعاب المرجانية، وإنشاء وتوسيع شبكة المحميات الطبيعية. كما تركز جهود التكيف على إدارة الموارد المائية بكفاءة، وتطوير الزراعة المقاومة للمناخ (مثل الزراعة المائية والعمودية)، وتعزيز مرونة البنية التحتية.</p>
+                         <p class="text-sm text-gray-500 dark:text-gray-500">دور هيئة البيئة - أبوظبي ووزارة التغير المناخي والبيئة في هذه الجهود.</p>
+                    </div>
+                </div>
+
+                 <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg flex flex-col md:flex-row-reverse items-center gap-6">
+                     <img src="image 7.jpg" alt="النقل والصناعة المستدامة" class="rounded-md w-full md:w-1/3 h-48 object-cover">
+                     <div class="md:w-2/3">
+                        <h4 class="text-2xl font-semibold mb-3 text-emerald-800 dark:text-emerald-300">نحو نقل وصناعة مستدامين</h4>
+                        <p class="text-gray-600 dark:text-gray-400 mb-2">تعمل الإمارات على تحويل قطاعي النقل والصناعة لتقليل بصمتهما الكربونية. يشمل ذلك تشجيع اعتماد المركبات الكهربائية من خلال تطوير البنية التحتية للشحن وتقديم الحوافز، وتوسيع شبكات النقل العام. وفي الصناعة، يتم التركيز على كفاءة الطاقة، واستكشاف وتطوير استخدام الهيدروجين الأخضر كوقود بديل، ودعم تقنيات احتجاز الكربون في الصناعات كثيفة الانبعاثات.</p>
+                        <p class="text-sm text-gray-500 dark:text-gray-500">مبادرات مثل استراتيجية دبي للتنقل الذكي، وجهود "مصدر" في تطوير الهيدروجين الأخضر.</p>
+                    </div>
+                </div>
+
+                 <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg flex flex-col md:flex-row items-center gap-6">
+                    <img src="image 8.jpg" alt="دور الإمارات العالمي و COP28" class="rounded-md w-full md:w-1/3 h-48 object-cover">
+                    <div class="md:w-2/3">
+                        <h4 class="text-2xl font-semibold mb-3 text-emerald-800 dark:text-emerald-300">الريادة العالمية وتعزيز العمل الجماعي</h4>
+                        <p class="text-gray-600 dark:text-gray-400 mb-2">لعبت استضافة مؤتمر الأطراف COP28 في دبي دورًا محوريًا في تعزيز العمل المناخي العالمي. تم التوصل خلال المؤتمر إلى "اتفاق الإمارات" التاريخي الذي دعا لأول مرة إلى "التحول بعيدًا عن الوقود الأحفوري في أنظمة الطاقة، بطريقة عادلة ومنظمة ومنصفة". تواصل الإمارات دورها كمركز للطاقة النظيفة (استضافة مقر الوكالة الدولية للطاقة المتجددة "آيرينا") وداعم للدول النامية في تحولها الأخضر من خلال مبادرات وشراكات دولية.</p>
+                         <p class="text-sm text-gray-500 dark:text-gray-500">التأكيد على أهمية التمويل المناخي، والعمل متعدد الأطراف، والحلول الشاملة.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="action" class="mb-16 bg-emerald-600 dark:bg-emerald-800 text-white p-8 rounded-lg shadow-lg scroll-mt-20">
+            <h2 class="text-3xl font-bold text-center mb-8">شارك بدورك بفعالية: خطوات عملية في الإمارات</h2>
+            <p class="text-center text-emerald-100 dark:text-emerald-200 mb-8 max-w-3xl mx-auto">العمل المناخي مسؤولية جماعية، وكل مساهمة فردية تحدث فرقًا. إليك طرق عملية يمكنك من خلالها المساهمة في الحل من داخل دولة الإمارات:</p>
+            <div class="grid md:grid-cols-3 gap-6 text-center">
+                <div class="bg-emerald-700 dark:bg-emerald-700 p-6 rounded-lg shadow-md flex flex-col items-center">
+                    <i class="fas fa-home text-4xl text-emerald-300 mb-4"></i>
+                    <h4 class="text-xl font-semibold mb-2 text-white">في المنزل والمكتب</h4>
+                    <ul class="text-sm text-emerald-200 dark:text-emerald-300 list-disc list-inside text-right space-y-1">
+                        <li>اضبط مكيف الهواء على درجة حرارة معتدلة (مثل 24 درجة مئوية).</li>
+                        <li>استخدم المصابيح والأجهزة الموفرة للطاقة (LED).</li>
+                        <li>افصل الأجهزة الإلكترونية عند عدم استخدامها.</li>
+                        <li>قلل استهلاك المياه (استحم لفترة أقصر، أصلح التسربات).</li>
+                        <li>افرز النفايات للمشاركة في برامج إعادة التدوير المحلية.</li>
+                    </ul>
+                </div>
+                <div class="bg-emerald-700 dark:bg-emerald-700 p-6 rounded-lg shadow-md flex flex-col items-center">
+                     <i class="fas fa-bus-alt text-4xl text-emerald-300 mb-4"></i>
+                    <h4 class="text-xl font-semibold mb-2 text-white">أثناء التنقل</h4>
+                     <ul class="text-sm text-emerald-200 dark:text-emerald-300 list-disc list-inside text-right space-y-1">
+                        <li>استخدم وسائل النقل العام (المترو، الترام، الحافلات) كلما أمكن.</li>
+                         <li>فكر في مشاركة السيارة مع الزملاء أو الجيران.</li>
+                        <li>اختر المشي أو ركوب الدراجة للمسافات القصيرة.</li>
+                        <li>عند شراء سيارة جديدة، ضع في اعتبارك الخيارات الهجينة أو الكهربائية.</li>
+                         <li>خطط لرحلاتك لتقليل المسافة المقطوعة وتجنب الازدحام.</li>
+                    </ul>
+                </div>
+                <div class="bg-emerald-700 dark:bg-emerald-700 p-6 rounded-lg shadow-md flex flex-col items-center">
+                    <i class="fas fa-shopping-bag text-4xl text-emerald-300 mb-4"></i>
+                    <h4 class="text-xl font-semibold mb-2 text-white">كـمستهلك واعي</h4>
+                    <ul class="text-sm text-emerald-200 dark:text-emerald-300 list-disc list-inside text-right space-y-1">
+                         <li>قلل الاستهلاك بشكل عام واشترِ فقط ما تحتاجه.</li>
+                        <li>اختر المنتجات ذات التعبئة والتغليف الأقل أو القابلة لإعادة التدوير.</li>
+                        <li>أحضر حقيبتك القابلة لإعادة الاستخدام عند التسوق.</li>
+                        <li>قلل من استهلاك اللحوم الحمراء (التي لها بصمة كربونية عالية).</li>
+                        <li>قلل من هدر الطعام عن طريق التخطيط للوجبات وتخزين الطعام بشكل صحيح.</li>
+                        <li>ادعم الشركات المحلية والمنتجات المستدامة.</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="text-center mt-10">
+                <p class="mb-4 text-emerald-100 dark:text-emerald-200">انضم إلى الجهود المجتمعية وكن جزءًا من الحل!</p>
+                <a href="https://www.moccae.gov.ae/ar/knowledge-and-statistics/climate-change-and-energy.aspx" target="_blank" rel="noopener noreferrer" class="inline-block bg-white text-emerald-600 dark:bg-gray-200 dark:text-emerald-800 font-bold py-2 px-6 rounded-full hover:bg-gray-100 dark:hover:bg-gray-300 transition duration-300 mx-2 mb-2">
+                   <i class="fas fa-info-circle mr-2"></i> وزارة التغير المناخي والبيئة
+                </a>
+                 <a href="https://www.ead.gov.ae/en" target="_blank" rel="noopener noreferrer" class="inline-block bg-white text-emerald-600 dark:bg-gray-200 dark:text-emerald-800 font-bold py-2 px-6 rounded-full hover:bg-gray-100 dark:hover:bg-gray-300 transition duration-300 mx-2 mb-2">
+                   <i class="fas fa-seedling mr-2"></i> هيئة البيئة - أبوظبي
+                </a>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-gray-800 dark:bg-gray-900 text-gray-300 dark:text-gray-400 py-8 border-t border-gray-700 dark:border-gray-600">
+        <div class="container mx-auto px-6 text-center">
+            <div class="mb-4">
+                <a href="#home" class="px-3 hover:text-emerald-400 dark:hover:text-emerald-300">الرئيسية</a> |
+                <a href="https://www.moccae.gov.ae/ar/home.aspx" target="_blank" rel="noopener noreferrer" class="px-3 hover:text-emerald-400 dark:hover:text-emerald-300">وزارة التغير المناخي والبيئة</a> |
+                <a href="https://u.ae/ar-ae/information-and-services/environment-and-energy/climate-change" target="_blank" rel="noopener noreferrer" class="px-3 hover:text-emerald-400 dark:hover:text-emerald-300">بوابة حكومة الإمارات</a>
+            </div>
+            <p class="text-sm">&copy; 2025 جميع الحقوق محفوظة. تم إنشاؤه للمعلومات والتوعية بقضية التغير المناخي وجهود دولة الإمارات.</p>
+             <p class="text-xs mt-2 text-gray-500">تم تطوير هذا الموقع بواسطة نموذج لغوي كبير.</p>
+        </div>
+    </footer>
+
+    <script>
+        const menuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileNavLinksMenu = document.querySelectorAll('#mobile-menu a');
+
+        menuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        mobileNavLinksMenu.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+
+        const sections = document.querySelectorAll('section[id]');
+        const navLinks = document.querySelectorAll('header nav a.nav-link');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                if (pageYOffset >= sectionTop - 80) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            const updateActiveLinks = (links) => {
+                links.forEach(link => {
+                    link.classList.remove('nav-link-active');
+                    if (link.getAttribute('href') && link.getAttribute('href').includes(current)) {
+                        link.classList.add('nav-link-active');
+                    }
+                });
+            }
+
+            updateActiveLinks(navLinks);
+            updateActiveLinks(mobileNavLinksMenu);
+
+             const homeLinkDesktop = document.querySelector('header nav a[href="#home"]');
+             const homeLinkMobile = document.querySelector('#mobile-menu a[href="#home"]');
+
+             if (!current && pageYOffset < 200 && homeLinkDesktop && homeLinkMobile) {
+                 navLinks.forEach(link => link.classList.remove('nav-link-active'));
+                 mobileNavLinksMenu.forEach(link => link.classList.remove('nav-link-active'));
+                 homeLinkDesktop.classList.add('nav-link-active');
+                 homeLinkMobile.classList.add('nav-link-active');
+             } else if (current === 'home' && homeLinkDesktop && homeLinkMobile) {
+                 navLinks.forEach(link => link.classList.remove('nav-link-active'));
+                 mobileNavLinksMenu.forEach(link => link.classList.remove('nav-link-active'));
+                 homeLinkDesktop.classList.add('nav-link-active');
+                 homeLinkMobile.classList.add('nav-link-active');
+             }
+        });
+
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+        const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+        const htmlElement = document.documentElement;
+
+        const setTheme = (isDark) => {
+            if (isDark) {
+                htmlElement.classList.add('dark');
+                themeToggleLightIcon.classList.remove('hidden');
+                themeToggleDarkIcon.classList.add('hidden');
+                localStorage.setItem('color-theme', 'dark');
+            } else {
+                htmlElement.classList.remove('dark');
+                themeToggleLightIcon.classList.add('hidden');
+                themeToggleDarkIcon.classList.remove('hidden');
+                localStorage.setItem('color-theme', 'light');
+            }
+        };
+
+        const preferredTheme = localStorage.getItem('color-theme');
+        const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+        let isInitiallyDark;
+        if (preferredTheme === 'dark') {
+            isInitiallyDark = true;
+        } else if (preferredTheme === 'light') {
+            isInitiallyDark = false;
+        } else {
+             isInitiallyDark = htmlElement.classList.contains('dark');
+        }
+
+        setTheme(isInitiallyDark);
+
+        themeToggleBtn.addEventListener('click', () => {
+            setTheme(!htmlElement.classList.contains('dark'));
+        });
+
+    </script>
+
+</body>
+</html>
