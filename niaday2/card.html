@@ -1,0 +1,57 @@
+<html>
+    <body>
+        <div id="panel">
+            <p>
+                I couldn't quite settle on a gift to get you sooooo here's a prepaid credit card, it has 200 dirhams on it and you can use it for whatever you want!
+                <br/>
+                <br/>
+                5371 0002 6411 5965 expiry: 04 / 28 CVV: 216
+            </p>
+        </div>
+    </body>
+</html>
+
+<style>
+
+@keyframes buttanim {
+    0% {transform: scale(1);}
+    50% {transform:scale(0.5);}
+    100% {transform:scale(1);}
+}    
+#btn:active {
+    animation: buttanim 0.5s;
+}
+button {
+  font-size: 25px;
+  border-radius: 10px;
+  font-family: 'Lato', sans-serif;
+  font-weight: 300;
+}
+a{
+    color: black;
+    text-decoration: none;
+}
+
+#panel{
+  display: flex;
+  align-items: center;
+  display: inline-block;
+  position: fixed;
+  left: 50%;
+  top: 40%;
+  transform: translate(-50%, -50%);
+  margin-top: 5%;
+  border: solid 5px white;
+  border-radius: 10px;
+  padding: 10px;
+  text-align: center;
+  background-color: rgba(0, 0, 0, 0.61);
+  backdrop-filter: blur(5px);
+  font-size: 25px;
+  max-width: 450px;
+}
+    body{
+    background:  #902C3E;
+    color: white;
+}
+</style>

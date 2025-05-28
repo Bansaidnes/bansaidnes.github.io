@@ -1,0 +1,83 @@
+<html>
+    <head>
+        <link rel="shortcut icon" type="image/png" href="img/favicon.png" />
+        <title>Groom DAYYYYY</title>
+    </head>
+    <body>
+        <audio class="song" loop autoplay>
+            <source src="music/hbd.mp3">
+            Your browser isn't invited for super fun audio time.
+        </audio>
+        <button id="startbtn">Start!</button>
+    </body>
+</html>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<style>
+    body{
+        background-color: #902C3E;
+    }
+    .song {
+  visibility: hidden;
+}
+#startbtn {
+    min-width: 200px; /* Ensures the button doesn't get too small */
+    padding: 20px 35px; /* Adds space around the text, adjust as needed */
+    border-radius: 30px; /* Softer, more rounded corners */
+    font-family: 'Lato', sans-serif;
+    font-size: 50px;
+    color: #4A3B31; /* A darker, softer brown instead of pure black, pairs well with antiquewhite */
+    background-color: antiquewhite; /* Your chosen background color */
+    border: 2px solid #E0D8C0; /* A subtle border that complements antiquewhite */
+    cursor: pointer; /* Changes the mouse cursor to a pointer on hover */
+    
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%); /* Keeps your centering logic */
+    
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.15); /* Adds a subtle shadow for depth */
+    transition: all 0.2s ease-in-out; /* Smooth transition for hover and active states */
+    
+    /* Removed fixed width and height (width: 15%; height: 15%;)
+       The button will now size based on its content (text + padding)
+       while respecting min-width. This often looks better. */
+}
+
+#startbtn:hover {
+    background-color: #FFF8E7; /* Slightly lighter, creamier antiquewhite on hover */
+    color: #3D2E27;
+    box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.2); /* Shadow becomes a bit more pronounced */
+    transform: translate(-50%, -50%) translateY(-3px); /* Button lifts slightly */
+}
+
+#startbtn:active {
+    background-color: #F5EADF; /* Slightly darker when pressed */
+    box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.1); /* Shadow recedes */
+    transform: translate(-50%, -50%) translateY(1px); /* Button presses down slightly */
+}
+</style>
+<script>
+    const sBtn = document.getElementById("startbtn")
+    sBtn.addEventListener("click", () => {
+        sBtn.style.display = "none"
+        document.querySelector('.song').play();
+        const song = document.querySelector('.song');
+        song.volume = 0.5;
+        const newIframe = document.createElement('iframe');
+        newIframe.id = "frame";
+        newIframe.style.position = "fixed";
+        newIframe.style.top = "0";
+        newIframe.style.left = "0";
+        newIframe.style.bottom = "0";
+        newIframe.style.right = "0";
+        newIframe.style.width = "100%";
+        newIframe.style.height = "100%";
+        newIframe.style.border = "none";
+        newIframe.style.margin = "0";
+        newIframe.style.padding = "0";
+        newIframe.style.overflow = "hidden";
+        newIframe.style.zIndex = "999999";
+        newIframe.src = "main.html"
+        document.body.appendChild(newIframe);
+    });
+</script>

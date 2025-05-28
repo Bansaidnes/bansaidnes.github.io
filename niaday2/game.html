@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>3D Parkour Cake Game</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cannon.js/0.6.2/cannon.min.js"></script>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f0f0; /* Fallback */
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            width: 100vw;
+        }
+        #gameCanvas {
+            flex-grow: 1;
+            display: block;
+            width: 100%;
+            /* Background color is set by Three.js scene.background */
+        }
+        #instructions {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background-color: rgba(255,255,255,0.2); /* Lighter for dark background */
+            color: white;
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 12px;
+            z-index: 10;
+            user-select: none;
+        }
+        #messageBox {
+            display: none;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 30px;
+            background: linear-gradient(145deg, #555555, #333333); /* Darker theme for message box */
+            border: 1px solid #777777;
+            color: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+            text-align: center;
+            z-index: 100;
+        }
+        #messageBox h2 { margin-top: 0; color: #76FF03; font-size: 24px; } /* Bright green for contrast */
+        #messageBox p { font-size: 16px; margin-bottom: 20px; }
+        #messageBox button {
+            background-color: #76FF03; /* Bright green */
+            color: black;
+            font-weight: bold;
+            border: none;
+            padding: 12px 25px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        #messageBox button:hover { background-color: #64DD17; } /* Darker green */
+
+        #mobileControlsContainer {
+            width: 100%;
+            height: 120px; /* Fixed height for controls */
+            background-color: rgba(0, 0, 0, 0.3); /* Darker transparent background */
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 10px;
+            box-sizing: border-box;
+            user-select: none;
+            -webkit-user-select: none;
+            -ms-user-select: none;
+        }
+        .control-cluster {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .control-row {
+            display: flex;
+        }
+        .mobile-button {
+            background-color: rgba(50, 50, 50, 0.8); /* Darker buttons */
+            border: 2px solid rgba(200, 200, 200, 0.5); /* Lighter border */
+            color: #fff; /* White text */
+            font-size: 18px;
+            font-weight: bold;
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            margin: 5px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+        }
+        .mobile-button:active {
+            background-color: rgba(80, 80, 80, 0.9);
+        }
+        #jumpButton {
+            width: 70px;
+            height: 70px;
+            font-size: 20px;
+            background-color: rgba(0, 150, 255, 0.8); /* Blue for jump */
+            color: white;
+        }
+         #jumpButton:active {
+            background-color: rgba(0, 120, 220, 0.9);
+        }
+
+    </style>
+</head>
+<body>
+    <div id="instructions">
+        Controls:<br>
+        W/A/S/D or Arrow Keys: Move<br>
+        Space: Jump<br>
+        (On-screen controls for mobile)
+    </div>
+    <canvas id="gameCanvas"></canvas>
+    <div id="mobileControlsContainer">
+        <div class="control-cluster">
+            <button class="mobile-button" id="mobileForward">▲</button>
+            <div class="control-row">
+                <button class="mobile-button" id="mobileLeft">◀</button>
+                <button class="mobile-button" id="mobileBackward">▼</button>
+                <button class="mobile-button" id="mobileRight">▶</button>
+            </div>
+        </div>
+        <button class="mobile-button" id="jumpButton">JUMP</button>
+    </div>
+    <div id="messageBox">
+        <h2>Congratulations!</h2>
+        <p>You reached the cake!</p>
+        <button id="playAgainButton"><a href="nletter.html">Next</a></button>    </div>
+
+    <script type="module">
+        // Essential global variables
+        let scene, camera, renderer, world;
+        let playerMesh, playerBody;
+        let cakeMeshGroup, cakeBody; // cakeMesh is now a Group
+        let platforms = []; 
+        let keys = {}; 
+        let touchState = { forward: false, backward: false, left: false, right: false, jump: false }; 
+
+        const playerSpeed = 5;
+        const jumpForce = 8; 
+        const playerRadius = 0.5;
+        const playerStartPos = new CANNON.Vec3(0, 2, 0); 
+        const fallThreshold = -20;
+
+        let gameWon = false;
+        let canvas;
+        
+        let canJump = true; 
+        const jumpCooldown = 800; // User updated cooldown
+        let jumpTimeoutId = null; 
+
+        // Initialize the game environment, physics, objects, and controls
+        function init() {
+            canvas = document.getElementById('gameCanvas');
+
+            // --- Three.js Setup ---
+            scene = new THREE.Scene();
+            scene.background = new THREE.Color(0x902C3E); 
+
+            // Camera
+            let initialClientHeight = canvas.clientHeight;
+            let initialAspect;
+            if (canvas.clientWidth > 0 && initialClientHeight > 0) {
+                initialAspect = canvas.clientWidth / initialClientHeight;
+            } else {
+                console.warn("Canvas initial height is 0 or width is 0. Using window aspect as fallback for camera.");
+                initialAspect = window.innerWidth / Math.max(1, window.innerHeight); 
+                if (isNaN(initialAspect) || !isFinite(initialAspect)) { 
+                    initialAspect = 16/9;
+                }
+            }
+            camera = new THREE.PerspectiveCamera(75, initialAspect, 0.1, 1000);
+            camera.position.set(0, 5, 10); 
+            camera.lookAt(0,0,0); 
+
+            // Renderer
+            renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true });
+            renderer.setSize(Math.max(1, canvas.clientWidth), Math.max(1, initialClientHeight)); 
+            renderer.shadowMap.enabled = true; 
+
+            // Lighting
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.6); // Slightly increased ambient for better cake visibility
+            scene.add(ambientLight);
+            const directionalLight = new THREE.DirectionalLight(0xffffff, 0.9); // Slightly increased directional
+            directionalLight.position.set(15, 25, 20);
+            directionalLight.castShadow = true;
+            directionalLight.shadow.mapSize.width = 2048;
+            directionalLight.shadow.mapSize.height = 2048;
+            directionalLight.shadow.camera.near = 0.5;
+            directionalLight.shadow.camera.far = 70;
+            directionalLight.shadow.camera.left = -30;
+            directionalLight.shadow.camera.right = 30;
+            directionalLight.shadow.camera.top = 30;
+            directionalLight.shadow.camera.bottom = -30;
+            scene.add(directionalLight);
+
+            // --- Cannon.js Setup (Physics) ---
+            world = new CANNON.World();
+            world.gravity.set(0, -9.82 * 2.2, 0); 
+            world.broadphase = new CANNON.NaiveBroadphase(); 
+
+            const groundMaterial = new CANNON.Material("groundMaterial");
+            const playerMaterialCannon = new CANNON.Material("playerMaterial");
+            const contactMaterial = new CANNON.ContactMaterial(groundMaterial, playerMaterialCannon, {
+                friction: 0.2,    
+                restitution: 0.05 
+            });
+            world.addContactMaterial(contactMaterial);
+
+            createPlayer(playerMaterialCannon);
+            createPlatforms(groundMaterial); 
+            createCake(groundMaterial);
+
+            document.addEventListener('keydown', (event) => { keys[event.code] = true; });
+            document.addEventListener('keyup', (event) => { keys[event.code] = false; });
+            document.getElementById('playAgainButton').addEventListener('click', resetGame);
+            setupMobileControls();
+            window.addEventListener('resize', onWindowResize, false);
+            onWindowResize(); 
+
+            animate(); 
+        }
+
+        function setupMobileControls() {
+            const controlsMap = [
+                { id: 'mobileForward', stateKey: 'forward' },
+                { id: 'mobileBackward', stateKey: 'backward' },
+                { id: 'mobileLeft', stateKey: 'left' },
+                { id: 'mobileRight', stateKey: 'right' },
+                { id: 'jumpButton', stateKey: 'jump' }
+            ];
+
+            controlsMap.forEach(control => {
+                const button = document.getElementById(control.id);
+                if (button) {
+                    button.addEventListener('touchstart', (e) => { e.preventDefault(); touchState[control.stateKey] = true; }, { passive: false });
+                    button.addEventListener('touchend', (e) => { e.preventDefault(); touchState[control.stateKey] = false; }, { passive: false });
+                    button.addEventListener('mousedown', (e) => { e.preventDefault(); touchState[control.stateKey] = true; });
+                    button.addEventListener('mouseup', (e) => { e.preventDefault(); touchState[control.stateKey] = false; });
+                    button.addEventListener('mouseleave', (e) => { 
+                        if (touchState[control.stateKey]) { 
+                           e.preventDefault(); touchState[control.stateKey] = false;
+                        }
+                    });
+                } else {
+                    console.warn(`Mobile control button with id '${control.id}' not found.`);
+                }
+            });
+        }
+
+        function createPlayer(material) { 
+            const playerGeometry = new THREE.SphereGeometry(playerRadius, 32, 32);
+            const playerMaterial3JS = new THREE.MeshStandardMaterial({ color: 0x007BFF, metalness: 0.4, roughness: 0.5 }); 
+            playerMesh = new THREE.Mesh(playerGeometry, playerMaterial3JS);
+            playerMesh.castShadow = true;
+            playerMesh.receiveShadow = true;
+            scene.add(playerMesh);
+
+            const playerShape = new CANNON.Sphere(playerRadius);
+            playerBody = new CANNON.Body({ mass: 5, material: material, shape: playerShape });
+            playerBody.position.copy(playerStartPos);
+            playerBody.linearDamping = 0.6; 
+            world.addBody(playerBody);
+
+            playerBody.addEventListener("collide", (event) => {
+                const otherBody = event.body; 
+                if (!gameWon && otherBody === cakeBody) {
+                    winGame();
+                }
+            });
+        }
+
+        function createPlatforms(material) { 
+            platforms = []; 
+            const platformData = [
+                { size: [4, 1, 4], position: [0, -0.5, 0] },    
+                { size: [3.5, 1, 3.5], position: [0, -0.2, -5.5] }, 
+                { size: [3, 1, 3], position: [0, -0.1, -9.8] },    
+                { size: [3, 1, 3], position: [0, 0.2, -14.5] },    
+                { size: [4, 1, 4], position: [0, 0.5, -19.5] }     
+            ];
+
+            platformData.forEach(data => {
+                const platformGeometry = new THREE.BoxGeometry(data.size[0], data.size[1], data.size[2]);
+                const platformMaterial3JS = new THREE.MeshStandardMaterial({ color: 0x000000, metalness: 0.2, roughness: 0.9 }); 
+                const platformMeshInstance = new THREE.Mesh(platformGeometry, platformMaterial3JS); 
+                platformMeshInstance.position.set(data.position[0], data.position[1], data.position[2]);
+                platformMeshInstance.castShadow = true;
+                platformMeshInstance.receiveShadow = true;
+                scene.add(platformMeshInstance);
+
+                const platformShape = new CANNON.Box(new CANNON.Vec3(data.size[0] / 2, data.size[1] / 2, data.size[2] / 2));
+                const platformBodyInstance = new CANNON.Body({ mass: 0, material: material, shape: platformShape }); 
+                platformBodyInstance.position.set(data.position[0], data.position[1], data.position[2]);
+                world.addBody(platformBodyInstance);
+                platforms.push({ mesh: platformMeshInstance, body: platformBodyInstance });
+            });
+        }
+
+        function createCake(material) { 
+            cakeMeshGroup = new THREE.Group(); // Use a group for the composite cake
+
+            const cakeBaseRadius = 0.7;
+            const cakeBaseHeight = 0.6;
+            const cakeTopRadius = 0.55;
+            const cakeTopHeight = 0.5;
+            const frostingHeight = 0.15;
+            const cherryRadius = 0.1;
+
+            // Materials
+            const cakeMaterial = new THREE.MeshStandardMaterial({ color: 0xD2B48C, metalness: 0.1, roughness: 0.8 }); // Tan/Light Brown
+            const frostingMaterial = new THREE.MeshStandardMaterial({ color: 0xFFFAF0, metalness: 0.2, roughness: 0.6 }); // Floral White
+            const cherryMaterial = new THREE.MeshStandardMaterial({ color: 0xFF0000, metalness: 0.3, roughness: 0.4 }); // Bright Red
+
+            // Base Layer
+            const baseGeom = new THREE.CylinderGeometry(cakeBaseRadius, cakeBaseRadius, cakeBaseHeight, 32);
+            const baseMesh = new THREE.Mesh(baseGeom, cakeMaterial);
+            baseMesh.castShadow = true;
+            baseMesh.receiveShadow = true;
+            cakeMeshGroup.add(baseMesh);
+
+            // Frosting on Base Layer (slightly larger radius, thin)
+            const baseFrostingGeom = new THREE.CylinderGeometry(cakeBaseRadius + 0.02, cakeBaseRadius + 0.02, frostingHeight, 32);
+            const baseFrostingMesh = new THREE.Mesh(baseFrostingGeom, frostingMaterial);
+            baseFrostingMesh.position.y = cakeBaseHeight / 2 - frostingHeight / 2 + 0.01; // Position on top of base
+            baseFrostingMesh.castShadow = true;
+            baseFrostingMesh.receiveShadow = true;
+            cakeMeshGroup.add(baseFrostingMesh);
+            
+            // Top Layer
+            const topGeom = new THREE.CylinderGeometry(cakeTopRadius, cakeTopRadius, cakeTopHeight, 32);
+            const topMesh = new THREE.Mesh(topGeom, cakeMaterial);
+            topMesh.position.y = cakeBaseHeight / 2 + cakeTopHeight / 2; // Stack on base
+            topMesh.castShadow = true;
+            topMesh.receiveShadow = true;
+            cakeMeshGroup.add(topMesh);
+
+            // Frosting on Top Layer
+            const topFrostingGeom = new THREE.CylinderGeometry(cakeTopRadius + 0.02, cakeTopRadius + 0.02, frostingHeight, 32);
+            const topFrostingMesh = new THREE.Mesh(topFrostingGeom, frostingMaterial);
+            topFrostingMesh.position.y = topMesh.position.y + cakeTopHeight / 2 - frostingHeight / 2 + 0.01; // Position on top of top layer
+            topFrostingMesh.castShadow = true;
+            topFrostingMesh.receiveShadow = true;
+            cakeMeshGroup.add(topFrostingMesh);
+
+            // Cherry on Top
+            const cherryGeom = new THREE.SphereGeometry(cherryRadius, 16, 16);
+            const cherryMesh = new THREE.Mesh(cherryGeom, cherryMaterial);
+            cherryMesh.position.y = topFrostingMesh.position.y + frostingHeight/2 + cherryRadius * 0.8; // On top of frosting
+            cherryMesh.castShadow = true;
+            // cherryMesh.receiveShadow = true; // Small objects might not need to receive shadows
+            cakeMeshGroup.add(cherryMesh);
+            
+            scene.add(cakeMeshGroup);
+
+            // Physics Body (simple cylinder for collision)
+            // The physics body should roughly encompass the visual cake for good collision feel.
+            // Using the base layer's dimensions for simplicity.
+            const cakeCollisionHeight = cakeBaseHeight + cakeTopHeight + frostingHeight; // Approximate total height
+            const cakeShape = new CANNON.Cylinder(cakeBaseRadius, cakeBaseRadius, cakeCollisionHeight, 16); 
+            cakeBody = new CANNON.Body({ mass: 0, material: material, shape: cakeShape, isTrigger: true }); 
+            
+            if (platforms.length > 0) { 
+                const lastPlatform = platforms[platforms.length - 1];
+                const lastPlatformPos = lastPlatform.body.position;
+                const lastPlatformHeight = lastPlatform.mesh.geometry.parameters.height; 
+                // Adjust cake Y position so its base is on the platform
+                cakeMeshGroup.position.set(lastPlatformPos.x, lastPlatformPos.y + lastPlatformHeight / 2 + cakeCollisionHeight / 2 - (cakeCollisionHeight - cakeBaseHeight)/2 , lastPlatformPos.z);
+                cakeBody.position.copy(cakeMeshGroup.position); // Make physics body follow visual group
+            } else { 
+                 const defaultCakePlatformY = 0.5; 
+                 const defaultCakeY = defaultCakePlatformY + cakeCollisionHeight / 2 - (cakeCollisionHeight-cakeBaseHeight)/2;
+                 cakeMeshGroup.position.set(0, defaultCakeY, -19.5); 
+                 cakeBody.position.copy(cakeMeshGroup.position);
+            }
+            world.addBody(cakeBody);
+        }
+
+        function handleControls(deltaTime) {
+            if (gameWon) return; 
+
+            const inputDirection = new THREE.Vector3(0,0,0);
+            if (keys['KeyW'] || keys['ArrowUp'] || touchState.forward) inputDirection.z += 1; 
+            if (keys['KeyS'] || keys['ArrowDown'] || touchState.backward) inputDirection.z -= 1; 
+            if (keys['KeyA'] || keys['ArrowLeft'] || touchState.left) inputDirection.x += 1; 
+            if (keys['KeyD'] || keys['ArrowRight'] || touchState.right) inputDirection.x -= 1; 
+
+            if (inputDirection.lengthSq() > 0) { 
+                const cameraDirection = new THREE.Vector3();
+                camera.getWorldDirection(cameraDirection);
+                cameraDirection.y = 0;
+                cameraDirection.normalize();
+
+                const right = new THREE.Vector3().crossVectors(camera.up, cameraDirection).normalize();
+                
+                const finalMove = new THREE.Vector3();
+                finalMove.addScaledVector(cameraDirection, inputDirection.z * playerSpeed);
+                finalMove.addScaledVector(right, inputDirection.x * playerSpeed);
+                
+                playerBody.velocity.x = finalMove.x;
+                playerBody.velocity.z = finalMove.z;
+            } else { 
+                 if (Math.abs(playerBody.velocity.y) < 0.5) { 
+                    playerBody.velocity.x *= 0.85; 
+                    playerBody.velocity.z *= 0.85;
+                 }
+            }
+
+            if ((keys['Space'] || touchState.jump) && canJump) {
+                playerBody.velocity.y = jumpForce;
+                canJump = false; 
+
+                if (jumpTimeoutId !== null) {
+                    clearTimeout(jumpTimeoutId);
+                }
+                jumpTimeoutId = setTimeout(() => {
+                    canJump = true; 
+                    jumpTimeoutId = null;
+                }, jumpCooldown);
+
+                if(keys['Space']) keys['Space'] = false; 
+                if(touchState.jump) touchState.jump = false; 
+            }
+        }
+
+        const clock = new THREE.Clock(); 
+        function animate() {
+            requestAnimationFrame(animate); 
+            const deltaTime = clock.getDelta(); 
+
+            world.step(1 / 60, deltaTime, 3); 
+
+            if (!gameWon) {
+                handleControls(deltaTime); 
+            }
+
+            if (playerMesh && playerBody) {
+                playerMesh.position.copy(playerBody.position);
+                playerMesh.quaternion.copy(playerBody.quaternion);
+            }
+
+            platforms.forEach(p => {
+                if (p.mesh && p.body) {
+                    p.mesh.position.copy(p.body.position);
+                    p.mesh.quaternion.copy(p.body.quaternion);
+                }
+            });
+
+            // Sync the cake group with its physics body
+            if (cakeMeshGroup && cakeBody) {
+                // The physics body (cakeBody) is the source of truth for position
+                // but we set its position initially based on the visual.
+                // For this setup, let's ensure the visual group follows the physics body
+                // if we were to make the cakeBody non-static (e.g. pushable).
+                // Since it's static and a trigger, we only need to set its position once.
+                // The visual (cakeMeshGroup) was already positioned in createCake.
+                // If the cake were to move, we'd do:
+                // cakeMeshGroup.position.copy(cakeBody.position);
+                // cakeMeshGroup.quaternion.copy(cakeBody.quaternion);
+            }
+
+
+            if (playerMesh) {
+                const offset = new THREE.Vector3(0, 4, 8); 
+                const desiredPosition = playerMesh.position.clone().add(offset);
+                const lerpFactor = 0.08; 
+                camera.position.lerp(desiredPosition, lerpFactor);
+                camera.lookAt(playerMesh.position); 
+            }
+
+            if (playerBody && playerBody.position.y < fallThreshold && !gameWon) {
+                resetPlayerPosition();
+            }
+
+            renderer.render(scene, camera); 
+        }
+
+        function onWindowResize() {
+            if (!canvas || !renderer || !camera) return;
+            
+            const newWidth = Math.max(1, canvas.clientWidth); 
+            const newHeight = Math.max(1, canvas.clientHeight); 
+
+            camera.aspect = newWidth / newHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(newWidth, newHeight);
+        }
+
+        function winGame() {
+            if (gameWon) return; 
+            gameWon = true;
+            document.getElementById('messageBox').style.display = 'block'; 
+            if (playerBody) {
+                playerBody.velocity.set(0,0,0);
+                playerBody.angularVelocity.set(0,0,0);
+            }
+        }
+
+        function resetPlayerPosition() {
+            if (playerBody) {
+                playerBody.position.copy(playerStartPos);
+                playerBody.velocity.set(0, 0, 0);
+                playerBody.angularVelocity.set(0, 0, 0);
+                canJump = true; 
+                if (jumpTimeoutId !== null) { 
+                    clearTimeout(jumpTimeoutId);
+                    jumpTimeoutId = null;
+                }
+            }
+        }
+
+        function resetGame() {
+            gameWon = false;
+            document.getElementById('messageBox').style.display = 'none';
+            resetPlayerPosition();
+        }
+
+        window.onload = init;
+
+    </script>
+</body>
+</html>
