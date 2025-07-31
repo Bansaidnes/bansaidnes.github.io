@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My wife dayyy</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            /* A beautiful deep red/maroon gradient background */
+            background: linear-gradient(135deg, #8B0000, #4A0000);
+            font-family: 'Pacifico', cursive;
+        }
+
+        /* Container to center the main content */
+        .container {
+            display: flex;
+            /* Stack the image and text vertically */
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+            padding: 20px;
+        }
+
+        /* Style for the image placeholder */
+        .main-photo {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%; /* Makes the image circular */
+            border: 5px solid white;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
+            margin-bottom: 2rem; /* Space between image and text */
+            object-fit: cover; /* Ensures the image fills the circle without stretching */
+        }
+
+        h1 {
+            font-size: 3rem; /* Responsive font size */
+            color: white;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Larger font size for bigger screens */
+        @media (min-width: 640px) {
+            h1 {
+                font-size: 4rem;
+            }
+        }
+
+        /* The floating heart elements */
+        .heart {
+            position: absolute;
+            bottom: -50px; /* Start from below the screen */
+            font-size: 2rem;
+            color: #ff7e9f; /* A soft pink color for the hearts */
+            pointer-events: none;
+            /* The animation definition */
+            animation: floatUp 10s linear infinite;
+        }
+
+        /* The keyframe animation for floating up */
+        @keyframes floatUp {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                /* Float up to the top and off the screen */
+                transform: translateY(-120vh) rotate(720deg);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="heart-container"></div>
+
+    <div class="container">
+        <!-- Image placeholder - replace the src with your image URL -->
+        <img src="https://placehold.co/400x400/fbcfe8/4a0000?text=Your+Photo" alt="A photo of my love" class="main-photo" onerror="this.onerror=null;this.src='https://placehold.co/400x400/fbcfe8/4a0000?text=Photo+Error';">
+
+        <h1>Happy GF Day My Loveee!</h1>
+    </div>
+
+    <script>
+        const heartContainer = document.getElementById('heart-container');
+
+        // Function to create a single heart
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.innerHTML = '❤';
+            heart.classList.add('heart');
+
+            // Randomize starting horizontal position
+            heart.style.left = `${Math.random() * 100}vw`;
+
+            // Randomize animation duration for a more natural look
+            heart.style.animationDuration = `${Math.random() * 5 + 7}s`; // 7 to 12 seconds
+
+            // Randomize heart size
+            heart.style.fontSize = `${Math.random() * 1.5 + 1}rem`; // 1rem to 2.5rem
+
+            heartContainer.appendChild(heart);
+
+            // Remove the heart from the DOM after it has finished animating
+            // to prevent the page from slowing down.
+            setTimeout(() => {
+                heart.remove();
+            }, 12000); // A bit longer than the max animation duration
+        }
+
+        // Create a new heart every 300 milliseconds
+        setInterval(createHeart, 300);
+    </script>
+
+</body>
+</html>
+
