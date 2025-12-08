@@ -1,0 +1,30 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32414.248
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BanHostAPI", "BanHostAPI\BanHostAPI.csproj", "{7287D110-033A-4890-8981-6B8A9F1217AC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{A17928ED-F179-4BCB-9D40-DDE4C64BFF5A}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7287D110-033A-4890-8981-6B8A9F1217AC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7287D110-033A-4890-8981-6B8A9F1217AC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7287D110-033A-4890-8981-6B8A9F1217AC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7287D110-033A-4890-8981-6B8A9F1217AC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {289B5C4C-4C6E-44FE-8D39-709FAD9561C6}
+	EndGlobalSection
+EndGlobal
