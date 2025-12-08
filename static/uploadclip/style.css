@@ -1,0 +1,176 @@
+#body, html{margin: 0; padding: 0; height: 100%; overflow: hidden;}
+.content{ position:absolute; left: 0%; right: 0%; bottom: 0%; top: 0%;}
+#over {position:relative; }
+p{font-size: 1.5em; color: white;}
+
+button, #fileLabel {
+    background-color:#5a189a; 
+    color: white; 
+    border: none; 
+    border-radius: 10px; 
+    padding: 10px; 
+    font-size: 1.5em; 
+    cursor: pointer;
+    margin-top: 0; 
+}
+
+.button-group {
+    display: flex;
+    justify-content: center;
+    gap: 15px; 
+    margin-top: 10px;
+    width: 100%;
+}
+
+input{
+  display: none;
+}
+
+#clipName {
+    display: none; 
+    background-color: rgba(255, 255, 255, 0.1); 
+    border: 2px solid white;
+    color: white;
+    border-radius: 10px;
+    padding: 10px;
+    font-size: 1.2em;
+    width: 80%;
+    margin: 10px auto; 
+    text-align: center;
+    outline: none;
+    transition: background-color 0.3s;
+}
+
+#clipName:focus {
+    background-color: rgba(255, 255, 255, 0.2);
+    border-color: #af38d6;
+}
+
+#clipName::placeholder {
+    color: #ddd;
+    opacity: 0.8;
+}
+
+#download-panel{
+  display: flex;
+  align-items: center;
+  display: inline-block;
+  position: fixed;
+  left: 50%;
+  top: 40%;
+  transform: translate(-50%, -50%);
+  margin-top: 5%;
+  border: solid 5px white;
+  border-radius: 10px;
+  padding: 10px;
+  text-align: center;
+  background-color: rgba(0, 0, 0, 0.61);
+  backdrop-filter: blur(5px);
+}
+
+#drop-zone {
+    border: 2px dashed #ffffff;
+    border-radius: 10px;
+    width: 400px;
+    height: 200px;
+    margin: 10px auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.3s, border-color 0.3s;
+    position: relative;
+    overflow: hidden;
+}
+
+#drop-zone.dragover {
+    background-color: rgba(175, 56, 214, 0.3);
+    border-color: #af38d6;
+}
+
+.drop-text {
+    font-size: 1.2em;
+    color: #ccc;
+    pointer-events: none;
+}
+
+video {
+  display: none;
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  border-radius: 8px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+#error-popup {
+    position: fixed;
+    top: 90px; 
+    right: 20px;
+    left: auto; 
+    transform: none; 
+    background-color: rgba(255, 0, 0, 0.2);
+    border: 1px solid rgba(255, 100, 100, 0.5);
+    backdrop-filter: blur(10px);
+    color: white;
+    padding: 15px 30px;
+    border-radius: 12px;
+    font-size: 1.2em;
+    z-index: 1000;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.5s ease-in-out;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+}
+
+#error-popup.show {
+    opacity: 1;
+}
+
+@keyframes buttanim {
+    0% {transform: scale(1);}
+    50% {transform:scale(0.5);}
+    100% {transform:scale(1);}
+}
+#btn:active {
+    animation: buttanim 0.5s;
+}
+a{
+  color:white;
+}
+a:hover{
+  color: #af38d6;
+  cursor: pointer;
+}
+@media (max-width: 858px){  
+  .about{padding: 20px;  overflow:hidden;}
+  #body, html{margin: 0; padding: 0; height: 100%; overflow: hidden;}
+  .content{ position:absolute; left: 0%; right: 0%; bottom: 0%; top: 0%;}
+  #over {position:relative;}
+  p{font-size: 1em; color: white;}
+  h1{font-size: 1em; color: white;}
+  button, #fileLabel{background-color:#5a189a; color: white; border: none; border-radius: 5px; padding: 10px; font-size: 1em; margin-top: 0px; cursor: pointer;}
+  #download-panel{
+    min-width: 200px;
+  }
+  
+  #clipName {
+      width: 90%;
+      font-size: 1em;
+  }
+
+  #drop-zone {
+      width: 300px;
+      height: 175px;
+      border: 2px dashed #ffffff;
+  }
+
+  video {
+    display: block;
+    max-width:300px;
+    max-height: 175px;
+  }
+}

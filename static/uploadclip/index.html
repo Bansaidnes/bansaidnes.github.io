@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    
+    <link rel="stylesheet" href="/static/uploadclip/style.css">
+    <link rel="stylesheet" href="/static/navbar.css">
+    <link rel="icon" type="image/x-icon" href="/static/img/Icon.jpg">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+    
+    <script src="/static/config.js"></script> 
+    
+    <title>Post a clip</title>
+</head>
+<body>
+    <div id="error-popup">File is too large! Max 500MB.</div>
+
+    <div class="content">
+        <iframe width="100%" height="100%" frameborder="0" src="/static/jellyfish.html"></iframe>
+    </div>
+    <div id="over">
+      <nav>
+        <input type="checkbox" id="check">
+        <label for="check" class="checkbtn">
+            <i class="fas fa-bars"></i>
+        </label> 
+        <label class="logo" ><a href="/">Bansaidnes</a></label>
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="https://cws.bansaidn.es">VPN</a></li>
+            <li><a href="https://github.com/Bansaidnes">Github</a></li>
+            <li><a href="/UrlShortener/">Url Shortener</a></li>
+        </ul>
+      </nav>
+      <div id="download-panel">
+        <form method="post" enctype="multipart/form-data" id="form">
+            <p id="filename">Selected file: </p>
+            
+            <div id="drop-zone">
+                <p class="drop-text">Drag & Drop Video Here</p>
+                <video autoplay controls src="" style="display: none;"></video>
+            </div>
+            
+            <input type="text" id="clipName" name="name" placeholder="Clip Title (Optional)" autocomplete="off">
+
+            <div id="progress-panel" style="display: none;">
+                <p id="status-text">Upload progress: </p>
+                <progress id="upload-progress"></progress>
+                <br/>
+            </div>
+            
+            <p id="clip-url"></p>
+            
+            <!-- Added ID here to target it in JS -->
+            <p id="max-size-text" style="font-size: 0.8em; color: #ddd; margin-top: 5px; margin-bottom: 5px;">Max file size: 500MB</p>
+
+            <div class="button-group">
+                <label for="vidUp" id="fileLabel">Select File</label>
+                <input id="vidUp" name="clip" type="file" />
+                
+                <button type="button" id="copy-btn" style="display: none;" onclick=copy()> Copy </button>
+                <button type="button" id="shorten-btn" style="display: none;" onclick=shorten()> Shorten </button>
+                <button id="upload-btn" type="submit">Upload</button>
+            </div>
+        </form>
+      </div>
+    </div>
+    <script src="/static/uploadclip/script.js"></script>
+</body>
+</html>

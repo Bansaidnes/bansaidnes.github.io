@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='clip/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='navbar.css') }}">
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='img/Icon.jpg') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+    
+    <script src="{{ url_for('static', filename='config.js') }}"></script>
+    <script src="{{ url_for('static', filename='clip/script.js') }}" defer></script>
+
+    <title>{{ clip_title }}</title>
+    <meta property="og:title" content="{{ clip_title }}" />
+    <meta property="og:description" content="A cool looping video." />
+    <meta property="og:site_name" content="bansaidn.es" />
+    <meta property="og:type" content="video.other" />
+    <meta property="og:video" content="{{ direct_video_url }}" />
+    <meta property="og:video:type" content="video/mp4" />
+    <meta property="og:video:width" content="{{ video_width }}" />
+    <meta property="og:video:height" content="{{ video_height }}" />
+    <meta content="#6A5ACD" data-react-helmet="true" name="theme-color" />
+
+</head>
+<body>
+    <div class="content">
+        <iframe width="100%" height="100%" frameborder="0" src="{{ url_for('static', filename='jellyfish.html') }}"></iframe>
+    </div>
+    <div id="over">
+	<nav>
+        <input type="checkbox" id="check">
+        <label for="check" class="checkbtn">
+            <i class="fas fa-bars"></i>
+        </label> 
+        <label class="logo" ><a href="/">Bansaidnes</a></label>
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="https://cws.bansaidn.es">VPN</a></li>
+            <li><a href="https://github.com/Bansaidnes">Github</a></li>
+            <li><a href="/UrlShortener/">Url Shortener</a></li>
+        </ul>
+      </nav>
+        <div id="clip-panel">
+            <p id="clip"></p>
+            <p>View clip: {{ clip_name }}</p> 
+            <Video autoplay controls id="player" src="" playsinline>Your broswer does not support video tags >:C</Video>
+        </div>
+    </div>
+</body>
+</html>
