@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using BanHostAPI.Classes;
+using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Linq;
 
 namespace BanHostAPI.Controllers

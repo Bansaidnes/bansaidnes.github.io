@@ -1,0 +1,432 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<style>
+    .glass-panel {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 40px;
+        text-align: center;
+        position: relative;
+    }
+
+    .wp-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+    }
+
+    .wp-container input[type="text"] {
+        width: 100%;
+        max-width: 350px;
+        padding: 15px;
+        border-radius: 50px;
+        border: 1px solid rgba(255,255,255,0.2);
+        background: rgba(255,255,255,0.05);
+        color: white;
+        text-align: center;
+        font-size: 1.1em;
+        margin-bottom: 10px;
+        outline: none;
+        transition: all 0.3s ease;
+    }
+    
+    .wp-container input:focus {
+        background: rgba(255,255,255,0.15);
+        border-color: var(--primary-color);
+        box-shadow: 0 0 15px rgba(157, 78, 221, 0.4);
+    }
+
+    .toggle-wrapper {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        margin-bottom: 15px;
+        background: rgba(255, 255, 255, 0.05);
+        padding: 8px 20px;
+        border-radius: 30px;
+        border: 1px solid rgba(255,255,255,0.1);
+    }
+    
+    .toggle-label {
+        color: rgba(255, 255, 255, 0.8);
+        font-size: 0.9em;
+        font-weight: 500;
+    }
+
+    .toggle-switch {
+        position: relative;
+        display: inline-block;
+        width: 44px;
+        height: 24px;
+    }
+
+    .toggle-switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+    }
+
+    .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0; left: 0; right: 0; bottom: 0;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 34px;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        transition: 0.4s;
+    }
+
+    .slider:before {
+        position: absolute;
+        content: "";
+        height: 16px;
+        width: 16px;
+        left: 3px;
+        bottom: 3px;
+        background: white;
+        border-radius: 50%;
+        transition: 0.4s;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+
+    input:checked + .slider {
+        background: rgba(157, 78, 221, 0.6);
+        border-color: rgba(157, 78, 221, 0.8);
+        box-shadow: 0 0 10px rgba(157, 78, 221, 0.4);
+    }
+
+    input:checked + .slider:before {
+        transform: translateX(20px);
+    }
+
+    .btn {
+        width: 200px;
+        margin: 10px 0;
+        border-radius: 50px;
+        padding: 12px;
+        cursor: pointer;
+        border: none;
+        font-size: 1em;
+        background: var(--primary-color, #9d4edd);
+        color: white;
+        transition: 0.3s;
+    }
+    .btn:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(157, 78, 221, 0.4); }
+    
+    .btn.secondary { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); }
+    .btn.secondary:hover { background: rgba(255,255,255,0.2); }
+    
+    .btn.small { width: auto; padding: 8px 20px; font-size: 0.9em; }
+
+    .divider {
+        display: flex; align-items: center; text-align: center; 
+        margin: 20px 0; color: var(--text-dim, #aaa); 
+        width: 100%; max-width: 400px;
+    }
+    .divider::before, .divider::after { content: ''; flex: 1; border-bottom: 1px solid rgba(255,255,255,0.1); }
+    .divider span { padding: 0 10px; font-size: 0.9em; text-transform: uppercase; letter-spacing: 1px; }
+
+    .room-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+        flex-wrap: wrap; 
+        gap: 15px;
+    }
+
+    .room-code-badge {
+        background: rgba(157, 78, 221, 0.2);
+        border: 1px solid var(--primary-color, #9d4edd);
+        padding: 8px 20px;
+        border-radius: 10px;
+        font-family: 'Montserrat', sans-serif;
+        letter-spacing: 2px;
+        color: var(--accent-color, #e0aaff);
+        cursor: pointer;
+        transition: all 0.3s ease;
+        white-space: nowrap;
+    }
+    .room-code-badge:hover {
+        background: rgba(157, 78, 221, 0.4);
+        box-shadow: 0 0 15px rgba(157, 78, 221, 0.3);
+    }
+
+    .status-indicator {
+        display: flex; align-items: center; gap: 8px; font-size: 0.9em; color: #aaa; margin-top: 5px;
+    }
+    .status-dot { width: 8px; height: 8px; border-radius: 50%; background: #555; box-shadow: 0 0 5px black; }
+    .status-dot.connected { background: #4ade80; box-shadow: 0 0 8px #4ade80; }
+
+    .video-wrapper {
+        position: relative;
+        width: 100%;
+        padding-bottom: 56.25%;
+        background: black;
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        margin-bottom: 20px;
+    }
+
+    .video-wrapper video {
+        position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: contain;
+    }
+
+    .series-controls {
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 12px;
+        padding: 15px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+    .series-controls.hidden { display: none; }
+    .np-info { display: flex; align-items: center; gap: 10px; color: #ddd; }
+
+    .episode-flyout {
+        position: absolute;
+        top: 0; left: 0; width: 100%; height: 100%;
+        background: rgba(15, 15, 20, 0.98);
+        backdrop-filter: blur(15px);
+        z-index: 20;
+        display: flex;
+        flex-direction: column;
+        padding: 30px;
+        opacity: 0;
+        pointer-events: none;
+        transition: all 0.3s ease;
+        box-sizing: border-box;
+    }
+    .episode-flyout.active { opacity: 1; pointer-events: auto; }
+
+    #season-select {
+        width: 100%; padding: 12px;
+        background: #222; color: white;
+        border: 1px solid rgba(255,255,255,0.2);
+        border-radius: 8px; margin-bottom: 15px;
+        font-size: 1em; outline: none;
+    }
+
+    .episode-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(50px, 1fr));
+        gap: 8px;
+        overflow-y: auto;
+        padding-bottom: 20px;
+        flex: 1;
+        min-height: 0;
+        align-content: flex-start; 
+    }
+
+    .ep-btn {
+        aspect-ratio: 1;
+        width: 100%;
+        background: rgba(255,255,255,0.08);
+        border: 1px solid rgba(255,255,255,0.1);
+        border-radius: 8px;
+        display: grid;
+        place-items: center;
+        cursor: pointer;
+        color: #ccc;
+        font-size: 0.9em;
+        user-select: none;
+        transition: 0.2s;
+    }
+    .ep-btn:hover { background: rgba(255,255,255,0.2); color: white; }
+    .ep-btn.active { background: var(--primary-color, #9d4edd); color: white; border-color: transparent; }
+
+    @media (max-width: 768px) {
+        .episode-flyout {
+            position: fixed;
+            inset: 0;
+            width: auto; height: auto;
+            padding: 20px;
+            padding-bottom: 60px;
+            z-index: 99999;
+            border-radius: 0;
+        }
+
+        .episode-grid {
+            grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+            gap: 12px;
+        }
+
+        .ep-btn { font-size: 1.1em; }
+
+        .room-header { flex-direction: column; align-items: flex-start; gap: 10px; }
+        .room-code-badge { align-self: flex-start; margin-top: 0; }
+        .close-btn-wrapper button { padding: 10px; font-size: 1.5em; }
+    }
+
+    .members-grid {
+        display: flex; flex-wrap: wrap; gap: 10px; margin-top: 15px;
+    }
+    .member-card {
+        background: rgba(255,255,255,0.05);
+        border: 1px solid rgba(255,255,255,0.1);
+        padding: 10px 15px;
+        border-radius: 12px;
+        display: flex; align-items: center; gap: 10px;
+        transition: all 0.2s ease;
+    }
+    .member-card.is-host { border-color: var(--primary-color); background: rgba(157, 78, 221, 0.1); }
+    .kick-btn {
+        background: rgba(255, 68, 68, 0.2); color: #ff6b6b; border: none;
+        padding: 4px 8px; border-radius: 6px; cursor: pointer; font-size: 0.8em;
+    }
+
+    .library-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+        gap: 15px;
+        max-height: 60vh;
+        overflow-y: auto; padding: 10px; width: 100%;
+    }
+    .show-card {
+        border-radius: 10px; overflow: hidden; aspect-ratio: 2/3; cursor: pointer; position: relative;
+        transition: transform 0.2s;
+    }
+    .show-card:hover { transform: scale(1.05); z-index: 2; box-shadow: 0 0 20px rgba(0,0,0,0.5); }
+    .show-card img { width: 100%; height: 100%; object-fit: cover; }
+    .show-title {
+        position: absolute; bottom: 0; left: 0; width: 100%;
+        background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+        padding: 20px 5px 5px 5px; font-size: 0.9em; font-weight: bold;
+    }
+
+    .glass-message {
+        position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(20px);
+        background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(12px);
+        padding: 12px 25px; border-radius: 50px; border: 1px solid rgba(255,255,255,0.2);
+        box-shadow: 0 10px 30px rgba(0,0,0,0.3); color: white;
+        display: flex; align-items: center; gap: 10px; opacity: 0; pointer-events: none;
+        transition: all 0.4s; z-index: 1000;
+    }
+    .glass-message.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+    .glass-modal-overlay {
+        position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+        background: rgba(0,0,0,0.8); z-index: 2000;
+        backdrop-filter: blur(5px);
+        display: flex; justify-content: center; align-items: center;
+        opacity: 0; pointer-events: none; transition: opacity 0.3s;
+    }
+    .glass-modal-overlay.active { opacity: 1; pointer-events: auto; }
+
+    .glass-modal {
+        background: rgba(30, 30, 35, 0.95);
+        border: 1px solid rgba(255,255,255,0.1);
+        padding: 30px; border-radius: 20px;
+        text-align: center; max-width: 400px; width: 90%;
+        transform: translateY(20px); transition: transform 0.3s;
+    }
+    .glass-modal-overlay.active .glass-modal { transform: translateY(0); }
+
+    .modal-btn-row { display: flex; gap: 15px; justify-content: center; margin-top: 20px; }
+    
+    .danger-btn { background: rgba(255,68,68,0.2); color: #ff6b6b; border: 1px solid rgba(255,68,68,0.3); }
+    .danger-btn:hover { background: rgba(255,68,68,0.4); }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="glass-panel">
+    
+    <div id="lobby-view" class="content-section active">
+        <h1>BanWatch</h1>
+        <p>Sync video playback with friends in real time</p>
+        <div class="wp-container">
+            <input type="text" id="username" placeholder="Enter your username" autocomplete="off" maxlength="24" style="max-width:350px;">
+            <div class="divider"><span>Create Room</span></div>
+            
+            <div class="toggle-wrapper">
+                <label class="toggle-switch">
+                    <input type="checkbox" id="mutual-control-toggle">
+                    <span class="slider"></span>
+                </label>
+                <span class="toggle-label">Allow Mutual Control</span>
+            </div>
+            
+            <button class="btn" onclick="openLibrary()"><i class="fas fa-film"></i> Pick a Show</button>
+            <div class="divider"><span>Or Join Room</span></div>
+            <input type="text" id="joinRoomCode" placeholder="6-Character Room Code" maxlength="6" style="text-transform: uppercase; max-width:350px;">
+            <button class="btn secondary" id="join-btn" style="width: 200px; margin-top:10px;">Join Party</button>
+        </div>
+    </div>
+
+    <div id="library-view" class="content-section hidden">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+            <button class="btn secondary small" onclick="backToLobby()"><i class="fas fa-arrow-left"></i> Back</button>
+            <h3>Library</h3>
+            <div style="width:50px;"></div>
+        </div>
+        <div id="library-grid" class="library-grid"><i class="fas fa-spinner fa-spin"></i> Loading...</div>
+    </div>
+
+    <div id="player-view" class="content-section hidden">
+        <div class="room-header">
+            <div style="text-align: left;">
+                <h2 id="room-title" style="margin:0; font-size: 1.5em;">Loading...</h2>
+                <div class="status-indicator">
+                    <div id="status-dot" class="status-dot"></div>
+                    <span id="status-text">Connecting...</span>
+                </div>
+            </div>
+            <div class="room-code-badge" id="copy-code-btn" title="Click to Copy">CODE: <span id="display-code">---</span></div>
+        </div>
+
+        <div class="video-wrapper">
+            <video id="videoPlayer" controls playsinline></video>
+            <div id="episode-flyout" class="episode-flyout">
+                <div class="close-btn-wrapper" style="display:flex; justify-content:space-between; margin-bottom:15px; align-items:center;">
+                    <h3 style="margin:0;">Select Episode</h3>
+                    <button onclick="toggleFlyout(false)" style="background:none; border:none; color:white; font-size:1.5em; cursor:pointer; padding:5px;"><i class="fas fa-times"></i></button>
+                </div>
+                <select id="season-select"></select>
+                <div id="episode-grid" class="episode-grid"></div>
+            </div>
+        </div>
+
+        <div id="series-controls" class="series-controls hidden">
+            <div class="np-info">
+                <i class="fas fa-play-circle" style="color:var(--primary-color);"></i>
+                <span id="np-label">Loading...</span>
+            </div>
+            <button onclick="toggleFlyout(true)" style="background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.2); color:white; padding:8px 20px; border-radius:20px; cursor:pointer; font-size:0.9em;"><i class="fas fa-list-ul"></i> Episodes</button>
+        </div>
+
+        <div style="text-align: left;">
+            <h3 style="color: var(--accent-color); font-size: 1.1em; margin-bottom: 10px;"><i class="fas fa-users"></i> Members</h3>
+            <div id="members-list" class="members-grid"></div>
+        </div>
+        
+        <button class="btn secondary small" id="leave-btn" style="margin-top: 30px;"><i class="fas fa-sign-out-alt"></i> Leave Party</button>
+    </div>
+
+</div>
+
+<div id="host-modal" class="glass-modal-overlay">
+    <div class="glass-modal">
+        <h3>Host Controls</h3>
+        <p style="color:#aaa; margin-bottom:20px;">You are the host. What would you like to do?</p>
+        <div class="modal-btn-row">
+            <button class="btn danger-btn" onclick="confirmCloseRoom()">Close Room</button>
+            <button class="btn" onclick="confirmPassHost()">Pass Host & Leave</button>
+        </div>
+        <button onclick="document.getElementById('host-modal').classList.remove('active')" style="background:none; border:none; color:#888; margin-top:15px; cursor:pointer;">Cancel</button>
+    </div>
+</div>
+
+<div id="glass-message" class="glass-message"><i class="fas fa-check-circle"></i><span id="glass-msg-text">Copied!</span></div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='config.js') }}"></script>
+<script src="{{ url_for('static', filename='watchparty/script.js') }}?v=4"></script>
+{% endblock %}

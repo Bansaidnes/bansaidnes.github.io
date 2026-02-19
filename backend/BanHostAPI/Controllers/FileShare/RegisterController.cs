@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using BanHostAPI.Classes;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Linq;
 
@@ -17,7 +18,7 @@ namespace BanHostAPI.Controllers
             User user = new User();
             user.username = username;
             user.passwordHash = Encrypt.hashPassword(password);
-            user.token = Encrypt.tokenGen(user);
+            user.token = Encrypt.userTokenGen(user);
 
             SqliteAccess.SaveUser(user);
             return Ok("Registered user!");

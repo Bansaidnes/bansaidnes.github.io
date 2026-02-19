@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div id="error-popup" title="Click to copy error">Error message here</div>
+
+<div class="glass-panel" style="max-width: 500px;">
+    <h1>BanVPN Access</h1>
+    
+    <div id="selection-view" class="content-section active">
+        <p style="margin-bottom: 30px;">Authenticate with BanVPN.</p>
+        
+        <div class="button-group" style="display: flex; flex-direction: column; gap: 15px; align-items: center;">
+            <a href="https://cws.bansaidn.es" target="_blank" class="btn" style="width: 200px; text-decoration: none;">Login</a>
+            <button id="show-signup-btn" class="btn secondary" style="width: 200px;">Sign Up</button>
+        </div>
+    </div>
+
+    <div id="signup-view" class="content-section hidden">
+        <p style="margin-bottom: 20px; font-size: 0.9em; color: var(--accent-color);">Create your account</p>
+        
+        <form id="signup-form" onsubmit="event.preventDefault();">
+            <div style="text-align: left; margin-bottom: 15px;">
+                <input type="text" id="username" name="username" placeholder="Username" autocomplete="off" required>
+            </div>
+            
+            <div style="text-align: left; margin-bottom: 20px; position: relative;">
+                <input type="password" id="password" name="password" placeholder="Password" autocomplete="new-password" required style="padding-right: 40px;">
+                <i class="fas fa-eye" id="toggle-password" style="position: absolute; right: 15px; top: 15px; cursor: pointer; color: rgba(255,255,255,0.6);"></i>
+            </div>
+
+            <p id="password-requirements" style="font-size: 0.75em; text-align: left; color: rgba(255,255,255,0.5); margin-top: -10px; margin-bottom: 20px;">
+                Password must be at least 8 characters, include uppercase, lowercase, number, and special character.
+            </p>
+
+            <div class="button-group" style="display: flex; justify-content: center; gap: 10px;">
+                <button type="button" id="back-btn" class="btn secondary" style="min-width: 100px;">Back</button>
+                <button type="submit" id="submit-btn" class="btn" style="min-width: 100px;">Create</button>
+            </div>
+        </form>
+    </div>
+
+    <div id="success-view" class="content-section hidden">
+        <div style="font-size: 4em; color: #4ade80; margin-bottom: 20px; text-shadow: 0 0 20px rgba(74, 222, 128, 0.3);">
+            <i class="fas fa-check-circle"></i>
+        </div>
+        <h2 style="margin-bottom: 10px;">Account Created!</h2>
+        <p style="margin-bottom: 30px; font-size: 0.9em; opacity: 0.8;">You may now connect.</p>
+        
+        <a href="https://cws.bansaidn.es" target="_blank" class="btn" style="width: 200px; text-decoration: none; display: inline-block;">Go to Login</a>
+    </div>
+
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='vpn_signup/script.js') }}"></script>
+{% endblock %}

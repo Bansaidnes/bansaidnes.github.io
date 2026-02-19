@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="theme-color" content="#10002b"> 
+    <title>Bansaidnes</title>
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='img/Icon.jpg') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+    <script src="{{ url_for('static', filename='config.js') }}"></script>
+    {% block head %}{% endblock %}
+</head>
+<body class="{{ active_page }}">
+    <div class="background-container">
+        <iframe src="{{ url_for('static', filename='jellyfish.html') }}"></iframe>
+    </div>
+
+    <div id="error-popup" title="Click to copy error"></div>
+
+    <nav>
+        <div class="nav-header">
+            <label class="logo"><a href="/">Bansaidnes</a></label>
+            <input type="checkbox" id="check">
+            <label for="check" class="checkbtn">
+                <i class="fas fa-bars"></i>
+            </label>
+        </div>
+        
+        <ul>
+            <li><a href="/" class="{{ 'active' if active_page == 'home' else '' }}">Home</a></li>
+            <li><a href="/vpn/" class="{{ 'active' if active_page == 'vpn' else '' }}">VPN</a></li>
+            <li><a href="/UrlShortener/" class="{{ 'active' if active_page == 'shortener' else '' }}">Url Shortener</a></li>
+            <li><a href="/uploadclip/" class="{{ 'active' if active_page == 'upload' else '' }}">Upload Clip</a></li>
+            <li><a href="/watchparty/" class="{{ 'active' if active_page == 'watchparty' else '' }}">BanWatch</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const errorPopup = document.getElementById("error-popup");
+            const errorPopupAfter = document.getElementById("NiggaButt");
+
+
+            if (errorPopup) {
+                errorPopup.addEventListener("click", function() {
+                    const textToCopy = errorPopup.innerText;
+                    if (!textToCopy) return;
+
+                    navigator.clipboard.writeText(textToCopy).then(() => {
+                        errorPopup.classList.add("copied");
+
+                        const originalText = errorPopup.innerText;
+                        errorPopup.innerText = "Copied to clipboard!";
+                        errorPopup.style.backgroundColor = "rgba(0, 255, 0, 0.2)";
+                        errorPopup.style.borderColor = "rgba(100, 255, 100, 0.3)";
+
+                        setTimeout(() => {
+                            errorPopup.innerText = originalText;
+                            errorPopup.classList.remove("copied"); 
+                            errorPopup.style.backgroundColor = "";
+                            errorPopup.style.borderColor = "";
+                        }, 1500);
+                    }).catch(err => {
+                        console.error('Failed to copy:', err);
+                    });
+                });
+            }
+        });
+    </script>
+
+    {% block scripts %}{% endblock %}
+</body>
+</html>

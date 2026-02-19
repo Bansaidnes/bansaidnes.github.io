@@ -16,7 +16,7 @@ namespace BanHostAPI
             using (HashAlgorithm algorithm = SHA256.Create())
                 return algorithm.ComputeHash(Encoding.UTF8.GetBytes(pw));
         }
-        public static string tokenGen(User user)
+        public static string userTokenGen(User user)
         {
             Random rnd = new Random();
             char[] elements = {'+', '-', '_', '=', ';', ':', '<', '>', '.', ',', '?'};

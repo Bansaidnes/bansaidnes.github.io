@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<style>
+    main { padding-top: 80px; }
+</style>
+{% endblock %}
+
+{% block content %}
+<main>
+    <div class="glass-panel" style="width: 90%; max-width: 900px;">
+        <div class="section-header" style="justify-content: center; flex-direction: column; gap: 15px;">
+            <h1 id="page-title">Upload Clip</h1>
+            
+            <div class="toggle-container" style="display: flex; gap: 10px; margin-bottom: 20px;">
+                <button id="tab-upload" class="btn small active" onclick="switchTab('upload')">Upload</button>
+                <button id="tab-gallery" class="btn small secondary" onclick="switchTab('gallery')">My Clips</button>
+            </div>
+        </div>
+
+        <div id="view-upload" class="content-section active">
+            <form id="form" method="post" enctype="multipart/form-data">
+                
+                <div id="drop-zone">
+                    <span class="drop-text">Drag and Drop Video Here</span>
+                    <video id="preview-video" controls style="display: none; max-height: 100%;"></video>
+                </div>
+
+                <div style="margin-bottom: 20px;">
+                    <p id="filename" style="font-size: 0.9em; color: var(--text-dim);">No file selected</p>
+                    <label for="vidUp" id="fileLabel" class="btn secondary small">Choose File</label>
+                    <input type="file" name="clip" id="vidUp" accept="video/*" hidden>
+                    
+                    <input type="text" name="name" id="clipName" placeholder="Clip Name (Optional)" style="display: none; margin-top: 10px;">
+                </div>
+
+                <button type="submit" id="upload-btn" class="btn">Upload Clip</button>
+                
+                <p id="max-size-text" style="font-size: 0.8em; color: rgba(255,255,255,0.4); margin-top: 10px;">Max size: 500MB</p>
+
+                <div id="progress-panel" style="display: none; margin-top: 20px;">
+                    <div class="glass-progress-container">
+                        <div id="upload-progress-bar" class="glass-progress-fill"></div>
+                    </div>
+                    <p id="status-text" style="margin-top: 10px; font-weight: 500; color: rgba(255,255,255,0.8);">Starting upload...</p>
+                </div>
+
+                <div id="success-panel" style="display: none; margin-top: 20px;">
+                    <p id="clip-url" style="color: var(--accent-color); word-break: break-all;">Clip url: ...</p>
+                    <div style="margin-top: 15px;">
+                        <button type="button" id="copy-btn" class="btn small" onclick="copy()">Copy Link</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <div id="view-gallery" class="content-section hidden">
+            <div id="gallery-grid" class="gallery-grid">
+                <p style="color: var(--text-dim);">Loading archives...</p>
+            </div>
+        </div>
+    </div>
+</main>
+
+<div id="error-popup"></div>
+
+<script src="{{ url_for('static', filename='uploadclip/script.js') }}"></script>
+{% endblock %}

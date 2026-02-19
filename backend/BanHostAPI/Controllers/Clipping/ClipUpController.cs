@@ -1,7 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Amazon.Runtime;
+using Amazon.S3;
+using Amazon.S3.Model;
+using Amazon.S3.Transfer;
+using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using System.Text.RegularExpressions;
-using System.Text;
 
 namespace BanHostAPI.Controllers
 {
@@ -11,6 +14,11 @@ namespace BanHostAPI.Controllers
     {
         private readonly IWebHostEnvironment hostEnv;
 
+        private const string BucketName = "bancdn"; 
+        private const string ServiceUrl = "https://lon1.digitaloceanspaces.com";
+        private const string AccessKey = "<Redacted>";
+        private const string SecretKey = "<Redacted>";
+
         public ClipUpController(IWebHostEnvironment hostEnv)
         {
             this.hostEnv = hostEnv;
@@ -19,7 +27,7 @@ namespace BanHostAPI.Controllers
         [HttpPost]
         [DisableRequestSizeLimit]
         [RequestFormLimits(MultipartBodyLengthLimit = 524_288_000)]
-        public async Task ClipUp([FromForm] List<IFormFile> clip, [FromForm] string? name)
+        public async Task ClipUp([FromForm] List<IFormFile> clip, [FromForm] string? name, [FromForm] string? ownerToken)
         {
             Response.Headers.Append("Content-Type", "text/event-stream");
             Response.Headers.Append("Cache-Control", "no-cache");
@@ -27,11 +35,8 @@ namespace BanHostAPI.Controllers
             Response.Headers.Append("X-Accel-Buffering", "no");
             Response.Headers.Append("Content-Encoding", "none");
 
-            string destFolder = Path.Combine(hostEnv.ContentRootPath, "Clips", "Compressed");
-            Directory.CreateDirectory(destFolder);
-
-            string sourceFolder = Path.Combine(hostEnv.ContentRootPath, "Clips");
-            Directory.CreateDirectory(sourceFolder);
+            string workFolder = Path.Combine(hostEnv.ContentRootPath, "Clips", "Temp");
+            Directory.CreateDirectory(workFolder);
 
             string finalId = "";
 
@@ -39,12 +44,14 @@ namespace BanHostAPI.Controllers
             {
                 finalId = GenerateID();
 
-                string originalPath = Path.Combine(sourceFolder, finalId + ".mp4");
+                string originalPath = Path.Combine(workFolder, finalId + "_raw.mp4");
+                string compressedPath = Path.Combine(workFolder, finalId + ".mp4");
 
-                while (System.IO.File.Exists(originalPath) || System.IO.File.Exists(Path.Combine(destFolder, finalId + ".mp4")))
+                while (System.IO.File.Exists(originalPath) || System.IO.File.Exists(compressedPath))
                 {
                     finalId = GenerateID();
-                    originalPath = Path.Combine(sourceFolder, finalId + ".mp4");
+                    originalPath = Path.Combine(workFolder, finalId + "_raw.mp4");
+                    compressedPath = Path.Combine(workFolder, finalId + ".mp4");
                 }
 
                 using (var filestream = new FileStream(originalPath, FileMode.Create))
@@ -52,14 +59,37 @@ namespace BanHostAPI.Controllers
                     await file.CopyToAsync(filestream);
                 }
 
-                string compressedPath = Path.Combine(destFolder, finalId + ".mp4");
+                await Response.WriteAsync($"event: status\ndata: Uploading original...\n\n");
+                await Response.Body.FlushAsync();
 
-                await PegMe(originalPath, compressedPath);
+                try
+                {
+                    await UploadToCdn(originalPath, $"Clips/{finalId}.mp4");
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Original Upload Failed: {ex.Message}");
+                }
+
+                await compressVideo(originalPath, compressedPath);
+
+                await Response.WriteAsync($"event: status\ndata: Uploading compressed...\n\n");
+                await Response.Body.FlushAsync();
+
+                try
+                {
+                    await UploadToCdn(compressedPath, $"Clips/Compressed/{finalId}.mp4");
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Compressed Upload Failed: {ex.Message}");
+                    await Response.WriteAsync($"event: error\ndata: CDN Upload failed\n\n");
+                    return;
+                }
 
                 try
                 {
                     var (width, height) = GetVideoMetadata(compressedPath);
-
                     string clipName = string.IsNullOrWhiteSpace(name) ? file.FileName : name;
 
                     var newClip = new Clip
@@ -67,24 +97,47 @@ namespace BanHostAPI.Controllers
                         ID = finalId,
                         Name = clipName,
                         Width = width,
-                        Height = height
+                        Height = height,
+                        OwnerToken = ownerToken
                     };
 
                     SqliteAccess.SaveClipInfo(newClip);
+
+                    if (System.IO.File.Exists(originalPath)) System.IO.File.Delete(originalPath);
+                    if (System.IO.File.Exists(compressedPath)) System.IO.File.Delete(compressedPath);
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine($"Metadata/DB Error: {ex.Message}");
+                    Console.WriteLine($"Metadata/Cleanup Error: {ex.Message}");
                 }
             }
 
             string finalPayload = $"{{\"id\": \"{finalId}\"}}";
             await Response.WriteAsync($"event: complete\n");
             await Response.WriteAsync($"data: {finalPayload}\n\n");
-
             await Response.Body.FlushAsync();
         }
 
+        private async Task UploadToCdn(string filePath, string key)
+        {
+            var credentials = new BasicAWSCredentials(AccessKey, SecretKey);
+            var config = new AmazonS3Config { ServiceURL = ServiceUrl };
+
+            using (var client = new AmazonS3Client(credentials, config))
+            {
+                var utility = new TransferUtility(client);
+
+                var request = new TransferUtilityUploadRequest
+                {
+                    BucketName = BucketName,
+                    Key = key,
+                    FilePath = filePath,
+                    CannedACL = S3CannedACL.PublicRead
+                };
+
+                await utility.UploadAsync(request);
+            }
+        }
         private (int width, int height) GetVideoMetadata(string filePath)
         {
             var process = new Process();
@@ -112,7 +165,7 @@ namespace BanHostAPI.Controllers
             return (0, 0);
         }
 
-        private async Task PegMe(string inputPath, string outputPath)
+        private async Task compressVideo(string inputPath, string outputPath)
         {
             long inputSizeBytes = new FileInfo(inputPath).Length;
             long targetSizeBytes = 80 * 1024 * 1024;
@@ -132,7 +185,7 @@ namespace BanHostAPI.Controllers
                 StartInfo = new ProcessStartInfo
                 {
                     FileName = "ffmpeg",
-                    Arguments = $"-i \"{inputPath}\"", 
+                    Arguments = $"-i \"{inputPath}\"",
                     UseShellExecute = false,
                     RedirectStandardError = true,
                     CreateNoWindow = true
@@ -159,7 +212,7 @@ namespace BanHostAPI.Controllers
             int videoBitrateKbps = (int)(totalBitrateKbps - audioBitrateKbps);
 
             if (videoBitrateKbps < 50) videoBitrateKbps = 50;
-            if (videoBitrateKbps > 5000) videoBitrateKbps = 5000; 
+            if (videoBitrateKbps > 5000) videoBitrateKbps = 5000;
 
             var process = new Process();
             process.StartInfo.FileName = "ffmpeg";

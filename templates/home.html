@@ -1,0 +1,221 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="glass-panel" id="main-panel">
+    <div id="about-section" class="content-section active">
+        <div class="typed-container">
+            <h1>> <span class="type-effect"></span></h1>
+        </div>
+        
+        <div class="resume-content">
+            <div class="summary">
+                <p><strong>About me:</strong></p>
+                <p>I'm a person with a deep passion for tech, computers, and the way things work behind the scenes. I've got extensive knowledge in software development in solo and group settings and enjoy programming in my spare time.</p>
+            </div>
+
+            <div class="education-experience">
+                <div class="edu">
+                    <p><strong>Education:</strong></p>
+                    <p><i class="fas fa-graduation-cap"></i> Iowa State University (2029) - BS Computer Science, Minor in AI</p>
+                    <p><i class="fas fa-school"></i> The Winchester School, Dubai (2025)</p>
+                </div>
+                <div class="exp">
+                    <p><strong>Experience:</strong></p>
+                    <p><i class="fas fa-briefcase"></i> Student Backend Developer - The Winchester School</p>
+                    <p style="font-size: 0.85em; opacity: 0.8; margin-left: 20px;">Built backend for appointment scheduling system using C# & ASP.NET.</p>
+                </div>
+            </div>
+
+            <div class="skills-container">
+                <p><strong>Skills:</strong></p>
+                <div class="tags">
+                    <span>C#</span><span>.NET</span><span>Python</span><span>Dart/Flutter</span>
+                    <span>SQL</span><span>Azure</span><span>Linux Bash</span><span>Git</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="action-area">
+            <button class="btn" onclick="toggleView('projects')">
+                View Projects <i class="fas fa-chevron-right"></i>
+            </button>
+            <a href="https://github.com/Bansaidnes" class="btn secondary">
+                <i class="fab fa-github"></i> Github
+            </a>
+        </div>
+    </div>
+
+    <div id="projects-section" class="content-section hidden">
+        <div class="section-header">
+            <h2>> My Projects</h2>
+            <button class="back-btn" onclick="toggleView('about')"><i class="fas fa-arrow-left"></i> Back to About</button>
+        </div>
+
+        <div class="carousel-container">
+            <button class="nav-arrow left" onclick="moveSlide(-1)"><i class="fas fa-chevron-left"></i></button>
+            
+            <div class="carousel-track-container">
+                <ul class="carousel-track">
+                    <li class="carousel-slide current-slide">
+                        <div class="project-card">
+                            <div class="project-img-container">
+                                <img src="{{ url_for('static', filename='img/clipProject.png') }}" alt="Video Streaming Service" class="project-img">
+                            </div>
+                            <div class="project-info">
+                                <h3>Video Streaming Service</h3>
+                                <p>A small scale video sharing service to upload, generate URLs, and share large videos. Built to handle video streaming roadblocks on browsers.</p>
+                                <div style="display: flex; gap: 10px; margin-top: 10px; flex-wrap: wrap;">
+                                    <a href="/uploadclip/" class="btn small">Try it out!</a>
+                                    <a href="https://github.com/Bansaidnes/bansaidnes.github.io/tree/main/backend/BanHostAPI/Controllers/Clipping" target="_blank" class="btn small secondary">View Source</a>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    
+                    <li class="carousel-slide">
+                        <div class="project-card">
+                            <div class="project-img-container">
+                                <img src="{{ url_for('static', filename='img/urlProject.png') }}" alt="URL Shortener" class="project-img">
+                            </div>
+                            <div class="project-info">
+                                <h3>URL Shortener</h3>
+                                <p>A personal URL shortening service running on Microsoft Azure VMs with ASP.NET Core API on Ubuntu Server.</p>
+                                <div style="display: flex; gap: 10px; margin-top: 10px; flex-wrap: wrap;">
+                                    <a href="/UrlShortener/" class="btn small">Try it out!</a>
+                                    <a href="https://github.com/Bansaidnes/bansaidnes.github.io/tree/main/backend/BanHostAPI/Controllers/UrlShortener" target="_blank" class="btn small secondary">View Source</a>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+
+                    <li class="carousel-slide">
+                        <div class="project-card">
+                            <div class="project-img-container">
+                                <img src="{{ url_for('static', filename='img/bookingProject.png') }}" alt="WinBooking" class="project-img">
+                            </div>
+                            <div class="project-info">
+                                <h3>WinBooking</h3>
+                                <p>A reliable appointment scheduling service used by parents to book meetings with teachers. I was responsible for the backend, collaborating with a <a href="https://github.com/bedros-p" target="_blank" style="color: var(--accent-color);">friend</a> who built the frontend.</p>
+                                <div style="display: flex; gap: 10px; margin-top: 10px; flex-wrap: wrap;">
+                                    <button class="btn small disabled" disabled>Coming Soon</button>
+                                    <a href="https://docs.google.com/document/d/1hQmEgIvVwVvZ7QBtlnGA-2T7w01VQubQiOBEu7KVtpU/edit?usp=sharing" target="_blank" class="btn small secondary">User Docs</a>
+                                    <a href="https://github.com/Bansaidnes/booking" target="_blank" class="btn small secondary">View Source</a>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <button class="nav-arrow right" onclick="moveSlide(1)"><i class="fas fa-chevron-right"></i></button>
+        </div>
+
+        <div class="carousel-nav-container">
+            <div class="carousel-nav">
+                <button class="carousel-indicator current-indicator" onclick="moveToSlide(0)"></button>
+                <button class="carousel-indicator" onclick="moveToSlide(1)"></button>
+                <button class="carousel-indicator" onclick="moveToSlide(2)"></button>
+            </div>
+            <p class="swipe-instruction">Swipe to next</p>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+<script>
+    var type = new Typed(".type-effect", {
+        strings: ["Mohammed Faraz", "A Software Developer", "A Tech Enthusiast"],
+        typeSpeed: 50,
+        backSpeed: 30,
+        startDelay: 200,
+        showCursor: true,
+        cursorChar: '_',
+        autoInsertCss: true,
+        backDelay: 3000,
+        loop: true
+    });
+
+    function toggleView(view) {
+        const aboutSection = document.getElementById('about-section');
+        const projectsSection = document.getElementById('projects-section');
+        const glassPanel = document.getElementById('main-panel');
+
+        if (view === 'projects') {
+            aboutSection.classList.add('fade-out');
+            setTimeout(() => {
+                aboutSection.classList.remove('active');
+                aboutSection.classList.add('hidden');
+                aboutSection.classList.remove('fade-out');
+                
+                projectsSection.classList.remove('hidden');
+                void projectsSection.offsetWidth;
+                projectsSection.classList.add('active');
+            }, 300); 
+        } else {
+            projectsSection.classList.remove('active');
+            setTimeout(() => {
+                projectsSection.classList.add('hidden');
+                aboutSection.classList.remove('hidden');
+                void aboutSection.offsetWidth;
+                aboutSection.classList.add('active');
+            }, 300);
+        }
+    }
+
+    const track = document.querySelector('.carousel-track');
+    const slides = Array.from(track.children);
+    const dotsNav = document.querySelector('.carousel-nav');
+    const dots = Array.from(dotsNav.children);
+    let currentIndex = 0;
+
+    function updateSlidePosition() {
+        const slideWidth = slides[0].getBoundingClientRect().width;
+        track.style.transform = 'translateX(-' + (slideWidth * currentIndex) + 'px)';
+        
+        dots.forEach(dot => dot.classList.remove('current-indicator'));
+        dots[currentIndex].classList.add('current-indicator');
+    }
+
+    function moveSlide(direction) {
+        currentIndex += direction;
+        if (currentIndex < 0) {
+            currentIndex = slides.length - 1;
+        } else if (currentIndex >= slides.length) {
+            currentIndex = 0;
+        }
+        updateSlidePosition();
+    }
+
+    function moveToSlide(index) {
+        currentIndex = index;
+        updateSlidePosition();
+    }
+
+    window.addEventListener('resize', updateSlidePosition);
+
+    const carouselContainer = document.querySelector('.carousel-container');
+    let touchStartX = 0;
+    let touchEndX = 0;
+
+    carouselContainer.addEventListener('touchstart', e => {
+        touchStartX = e.changedTouches[0].screenX;
+    }, {passive: true});
+
+    carouselContainer.addEventListener('touchend', e => {
+        touchEndX = e.changedTouches[0].screenX;
+        handleSwipe();
+    }, {passive: true});
+
+    function handleSwipe() {
+        if (Math.abs(touchEndX - touchStartX) < 50) return;
+
+        if (touchEndX < touchStartX) {
+            moveSlide(1); 
+        } else {
+            moveSlide(-1); 
+        }
+    }
+</script>
+{% endblock %}
