@@ -541,7 +541,6 @@ document.addEventListener("DOMContentLoaded", function() {
     elements.joinBtn.onclick = () => {
         const user = elements.username.value.trim();
         const code = elements.joinCode.value.trim().toUpperCase();
-        // 2. CHECK USERNAME LENGTH (Fallback)
         if (user.length > USERNAME_LIMIT) return showGlassMessage(`Name too long (max ${USERNAME_LIMIT} chars)`, true);
         if(!user || !code) return showGlassMessage("Username & Code required", true);
         performJoin(code, user);

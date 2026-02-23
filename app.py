@@ -161,6 +161,11 @@ def serve_static(filename):
 def watch_party_page():
     return render_template('watchparty.html', active_page='watchparty')
 
+@app.route('/banwake/')
+@app.route('/banwake/index.html')
+def banwake_page():
+    return render_template('banwake.html', active_page='banwake')
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=2905, debug=False)
     

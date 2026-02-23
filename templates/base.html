@@ -34,6 +34,7 @@
             <li><a href="/UrlShortener/" class="{{ 'active' if active_page == 'shortener' else '' }}">Url Shortener</a></li>
             <li><a href="/uploadclip/" class="{{ 'active' if active_page == 'upload' else '' }}">Upload Clip</a></li>
             <li><a href="/watchparty/" class="{{ 'active' if active_page == 'watchparty' else '' }}">BanWatch</a></li>
+            <li><a href="/banwake/" class="{{ 'active' if active_page == 'banwake' else '' }}">BanWake</a></li>
         </ul>
     </nav>
 
@@ -44,8 +45,6 @@
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             const errorPopup = document.getElementById("error-popup");
-            const errorPopupAfter = document.getElementById("NiggaButt");
-
 
             if (errorPopup) {
                 errorPopup.addEventListener("click", function() {

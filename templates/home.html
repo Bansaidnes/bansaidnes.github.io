@@ -59,6 +59,21 @@
                     <li class="carousel-slide current-slide">
                         <div class="project-card">
                             <div class="project-img-container">
+                                <img src="{{ url_for('static', filename='img/banwatchProject.png') }}" alt="BanWatch" class="project-img">
+                            </div>
+                            <div class="project-info">
+                                <h3>BanWatch</h3>
+                                <p>A simple watchparty service that allows a user to create a watchroom and invite friends to join the room. Content playing in the room is synced at the same timestamp for all users. Uses an SSE workflow for the backend.</p>
+                                <div style="display: flex; gap: 10px; margin-top: 10px; flex-wrap: wrap;">
+                                    <a href="/watchparty/" class="btn small">Try it out!</a>
+                                    <a href="https://github.com/Bansaidnes/bansaidnes.github.io/tree/main/backend/BanHostAPI/Controllers/BanWatch" target="_blank" class="btn small secondary">View Source</a>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="carousel-slide">
+                        <div class="project-card">
+                            <div class="project-img-container">
                                 <img src="{{ url_for('static', filename='img/clipProject.png') }}" alt="Video Streaming Service" class="project-img">
                             </div>
                             <div class="project-info">
@@ -115,6 +130,7 @@
                 <button class="carousel-indicator current-indicator" onclick="moveToSlide(0)"></button>
                 <button class="carousel-indicator" onclick="moveToSlide(1)"></button>
                 <button class="carousel-indicator" onclick="moveToSlide(2)"></button>
+                <button class="carousel-indicator" onclick="moveToSlide(3)"></button>
             </div>
             <p class="swipe-instruction">Swipe to next</p>
         </div>

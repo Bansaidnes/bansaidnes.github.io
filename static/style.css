@@ -359,19 +359,18 @@ button:active, .btn:active {
 
 .project-img-container {
     width: 100%;
-    height: 250px;
-    border-radius: 10px;
-    overflow: hidden;
+    height: 300px;
     position: relative;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    background: rgba(0, 0, 0, 0.2); 
+    border-radius: 10px 10px 0 0; 
+    overflow: hidden;
 }
 
 .project-img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain; 
     object-position: center;
-    transition: transform 0.3s ease;
 }
 
 .project-img:hover {
@@ -562,6 +561,8 @@ button:active, .btn:active {
     nav:has(#check:checked) ul li:nth-child(3) { transition-delay: 0.4s; }
     nav:has(#check:checked) ul li:nth-child(4) { transition-delay: 0.5s; }
     nav:has(#check:checked) ul li:nth-child(5) { transition-delay: 0.6s; }
+    nav:has(#check:checked) ul li:nth-child(6) { transition-delay: 0.6s; }
+
 
     .glass-panel {
         width: 90%;

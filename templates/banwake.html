@@ -1,0 +1,175 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<style>
+    .banwake-panel {
+        max-width: 500px;
+        margin: 50px auto;
+        padding: 40px;
+        text-align: center;
+    }
+    .status-display {
+        font-size: 2.5em;
+        font-weight: bold;
+        margin: 30px 0;
+        text-transform: uppercase;
+        letter-spacing: 3px;
+        color: #aaa;
+        transition: all 0.3s ease;
+    }
+    .status-display.calling { color: var(--primary-color, #9d4edd); text-shadow: 0 0 20px rgba(157, 78, 221, 0.6); }
+    .status-display.ringing { color: #f6ad55; text-shadow: 0 0 20px rgba(246, 173, 85, 0.6); }
+    .status-display.answered { color: #4ade80; text-shadow: 0 0 20px rgba(74, 222, 128, 0.6); }
+    .status-display.failed { color: #ff5555; }
+
+    .controls-wrapper {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        gap: 15px;
+    }
+
+    .password-wrapper {
+        position: relative;
+        width: 100%;
+        max-width: 350px;
+    }
+
+    .password-wrapper input {
+        width: 100%;
+        box-sizing: border-box;
+        padding: 15px 50px 15px 20px; 
+        border-radius: 50px;
+        border: 1px solid rgba(255,255,255,0.2);
+        background: rgba(255,255,255,0.05);
+        color: white;
+        text-align: center;
+        font-size: 1.1em;
+        outline: none;
+        transition: all 0.3s ease;
+        margin: 0;
+    }
+
+    .password-wrapper input:focus { 
+        border-color: var(--primary-color, #9d4edd); 
+        background: rgba(255,255,255,0.1); 
+        box-shadow: 0 0 15px rgba(157, 78, 221, 0.4);
+    }
+
+    .toggle-password-btn {
+        position: absolute;
+        right: 15px;
+        top: 0;
+        height: 100%;
+        background: transparent;
+        border: none;
+        color: rgba(255, 255, 255, 0.4);
+        font-size: 1.2em;
+        cursor: pointer;
+        padding: 0 10px; 
+        margin: 0; 
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: color 0.3s ease, transform 0.2s ease;
+        outline: none;
+    }
+    
+    .toggle-password-btn:hover {
+        color: white;
+        transform: scale(1.1);
+    }
+
+    .call-action-btn {
+        width: 100%;
+        max-width: 350px;
+        box-sizing: border-box;
+        margin: 0; 
+    }
+
+    /* --- THE MISSING TOAST CSS --- */
+    .glass-message {
+        position: fixed; 
+        bottom: 30px; 
+        left: 50%; 
+        transform: translateX(-50%) translateY(20px);
+        background: rgba(255, 255, 255, 0.1); 
+        backdrop-filter: blur(12px);
+        padding: 12px 25px; 
+        border-radius: 50px; 
+        border: 1px solid rgba(255,255,255,0.2);
+        box-shadow: 0 10px 30px rgba(0,0,0,0.3); 
+        color: white;
+        display: flex; 
+        align-items: center; 
+        gap: 10px; 
+        opacity: 0; 
+        pointer-events: none;
+        transition: all 0.4s ease; 
+        z-index: 1000;
+    }
+    .glass-message.show { 
+        opacity: 1; 
+        transform: translateX(-50%) translateY(0); 
+    }
+
+    .custom-alert-overlay {
+        position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+        background: rgba(0,0,0,0.6); backdrop-filter: blur(8px);
+        display: flex; justify-content: center; align-items: center;
+        z-index: 30000; animation: fadeIn 0.2s ease-out;
+    }
+    .custom-alert-box {
+        background: rgba(30, 20, 50, 0.95);
+        border: 1px solid rgba(255,255,255,0.15);
+        padding: 25px 30px; border-radius: 20px;
+        text-align: center; max-width: 400px; width: 90%;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+        transform: scale(0.9); animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+    }
+    .custom-alert-text { font-size: 1.1em; color: white; margin-bottom: 25px; line-height: 1.5; }
+    .custom-btn {
+        padding: 10px 25px; border-radius: 50px; border: none;
+        font-size: 1em; cursor: pointer; transition: all 0.2s;
+        font-family: inherit; font-weight: 600;
+    }
+    .custom-btn.primary { background: var(--primary-color, #9d4edd); color: white; }
+    .custom-btn.primary:hover { filter: brightness(1.2); transform: translateY(-2px); }
+    
+    @keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+    @keyframes popIn { to { transform: scale(1); } }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="glass-panel banwake-panel">
+    <h1>BanWake</h1>
+    <p>Wake Bansaidnes up</p>
+
+    <div id="status-text" class="status-display">Idle</div>
+
+    <div class="controls-wrapper">
+        <div class="password-wrapper">
+            <input type="password" id="wake-password" placeholder="Enter Password">
+            <button type="button" id="toggle-password" class="toggle-password-btn" title="Toggle Password">
+                <i class="fas fa-eye" id="toggle-icon"></i>
+            </button>
+        </div>
+
+        <button class="btn call-action-btn" id="call-btn">
+            <i class="fas fa-phone-alt"></i> Initiate Call
+        </button>
+    </div>
+</div>
+
+<div id="glass-message" class="glass-message">
+    <i class="fas fa-check-circle"></i>
+    <span id="glass-msg-text"></span>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='config.js') }}"></script>
+<script src="{{ url_for('static', filename='banwake/script.js') }}"></script>
+{% endblock %}
