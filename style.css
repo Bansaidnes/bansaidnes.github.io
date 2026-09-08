@@ -3,6 +3,9 @@ header {
     color: #fff;
     padding: 10px 0;
     border-radius: 100px;
+    margin: 10px auto;
+    width: 80vw;
+    align-self: center;
 }
 nav ul {
     list-style: none;
